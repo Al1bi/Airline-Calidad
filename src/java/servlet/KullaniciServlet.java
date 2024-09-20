@@ -28,6 +28,19 @@ public class KullaniciServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private KullaniciDAO kullaniciDAO;
+    private static final String KULLANICI_YETKI = "kullanici_yetki";
+    private static final String GIRIS_PAGE = "giris";
+    private static final String UCAK_BILETI_URL = "../ucakbileti";
+    private static final String KULLANICI_ID = "kullaniciId";
+    private static final String UCAK_BILETI_PAGE = "ucakbileti";
+    private static final String ENCODING_UTF8 = "UTF-8";
+    private static final String ENCODING_ISO_8859_1 = "ISO-8859-1";
+    private static final String KULLANICI_SIFRE = "kullanici_sifre";
+    private static final String KULLANICI_EMAIL = "kullanici_email";
+    private static final String KULLANICI_AD = "kullanici_ad";
+    private static final String KULLANICI_SOYAD = "kullanici_soyad";
+    private static final String KULLANICI_LISTE = "kullaniciliste";
+    private static final String PANEL = "panel";
 
     public void init() {
         kullaniciDAO = new KullaniciDAO();
@@ -47,6 +60,7 @@ public class KullaniciServlet extends HttpServlet {
                 case "/uyeol":
                     uyeol(request, response);
                     break;
+                default:
                 case "/gosteruyeol":
                     gosteruyeol(request, response);
                     break;
@@ -116,13 +130,13 @@ public class KullaniciServlet extends HttpServlet {
     private void adminbilgilerim(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS_PAGE);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(UCAK_BILETI_URL);
         } else {
-            int kullanici_id = (int) session.getAttribute("kullanici_id");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("adminguncelle?id=" + kullanici_id);
+            int kullaniciId = (int) session.getAttribute(kullaniciId);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("adminguncelle?id=" + kullaniciId);
             dispatcher.forward(request, response);
         }
     }
@@ -130,19 +144,19 @@ public class KullaniciServlet extends HttpServlet {
     private void sifreguncelle(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 1) {
-            response.sendRedirect("ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS_PAGE);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 1) {
+            response.sendRedirect(UCAK_BILETI_PAGE);
         } else {
-            int kullanici_id = Integer.parseInt(request.getParameter("kullanici_id_sifre"));
-            String kullanici_sifre = new String((request.getParameter("kullanici_suan_sifre")).getBytes("ISO-8859-1"), "UTF-8");
-            String kullanici_sifre1 = new String((request.getParameter("kullanici_sifre1")).getBytes("ISO-8859-1"), "UTF-8");
-            Boolean kontrol = kullaniciDAO.sifrekontrol(kullanici_id, kullanici_sifre);
+            int kullaniciId = Integer.parseInt(request.getParameter("kullaniciId_sifre"));
+            String kullanici_sifre = new String((request.getParameter("kullanici_suan_sifre")).getBytes(ENCODING_ISO_8859_1), ENCODING_UTF8);
+            String kullanici_sifre1 = new String((request.getParameter("kullanici_sifre1")).getBytes(ENCODING_ISO_8859_1), ENCODING_UTF8);
+            Boolean kontrol = kullaniciDAO.sifrekontrol(kullaniciId, kullanici_sifre);
             if (kontrol == true) {
-                Kullanici kullanici = new Kullanici(kullanici_id, kullanici_sifre1);
+                Kullanici kullanici = new Kullanici(kullaniciId, kullanici_sifre1);
                 kullaniciDAO.sifreguncelle(kullanici);
-                session.setAttribute("kullanici_sifre", kullanici_sifre1);
+                session.setAttribute(KULLANICI_SIFRE, kullanici_sifre1);
                 response.sendRedirect("profil?durum=basarili");
             } else {
                 response.sendRedirect("profil?durum=hatali");
@@ -153,23 +167,23 @@ public class KullaniciServlet extends HttpServlet {
     private void profilguncelle(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 1) {
-            response.sendRedirect("ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS_PAGE);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 1) {
+            response.sendRedirect(UCAK_BILETI_PAGE);
         } else {
-            String kontrol_email = (String) session.getAttribute("kullanici_email");
-            int kullanici_id = Integer.parseInt(request.getParameter("kullanici_id"));
-            String kullanici_ad = new String((request.getParameter("kullanici_ad")).getBytes("ISO-8859-1"), "UTF-8");
-            String kullanici_soyad = new String((request.getParameter("kullanici_soyad")).getBytes("ISO-8859-1"), "UTF-8");
-            String kullanici_email = request.getParameter("kullanici_email");
+            String kontrol_email = (String) session.getAttribute(KULLANICI_EMAIL);
+            int kullaniciId = Integer.parseInt(request.getParameter(kullaniciId));
+            String kullanici_ad = new String((request.getParameter(KULLANICI_AD)).getBytes(ENCODING_ISO_8859_1), ENCODING_UTF8);
+            String kullanici_soyad = new String((request.getParameter(KULLANICI_SOYAD)).getBytes(ENCODING_ISO_8859_1), ENCODING_UTF8);
+            String kullanici_email = request.getParameter(KULLANICI_EMAIL);
             Boolean kontrol = kullaniciDAO.uyekontrol(kullanici_email);
             if (kontrol == true || kullanici_email.equals(kontrol_email)) {
-                Kullanici kullanici = new Kullanici(kullanici_id, kullanici_ad, kullanici_soyad, kullanici_email);
+                Kullanici kullanici = new Kullanici(kullaniciId, kullanici_ad, kullanici_soyad, kullanici_email);
                 kullaniciDAO.profilguncelle(kullanici);
-                session.setAttribute("kullanici_ad", kullanici_ad);
-                session.setAttribute("kullanici_soyad", kullanici_soyad);
-                session.setAttribute("kullanici_email", kullanici_email);
+                session.setAttribute(KULLANICI_AD, kullanici_ad);
+                session.setAttribute(KULLANICI_SOYAD, kullanici_soyad);
+                session.setAttribute(KULLANICI_EMAIL, kullanici_email);
                 response.sendRedirect("profil?durum=basarili");
             } else {
                 response.sendRedirect("profil?durum=basarisiz");
@@ -180,16 +194,16 @@ public class KullaniciServlet extends HttpServlet {
     private void profil(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 1) {
-            response.sendRedirect("ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS_PAGE);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 1) {
+            response.sendRedirect(UCAK_BILETI_PAGE);
         } else {
-            int kullanici_id = (int) session.getAttribute("kullanici_id");
-            String kullanici_ad = (String) session.getAttribute("kullanici_ad");
-            String kullanici_email = (String) session.getAttribute("kullanici_email");
-            String kullanici_soyad = (String) session.getAttribute("kullanici_soyad");
-            Kullanici kullanici = new Kullanici(kullanici_id, kullanici_ad, kullanici_soyad, kullanici_email);
+            int kullaniciId = (int) session.getAttribute(kullaniciId);
+            String kullanici_ad = (String) session.getAttribute(KULLANICI_AD);
+            String kullanici_email = (String) session.getAttribute(KULLANICI_EMAIL);
+            String kullanici_soyad = (String) session.getAttribute(KULLANICI_SOYAD);
+            Kullanici kullanici = new Kullanici(kullaniciId, kullanici_ad, kullanici_soyad, kullanici_email);
             request.setAttribute("kullanici", kullanici);
             RequestDispatcher dispatcher = request.getRequestDispatcher("profil.jsp");
             dispatcher.forward(request, response);
@@ -199,24 +213,24 @@ public class KullaniciServlet extends HttpServlet {
     private void kullanicisil(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS_PAGE);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(UCAK_BILETI_URL);
         } else {
             int id = Integer.parseInt(request.getParameter("id"));
             kullaniciDAO.kullanicisil(id);
-            response.sendRedirect("kullaniciliste");
+            response.sendRedirect(KULLANICI_LISTE);
         }
     }
 
     private void adminekle(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS_PAGE);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(UCAK_BILETI_URL);
         } else {
             RequestDispatcher dispatcher = request.getRequestDispatcher("adminekle.jsp");
             dispatcher.forward(request, response);
@@ -226,20 +240,20 @@ public class KullaniciServlet extends HttpServlet {
     private void gosteradminekle(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS_PAGE);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(UCAK_BILETI_URL);
         } else {
-            String kullanici_ad = new String((request.getParameter("kullanici_ad")).getBytes("ISO-8859-1"), "UTF-8");
-            String kullanici_soyad = new String((request.getParameter("kullanici_soyad")).getBytes("ISO-8859-1"), "UTF-8");
-            String kullanici_email = request.getParameter("kullanici_email");
-            String kullanici_sifre = new String((request.getParameter("kullanici_sifre")).getBytes("ISO-8859-1"), "UTF-8");
+            String kullanici_ad = new String((request.getParameter(KULLANICI_AD)).getBytes(ENCODING_ISO_8859_1), ENCODING_UTF8);
+            String kullanici_soyad = new String((request.getParameter(KULLANICI_SOYAD)).getBytes(ENCODING_ISO_8859_1), ENCODING_UTF8);
+            String kullanici_email = request.getParameter(KULLANICI_EMAIL);
+            String kullanici_sifre = new String((request.getParameter(KULLANICI_SIFRE)).getBytes(ENCODING_ISO_8859_1), ENCODING_UTF8);
             Boolean kontrol = kullaniciDAO.uyekontrol(kullanici_email);
             if (kontrol == true) {
                 Kullanici yenikullanici = new Kullanici(kullanici_ad, kullanici_soyad, kullanici_email, kullanici_sifre);
                 kullaniciDAO.adminekle(yenikullanici);
-                response.sendRedirect("kullaniciliste");
+                response.sendRedirect(KULLANICI_LISTE);
             } else {
                 response.sendRedirect("kullaniciliste?durum=basarisiz");
             }
@@ -249,13 +263,13 @@ public class KullaniciServlet extends HttpServlet {
     private void kullaniciliste(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS_PAGE);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(UCAK_BILETI_URL);
         } else {
             List<Kullanici> kullaniciliste = kullaniciDAO.uyelistele();
-            request.setAttribute("kullaniciliste", kullaniciliste);
+            request.setAttribute(KULLANICI_LISTE, kullaniciliste);
             RequestDispatcher dispatcher = request.getRequestDispatcher("kullanicilistele.jsp");
             dispatcher.forward(request, response);
         }
@@ -264,10 +278,10 @@ public class KullaniciServlet extends HttpServlet {
     private void adminguncelle(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS_PAGE);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(UCAK_BILETI_URL);
         } else {
             int id = Integer.parseInt(request.getParameter("id"));
             Kullanici kullanici = kullaniciDAO.kullanicisec(id);
@@ -280,27 +294,27 @@ public class KullaniciServlet extends HttpServlet {
     private void gosteradminguncelle(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS_PAGE);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(UCAK_BILETI_URL);
         } else {
-            int kullanici_id = Integer.parseInt(request.getParameter("kullanici_id"));
-            String kullanici_ad = new String((request.getParameter("kullanici_ad")).getBytes("ISO-8859-1"), "UTF-8");
-            String kullanici_soyad = new String((request.getParameter("kullanici_soyad")).getBytes("ISO-8859-1"), "UTF-8");
-            String kullanici_email = request.getParameter("kullanici_email");
-            String kullanici_sifre = new String((request.getParameter("kullanici_sifre")).getBytes("ISO-8859-1"), "UTF-8");
-            Kullanici kullanici = new Kullanici(kullanici_id, kullanici_ad, kullanici_soyad, kullanici_email, kullanici_sifre);
+            int kullaniciId = Integer.parseInt(request.getParameter(kullaniciId));
+            String kullanici_ad = new String((request.getParameter(KULLANICI_AD)).getBytes(ENCODING_ISO_8859_1), ENCODING_UTF8);
+            String kullanici_soyad = new String((request.getParameter(KULLANICI_SOYAD)).getBytes(ENCODING_ISO_8859_1), ENCODING_UTF8);
+            String kullanici_email = request.getParameter(KULLANICI_EMAIL);
+            String kullanici_sifre = new String((request.getParameter(KULLANICI_SIFRE)).getBytes(ENCODING_ISO_8859_1), ENCODING_UTF8);
+            Kullanici kullanici = new Kullanici(kullaniciId, kullanici_ad, kullanici_soyad, kullanici_email, kullanici_sifre);
             kullaniciDAO.adminguncelle(kullanici);
-            response.sendRedirect("kullaniciliste");
+            response.sendRedirect(KULLANICI_LISTE);
         }
     }
 
     private void gostersifremiunuttum(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
         HttpSession sessionn = request.getSession();
-        if ((Integer) sessionn.getAttribute("kullanici_yetki") == null) {
-            String kullanici_email = request.getParameter("kullanici_email");
+        if ((Integer) sessionn.getAttribute(KULLANICI_YETKI) == null) {
+            String kullanici_email = request.getParameter(KULLANICI_EMAIL);
             Boolean kontrol = kullaniciDAO.uyekontrol(kullanici_email);
             if (kontrol == false) {
                 Kullanici kullanici = kullaniciDAO.sifreal(kullanici_email);
@@ -314,6 +328,7 @@ public class KullaniciServlet extends HttpServlet {
                 Properties props = new Properties();
                 props.put("mail.smtp.host", "smtp.gmail.com");
                 props.put("mail.smtp.socketFactory.port", "465");
+                props.put("mail.smtp.ssl.checkserveridentity", "true");
                 props.put("mail.smtp.socketFactory.class",
                         "javax.net.ssl.SSLSocketFactory");
                 props.put("mail.smtp.auth", "true");
@@ -328,8 +343,8 @@ public class KullaniciServlet extends HttpServlet {
                 try {
                     MimeMessage message = new MimeMessage(session);
                     message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-                    message.setSubject(subject, "UTF-8");
-                    message.setText(messg, "UTF-8");
+                    message.setSubject(subject, ENCODING_UTF8);
+                    message.setText(messg, ENCODING_UTF8);
                     Transport.send(message);
 
                 } catch (MessagingException e) {
@@ -341,18 +356,18 @@ public class KullaniciServlet extends HttpServlet {
                 response.sendRedirect("sifremiunuttum?durum=basarisiz");
             }
         } else {
-            response.sendRedirect("ucakbileti");
+            response.sendRedirect(UCAK_BILETI_PAGE);
         }
     }
 
     private void gosteruyeol(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            String kullanici_ad = new String((request.getParameter("kullanici_ad")).getBytes("ISO-8859-1"), "UTF-8");
-            String kullanici_soyad = new String((request.getParameter("kullanici_soyad")).getBytes("ISO-8859-1"), "UTF-8");
-            String kullanici_email = request.getParameter("kullanici_email");
-            String kullanici_sifre = new String((request.getParameter("kullanici_sifre1")).getBytes("ISO-8859-1"), "UTF-8");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            String kullanici_ad = new String((request.getParameter(KULLANICI_AD)).getBytes(ENCODING_ISO_8859_1), ENCODING_UTF8);
+            String kullanici_soyad = new String((request.getParameter(KULLANICI_SOYAD)).getBytes(ENCODING_ISO_8859_1), ENCODING_UTF8);
+            String kullanici_email = request.getParameter(KULLANICI_EMAIL);
+            String kullanici_sifre = new String((request.getParameter("kullanici_sifre1")).getBytes(ENCODING_ISO_8859_1), ENCODING_UTF8);
             Boolean kontrol = kullaniciDAO.uyekontrol(kullanici_email);
             if (kontrol == true) {
                 Kullanici yeniKullanici = new Kullanici(kullanici_ad, kullanici_soyad, kullanici_email, kullanici_sifre);
@@ -362,49 +377,49 @@ public class KullaniciServlet extends HttpServlet {
                 response.sendRedirect("uyeol?durum=basarisiz");
             }
         } else {
-            response.sendRedirect("ucakbileti");
+            response.sendRedirect(UCAK_BILETI_PAGE);
         }
     }
 
     private void uyeol(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("uyeol.jsp");
             dispatcher.forward(request, response);
         } else {
-            response.sendRedirect("ucakbileti");
+            response.sendRedirect(UCAK_BILETI_PAGE);
         }
     }
 
     private void giris(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("giris.jsp");
             dispatcher.forward(request, response);
         } else {
-            response.sendRedirect("ucakbileti");
+            response.sendRedirect(UCAK_BILETI_PAGE);
         }
     }
 
     private void sifremiunuttum(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("sifremiunuttum.jsp");
             dispatcher.forward(request, response);
         } else {
-            response.sendRedirect("ucakbileti");
+            response.sendRedirect(UCAK_BILETI_PAGE);
         }
     }
 
     private void gostergiris(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            String kullanici_email = request.getParameter("kullanici_email");
-            String kullanici_sifre = new String((request.getParameter("kullanici_sifre")).getBytes("ISO-8859-1"), "UTF-8");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            String kullanici_email = request.getParameter(KULLANICI_EMAIL);
+            String kullanici_sifre = new String((request.getParameter(KULLANICI_SIFRE)).getBytes(ENCODING_ISO_8859_1), ENCODING_UTF8);
 
             Boolean kontrol = kullaniciDAO.uyegiriskontrol(kullanici_email, kullanici_sifre);
             if (kontrol == true) {
@@ -412,39 +427,39 @@ public class KullaniciServlet extends HttpServlet {
                 int kullanici_yetki = uye.getKullanici_yetki();
                 String kullanici_ad = uye.getKullanici_ad();
                 String kullanici_soyad = uye.getKullanici_soyad();
-                int kullanici_id = uye.getKullanici_id();
+                int kullaniciId = uye.getkullaniciId();
 
-                session.setAttribute("kullanici_id", kullanici_id);
-                session.setAttribute("kullanici_ad", kullanici_ad);
-                session.setAttribute("kullanici_soyad", kullanici_soyad);
-                session.setAttribute("kullanici_email", kullanici_email);
-                session.setAttribute("kullanici_yetki", kullanici_yetki);
-                session.setAttribute("kullanici_sifre", kullanici_sifre);
+                session.setAttribute(kullaniciId, kullaniciId);
+                session.setAttribute(KULLANICI_AD, kullanici_ad);
+                session.setAttribute(KULLANICI_SOYAD, kullanici_soyad);
+                session.setAttribute(KULLANICI_EMAIL, kullanici_email);
+                session.setAttribute(KULLANICI_YETKI, kullanici_yetki);
+                session.setAttribute(KULLANICI_SIFRE, kullanici_sifre);
 
-                response.sendRedirect("ucakbileti");
+                response.sendRedirect(UCAK_BILETI_PAGE);
             } else {
                 response.sendRedirect("giris?durum=basarisiz");
             }
         } else {
-            response.sendRedirect("ucakbileti");
+            response.sendRedirect(UCAK_BILETI_PAGE);
         }
     }
 
     private void admingiris(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("giris.jsp");
             dispatcher.forward(request, response);
         } else {
-            response.sendRedirect("panel");
+            response.sendRedirect(PANEL);
         }
     }
 
     private void admingostergiris(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
             String admin_email = request.getParameter("admin_email");
             String admin_sifre = request.getParameter("admin_sifre");
 
@@ -455,20 +470,20 @@ public class KullaniciServlet extends HttpServlet {
                 int kullanici_yetki = uye.getKullanici_yetki();
                 String kullanici_ad = uye.getKullanici_ad();
                 String kullanici_soyad = uye.getKullanici_soyad();
-                int kullanici_id = uye.getKullanici_id();
+                int kullaniciId = uye.getkullaniciId();
 
-                session.setAttribute("kullanici_id", kullanici_id);
-                session.setAttribute("kullanici_ad", kullanici_ad);
-                session.setAttribute("kullanici_soyad", kullanici_soyad);
-                session.setAttribute("kullanici_email", admin_email);
-                session.setAttribute("kullanici_yetki", kullanici_yetki);
+                session.setAttribute(kullaniciId, kullaniciId);
+                session.setAttribute(KULLANICI_AD, kullanici_ad);
+                session.setAttribute(KULLANICI_SOYAD, kullanici_soyad);
+                session.setAttribute(KULLANICI_EMAIL, admin_email);
+                session.setAttribute(KULLANICI_YETKI, kullanici_yetki);
 
-                response.sendRedirect("panel");
+                response.sendRedirect(PANEL);
             } else {
                 response.sendRedirect("giris?durum=basarisiz");
             }
         } else {
-            response.sendRedirect("panel");
+            response.sendRedirect(PANEL);
         }
 
     }
@@ -476,18 +491,18 @@ public class KullaniciServlet extends HttpServlet {
     private void hesapsil(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == 1) {
-            int kullanici_id = Integer.parseInt(request.getParameter("sifre_id"));
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == 1) {
+            int kullaniciId = Integer.parseInt(request.getParameter("sifre_id"));
             String kullanici_sifre = request.getParameter("sil_sifre");
-            Boolean kontrol = kullaniciDAO.sifrekontrol(kullanici_id, kullanici_sifre);
+            Boolean kontrol = kullaniciDAO.sifrekontrol(kullaniciId, kullanici_sifre);
             if (kontrol == true) {
-                kullaniciDAO.hesapsil(kullanici_id);
+                kullaniciDAO.hesapsil(kullaniciId);
                 response.sendRedirect("cikis");
             } else {
                 response.sendRedirect("profil?durum=uyari");
             }
         } else {
-            response.sendRedirect("giris");
+            response.sendRedirect(GIRIS_PAGE);
         }
     }
 
@@ -496,7 +511,7 @@ public class KullaniciServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         session.invalidate();
-        response.sendRedirect("ucakbileti");
+        response.sendRedirect(UCAK_BILETI_PAGE);
     }
 
     private void adminuyecikis(HttpServletRequest request, HttpServletResponse response)
@@ -504,6 +519,6 @@ public class KullaniciServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         session.invalidate();
-        response.sendRedirect("../ucakbileti");
+        response.sendRedirect(UCAK_BILETI_URL);
     }
 }
