@@ -24,6 +24,10 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 public class FirmaServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private FirmaDAO firmaDAO;
+    private static final String KULLANICI_YETKI = "kullanici_yetki";
+    private static final String GIRIS_PAGE = "giris";
+    private static final String UCAK_BILETI_PAGE = "../ucakbileti";
+    private static final String ASSETS_DATA_PATH = "C:\\Users\\Asus\\Documents\\NetBeansProjects\\hawkeye\\web\\assets\\data\\";
 
     public void init() {
         firmaDAO = new FirmaDAO();
@@ -57,7 +61,10 @@ public class FirmaServlet extends HttpServlet {
                     break; 
                 case "/admin/firmasil":
                    firmasil(request, response);
-                    break;      
+                    break;   
+                default:
+                response.sendRedirect("error404.jsp"); // Redirige a una página de error o una acción predeterminada
+                break;   
             }
         } catch (SQLException ex) {
             throw new ServletException(ex);
@@ -67,10 +74,10 @@ public class FirmaServlet extends HttpServlet {
     private void firmaliste(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, IOException, ServletException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        }else if((Integer) session.getAttribute("kullanici_yetki") != 2){
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS_PAGE);
+        }else if((Integer) session.getAttribute(KULLANICI_YETKI) != 2){
+            response.sendRedirect(UCAK_BILETI_PAGE);
         }else{
             List<Firma> firmaliste = firmaDAO.firmalistele();
             request.setAttribute("firmaliste", firmaliste);
@@ -82,77 +89,100 @@ public class FirmaServlet extends HttpServlet {
     private void firmaekle(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        }else if((Integer) session.getAttribute("kullanici_yetki") != 2){
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS_PAGE);
+        }else if((Integer) session.getAttribute(KULLANICI_YETKI) != 2){
+            response.sendRedirect(UCAK_BILETI_PAGE);
         }else{
             RequestDispatcher dispatcher = request.getRequestDispatcher("firmaekle.jsp");      
         dispatcher.forward(request, response);
         }
     }  
     
-    private void gosterfirmaekle(HttpServletRequest request, HttpServletResponse response)
-    throws SQLException, IOException, ServletException {
-        HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        }else if((Integer) session.getAttribute("kullanici_yetki") != 2){
-            response.sendRedirect("../ucakbileti");
-        }else{
-            String firma_logo = null;
-            String firma_ad = null;
+    private void gosterFirmaEkle(HttpServletRequest solicitud, HttpServletResponse respuesta) 
+        throws SQLException, IOException, ServletException {
+    
+        HttpSession sesion = solicitud.getSession();
+        
+        if (!esUsuarioAutorizado(sesion, respuesta)) {
+            return;
+        }
+        
+        String firmaAd = null;
+        String firmaLogo = null;
 
-            response.setContentType("text/html; charset=UTF-8");
+        respuesta.setContentType("text/html; charset=UTF-8");
 
-            boolean isMultipartContent = ServletFileUpload.isMultipartContent(request);
-            if (!isMultipartContent) {
-                return;
+        if (!ServletFileUpload.isMultipartContent(solicitud)) {
+            return;
+        }
+
+        List<FileItem> campos = parsearSolicitud(solicitud);
+        if (campos == null || campos.isEmpty()) {
+            return;
+        }
+
+        for (FileItem campo : campos) {
+            if (campo.isFormField()) {
+                firmaAd = obtenerValorFormulario(campo, "firma_ad", firmaAd);
+            } else {
+                firmaLogo = manejarArchivo(campo, firmaLogo);
             }
-            FileItemFactory factory = new DiskFileItemFactory();
-            ServletFileUpload upload = new ServletFileUpload(factory);
-            upload.setHeaderEncoding("UTF-8");
-            try {
-                List< FileItem> fields = upload.parseRequest(request);
-                Iterator< FileItem> it = fields.iterator();
-                if (!it.hasNext()) {
-                    return;
-                }
+        }
 
-                while (it.hasNext()) {
-                    FileItem fileItem = it.next();
-                    boolean isFormField = fileItem.isFormField();
-                    if (isFormField) {
-                        if (firma_ad == null) {
-                            if (fileItem.getFieldName().equals("firma_ad")) {
-                                firma_ad = fileItem.getString("UTF-8");
-                            }
-                        }
-                    } else {
-                        if (fileItem.getSize() > 0) {
-                            firma_logo = fileItem.getName();
-                            fileItem.write(new File("C:\\Users\\Asus\\Documents\\NetBeansProjects\\hawkeye\\web\\assets\\data\\" + firma_logo));
-                            
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        if (firmaAd != null && firmaLogo != null) {
+            Firma nuevaFirma = new Firma(firmaAd, firmaLogo);
+            FirmaDAO.firmaEkle(nuevaFirma);
+        }
+    }
 
-            Firma yenifirma = new Firma(firma_ad, firma_logo);
-            firmaDAO.firmaekle(yenifirma);
-            response.sendRedirect("firmaliste");
-        }       
-    }   
+    private boolean esUsuarioAutorizado(HttpSession sesion, HttpServletResponse respuesta) throws IOException {
+        Integer usuarioAutorizacion = (Integer) sesion.getAttribute(KULLANICI_YETKI);
+        if (usuarioAutorizacion == null) {
+            respuesta.sendRedirect(GIRIS_PAGE);
+            return false;
+        } else if (usuarioAutorizacion != 2) {
+            respuesta.sendRedirect(UCAK_BILETI_PAGE);
+            return false;
+        }
+        return true;
+    }
+
+    private List<FileItem> parsearSolicitud(HttpServletRequest solicitud) {
+        FileItemFactory fabrica = new DiskFileItemFactory();
+        ServletFileUpload subir = new ServletFileUpload(fabrica);
+        subir.setHeaderEncoding(ENCODING_UTF8);
+        try {
+            return subir.parseRequest(solicitud);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private String obtenerValorFormulario(FileItem campo, String nombreCampo, String valorActual) throws UnsupportedEncodingException {
+        if (valorActual == null && campo.getFieldName().equals(nombreCampo)) {
+            return campo.getString(ENCODING_UTF8);
+        }
+        return valorActual;
+    }
+
+    private String manejarArchivo(FileItem archivo, String nombreArchivoActual) throws Exception {
+        if (archivo.getSize() > 0) {
+            String nombreArchivo = archivo.getName();
+            archivo.write(new File(FILE_PATH + nombreArchivo));
+            return nombreArchivo;
+        }
+        return nombreArchivoActual;
+    }
     
     private void firmaguncelle(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        }else if((Integer) session.getAttribute("kullanici_yetki") != 2){
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS_PAGE);
+        }else if((Integer) session.getAttribute(KULLANICI_YETKI) != 2){
+            response.sendRedirect(UCAK_BILETI_PAGE);
         }else{
             int id = Integer.parseInt(request.getParameter("id"));
             Firma firma = firmaDAO.firmasec(id);
@@ -163,82 +193,113 @@ public class FirmaServlet extends HttpServlet {
         
     }
     
-    private void gosterfirmaguncelle(HttpServletRequest request, HttpServletResponse response)
-    throws SQLException, ServletException, IOException {
-        HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        }else if((Integer) session.getAttribute("kullanici_yetki") != 2){
-            response.sendRedirect("../ucakbileti");
-        }else{
-            String logo = null;
-            String firma_logo = null;
-            String firma_ad = null;
-            int firma_id = 0;
+    private void gosterFirmaGuncelle(HttpServletRequest solicitud, HttpServletResponse respuesta) 
+        throws SQLException, ServletException, IOException {
+    
+        HttpSession sesion = solicitud.getSession();
+        
+        if (!esUsuarioAutorizado(sesion, respuesta)) {
+            return;
+        }
+        
+        String firmaAd = null;
+        String firmaLogo = null;
+        int firmaId = 0;
+        
+        respuesta.setContentType("text/html; charset=UTF-8");
 
-            response.setContentType("text/html; charset=UTF-8");
-            boolean isMultipartContent = ServletFileUpload.isMultipartContent(request);
-            if (!isMultipartContent) {
-                return;
-            }
-            FileItemFactory factory = new DiskFileItemFactory();
-            ServletFileUpload upload = new ServletFileUpload(factory);
-            upload.setHeaderEncoding("UTF-8");
-            try {
-                List< FileItem> fields = upload.parseRequest(request);
-                Iterator< FileItem> it = fields.iterator();
-                if (!it.hasNext()) {
-                    return;
-                }
+        if (!ServletFileUpload.isMultipartContent(solicitud)) {
+            return;
+        }
 
-                while (it.hasNext()) {
-                    FileItem fileItem = it.next();
-                    boolean isFormField = fileItem.isFormField();
-                    if (isFormField) {
-                        if (firma_ad == null) {
-                            if (fileItem.getFieldName().equals("firma_ad")) {
-                                firma_ad = fileItem.getString("UTF-8");
-                            }
-                        }
-                        if (logo == null) {
-                            if (fileItem.getFieldName().equals("logo")) {
-                                logo = fileItem.getString("UTF-8");
-                            }
-                        }
-                        if (firma_id == 0) {
-                            if (fileItem.getFieldName().equals("firma_id")) {
-                                firma_id = Integer.parseInt(fileItem.getString());
-                            }
-                        }
-                    } else {
-                        if (fileItem.getSize() > 0) {
-                            firma_logo = fileItem.getName();
-                            fileItem.write(new File("C:\\Users\\Asus\\Documents\\NetBeansProjects\\hawkeye\\web\\assets\\data\\" + firma_logo));
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+        List<FileItem> campos = parsearSolicitud(solicitud);
+        if (campos == null || campos.isEmpty()) {
+            return;
+        }
+
+        for (FileItem campo : campos) {
+            if (campo.isFormField()) {
+                firmaAd = obtenerValorFormulario(campo, "firma_ad", firmaAd);
+                firmaId = obtenerValorEnteroFormulario(campo, "firma_id", firmaId);
+            } else {
+                firmaLogo = manejarArchivo(campo, firmaLogo);
             }
-            File f = new File("C:\\Users\\Asus\\Documents\\NetBeansProjects\\hawkeye\\web\\assets\\data\\" + logo);
-            f.delete();
-            Firma firma = new Firma(firma_id, firma_ad, firma_logo);
-            firmaDAO.firmaguncelle(firma);
-            response.sendRedirect("firmaliste");
+        }
+
+        if (firmaAd != null && firmaLogo != null) {
+            eliminarArchivoAntiguo(firmaLogo);
+            actualizarFirma(firmaId, firmaAd, firmaLogo);
         }
     }
+
+    private boolean esUsuarioAutorizado(HttpSession sesion, HttpServletResponse respuesta) throws IOException {
+        Integer usuarioAutorizacion = (Integer) sesion.getAttribute(KULLANICI_YETKI);
+        if (usuarioAutorizacion == null) {
+            respuesta.sendRedirect(GIRIS_PAGE);
+            return false;
+        } else if (usuarioAutorizacion != 2) {
+            respuesta.sendRedirect(UCAK_BILETI_PAGE);
+            return false;
+        }
+        return true;
+    }
+
+    private List<FileItem> parsearSolicitud(HttpServletRequest solicitud) {
+        FileItemFactory fabrica = new DiskFileItemFactory();
+        ServletFileUpload subir = new ServletFileUpload(fabrica);
+        subir.setHeaderEncoding("UTF-8");
+        try {
+            return subir.parseRequest(solicitud);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private String obtenerValorFormulario(FileItem campo, String nombreCampo, String valorActual) throws UnsupportedEncodingException {
+        if (valorActual == null && campo.getFieldName().equals(nombreCampo)) {
+            return campo.getString("UTF-8");
+        }
+        return valorActual;
+    }
+
+    private int obtenerValorEnteroFormulario(FileItem campo, String nombreCampo, int valorActual) throws UnsupportedEncodingException {
+        if (valorActual == 0 && campo.getFieldName().equals(nombreCampo)) {
+            return Integer.parseInt(campo.getString());
+        }
+        return valorActual;
+    }
+
+    private String manejarArchivo(FileItem archivo, String nombreArchivoActual) throws Exception {
+        if (archivo.getSize() > 0) {
+            String nombreArchivo = archivo.getName();
+            archivo.write(new File(ASSETS_DATA_PATH + nombreArchivo));
+            return nombreArchivo;
+        }
+        return nombreArchivoActual;
+    }
+
+    private void eliminarArchivoAntiguo(String logotipo) {
+        File archivo = new File(ASSETS_DATA_PATH + logotipo);
+        archivo.delete();
+    }
+
+    private void actualizarFirma(int firmaId, String firmaAd, String firmaLogo) throws SQLException {
+        Firma firma = new Firma(firmaId, firmaAd, firmaLogo);
+    }
+
     
     private void firmasil(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        }else if((Integer) session.getAttribute("kullanici_yetki") != 2){
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS_PAGE);
+        }else if((Integer) session.getAttribute(KULLANICI_YETKI) != 2){
+            response.sendRedirect(UCAK_BILETI_PAGE);
         }else{
             int firma_id = Integer.parseInt(request.getParameter("id"));
             String firma_logo = request.getParameter("logo");
-            File f = new File("C:\\Users\\Asus\\Documents\\NetBeansProjects\\hawkeye\\web\\assets\\data\\" + firma_logo);
+            File f = new File(ASSETS_DATA_PATH + firma_logo);
             f.delete();
             firmaDAO.firmasil(firma_id);
             response.sendRedirect("firmaliste");
