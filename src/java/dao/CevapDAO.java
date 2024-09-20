@@ -15,7 +15,7 @@ public class CevapDAO {
     
     private final String jdbcURL = "jdbc:mysql://localhost:3306/hawkeye";
     private final String jdbcKullaniciname = "root";
-    private final String jdbcPassword = "123456";   
+    private final String jdbcPassword = System.getenv("DB_PASSWORD");   
     
     private static final String CEVAP_SELECT_ALL = "select * from cevap\n" +
                                                 "INNER JOIN  mesaj ON (mesaj.mesaj_id = cevap.mesaj_id);";
