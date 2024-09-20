@@ -15,7 +15,7 @@ import model.Rezervasyon;
 public class RezervasyonDAO {
     private final String jdbcURL = "jdbc:mysql://localhost:3306/hawkeye";
     private final String jdbcKullaniciname = "root";
-    private final String jdbcPassword = "123456";    
+    private final String jdbcPassword = System.getenv("DB_PASSWORD");    
     
     public static final String DATE_PATTERN = "aaaa-MM-dd";
     public static final String TIME_PATTERN = "HH:mm"; 
@@ -120,7 +120,10 @@ public class RezervasyonDAO {
                                                 "JOIN ucak AS p ON p.ucak_id=u.ucak_id\n" +
                                                 "ORDER BY r.rezervasyon_tarih DESC;";
     
-    public RezervasyonDAO() {}
+    public RezervasyonDAO() {
+        // Este constructor está vacío porque aún no se ha definido la lógica de inicialización necesaria.
+        // En futuras implementaciones, se podría incluir la configuración inicial de recursos.
+    }
     
     protected Connection getConnection() {
         Connection connection = null;
@@ -333,138 +336,99 @@ public class RezervasyonDAO {
     
     public List<Rezervasyon> tekyonsorgulama(Rezervasyon rezervasyon) {
         List<Rezervasyon> rez = new ArrayList<>();
+    
+        String currentFormattedTime = getCurrentFormattedTime();
+        String u_saat = calculateNextHour(currentFormattedTime);
+        String currentDate = getCurrentDate();
+    
+        String query = rezervasyon.getUcus_tarih().equals(currentDate) ? TEKYON_SORGULAMA_SELECT2 : TEKYON_SORGULAMA_SELECT1;
+        executeQueryAndPopulateResults(rez, rezervasyon, u_saat, query);
+    
+        return rez;
+    }
+    
+    private String getCurrentFormattedTime() {
         DateTimeFormatter timeformatter = DateTimeFormatter.ofPattern(TIME_PATTERN);
-        LocalDateTime now = LocalDateTime.now();
-        String sss = now.format(timeformatter);
-
-        String[] ARRAYsaat = sss.split(":");
-        String h = ARRAYsaat[0];
-        String m = ARRAYsaat[1];
-        int hh = Integer.parseInt(h);
-        int mm = Integer.parseInt(m);
-        String Ssdakika;
-        if (mm < 10) {
-            Ssdakika = "0" + String.valueOf(mm);
-        } else {
-            Ssdakika = String.valueOf(mm);
-        }
-        String Sssaat;
-        if (hh < 10) {
-            Sssaat = "0" + String.valueOf(hh + 1);
-        } else {
-            Sssaat = String.valueOf(hh + 1);
-        }
-        String u_saat = Sssaat + ":" + Ssdakika;
-
+        return LocalDateTime.now().format(timeformatter);
+    }
+    
+    private String calculateNextHour(String formattedTime) {
+        String[] timeParts = formattedTime.split(":");
+        int hh = Integer.parseInt(timeParts[0]);
+        int mm = Integer.parseInt(timeParts[1]);
+    
+        String formattedMinute = String.format("%02d", mm);
+        String formattedHour = String.format("%02d", (hh + 1) % 24);
+    
+        return formattedHour + ":" + formattedMinute;
+    }
+    
+    private String getCurrentDate() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN);
-        LocalDate date = LocalDate.now();
-        String date1 = date.format(formatter);
-        if (rezervasyon.getUcus_tarih().equals(date1)) {
-            try (Connection connection = getConnection();
-                    PreparedStatement statement = connection.prepareStatement(TEKYON_SORGULAMA_SELECT2);) {
-                statement.setInt(1, rezervasyon.getHavaalani_kalkis_id());
-                statement.setInt(2, rezervasyon.getHavaalani_varis_id());
-                statement.setString(3, rezervasyon.getUcus_tarih());
+        return LocalDate.now().format(formatter);
+    }
+    
+    private void executeQueryAndPopulateResults(List<Rezervasyon> rez, Rezervasyon rezervasyon, String u_saat, String query) {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+    
+            statement.setInt(1, rezervasyon.getHavaalani_kalkis_id());
+            statement.setInt(2, rezervasyon.getHavaalani_varis_id());
+            statement.setString(3, rezervasyon.getUcus_tarih());
+            if (query.equals(TEKYON_SORGULAMA_SELECT2)) {
                 statement.setString(4, u_saat);
-                statement.setInt(5, (rezervasyon.getCocuk_sayi() + rezervasyon.getYetiskin_sayi()));
-                ResultSet rs = statement.executeQuery();
-
-                while (rs.next()) {
-                    int ucus_id = rs.getInt(UCUS_ID_COLUMN);
-                    String kalkis_sehir = rs.getString(KALKIS_SEHIR_COLUMN);
-                    String kalkis_ad = rs.getString(KALKIS_AD_COLUMN);
-                    String kalkis_kod = rs.getString(KALKIS_KOD_COLUMN);
-                    String varis_sehir = rs.getString(VARIS_SEHIR_COLUMN);
-                    String varis_ad = rs.getString(VARIS_AD_COLUMN);
-                    String varis_kod = rs.getString(VARIS_KOD_COLUMN);
-                    String ucus_saat = rs.getString(UCUS_SAAT_COLUMN);
-                    ucus_saat = ucus_saat.substring(0, 5);
-                    String ucus_tarih = rs.getString(UCUS_TARIH_COLUMN);
-                    String ucus_sure = rs.getString(UCUS_SURE_COLUMN);
-
-                    String[] ARRAYucus_sure = ucus_sure.split(":");
-                    String ucus_s = ARRAYucus_sure[0];
-                    String ucus_d = ARRAYucus_sure[1];
-                    String[] ARRAYucus_saat = ucus_saat.split(":");
-                    String s = ARRAYucus_saat[0];
-                    String d = ARRAYucus_saat[1];
-                    int saat = (Integer.parseInt(s) + Integer.parseInt(ucus_s)) % 24;
-                    int dakika = (Integer.parseInt(d) + Integer.parseInt(ucus_d)) % 60;
-                    String Sdakika;
-                    if (dakika < 10) {
-                        Sdakika = "0" + String.valueOf(dakika);
-                    } else {
-                        Sdakika = String.valueOf(dakika);
-                    }
-                    String Ssaat;
-                    if (saat < 10) {
-                        Ssaat = "0" + String.valueOf(saat);
-                    } else {
-                        Ssaat = String.valueOf(saat);
-                    }
-                    String varis_saat = Ssaat + ":" + Sdakika;
-                    String firma_ad = rs.getString(FIRMA_AD_COLUMN);
-                    String firma_logo = rs.getString(FIRMA_LOGO_COLUMN);
-                    Double ucus_ucret = rs.getDouble(UCUS_UCRET_COLUMN);
-                    rez.add(new Rezervasyon(ucus_tarih, ucus_id, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucus_saat, ucus_sure, firma_ad, firma_logo, ucus_ucret, ucus_s, ucus_d, varis_saat));
-                }
-            } catch (SQLException e) {
-                printSQLException(e);
+                statement.setInt(5, rezervasyon.getCocuk_sayi() + rezervasyon.getYetiskin_sayi());
+            } else {
+                statement.setInt(4, rezervasyon.getCocuk_sayi() + rezervasyon.getYetiskin_sayi());
             }
-            return rez;
-        } else {
-            try (Connection connection = getConnection();
-                    PreparedStatement statement = connection.prepareStatement(TEKYON_SORGULAMA_SELECT1);) {
-                statement.setInt(1, rezervasyon.getHavaalani_kalkis_id());
-                statement.setInt(2, rezervasyon.getHavaalani_varis_id());
-                statement.setString(3, rezervasyon.getUcus_tarih());
-                statement.setInt(4, (rezervasyon.getCocuk_sayi() + rezervasyon.getYetiskin_sayi()));
-                ResultSet rs = statement.executeQuery();
-
-                while (rs.next()) {
-                    int ucus_id = rs.getInt(UCUS_ID_COLUMN);
-                    String kalkis_sehir = rs.getString(KALKIS_SEHIR_COLUMN);
-                    String kalkis_ad = rs.getString(KALKIS_AD_COLUMN);
-                    String kalkis_kod = rs.getString(KALKIS_KOD_COLUMN);
-                    String varis_sehir = rs.getString(VARIS_SEHIR_COLUMN);
-                    String varis_ad = rs.getString(VARIS_AD_COLUMN);
-                    String varis_kod = rs.getString(VARIS_KOD_COLUMN);
-                    String ucus_saat = rs.getString(UCUS_SAAT_COLUMN);
-                    ucus_saat = ucus_saat.substring(0, 5);
-                    String ucus_tarih = rs.getString(UCUS_TARIH_COLUMN);
-                    String ucus_sure = rs.getString(UCUS_SURE_COLUMN);
-
-                    String[] ARRAYucus_sure = ucus_sure.split(":");
-                    String ucus_s = ARRAYucus_sure[0];
-                    String ucus_d = ARRAYucus_sure[1];
-                    String[] ARRAYucus_saat = ucus_saat.split(":");
-                    String s = ARRAYucus_saat[0];
-                    String d = ARRAYucus_saat[1];
-                    int saat = (Integer.parseInt(s) + Integer.parseInt(ucus_s)) % 24;
-                    int dakika = (Integer.parseInt(d) + Integer.parseInt(ucus_d)) % 60;
-                    String Sdakika;
-                    if (dakika < 10) {
-                        Sdakika = "0" + String.valueOf(dakika);
-                    } else {
-                        Sdakika = String.valueOf(dakika);
-                    }
-                    String Ssaat;
-                    if (saat < 10) {
-                        Ssaat = "0" + String.valueOf(saat);
-                    } else {
-                        Ssaat = String.valueOf(saat);
-                    }
-                    String varis_saat = Ssaat + ":" + Sdakika;
-                    String firma_ad = rs.getString(FIRMA_AD_COLUMN);
-                    String firma_logo = rs.getString(FIRMA_LOGO_COLUMN);
-                    Double ucus_ucret = rs.getDouble(UCUS_UCRET_COLUMN);
-                    rez.add(new Rezervasyon(ucus_tarih, ucus_id, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucus_saat, ucus_sure, firma_ad, firma_logo, ucus_ucret, ucus_s, ucus_d, varis_saat));
-                }
-            } catch (SQLException e) {
-                printSQLException(e);
+    
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Rezervasyon r = extractRezervasyonFromResultSet(rs);
+                rez.add(r);
             }
-            return rez;
+        } catch (SQLException e) {
+            printSQLException(e);
         }
+    }
+    
+    private Rezervasyon extractRezervasyonFromResultSet(ResultSet rs) throws SQLException {
+        int ucus_id = rs.getInt(UCUS_ID_COLUMN);
+        String kalkis_sehir = rs.getString(KALKIS_SEHIR_COLUMN);
+        String kalkis_ad = rs.getString(KALKIS_AD_COLUMN);
+        String kalkis_kod = rs.getString(KALKIS_KOD_COLUMN);
+        String varis_sehir = rs.getString(VARIS_SEHIR_COLUMN);
+        String varis_ad = rs.getString(VARIS_AD_COLUMN);
+        String varis_kod = rs.getString(VARIS_KOD_COLUMN);
+        String ucus_saat = rs.getString(UCUS_SAAT_COLUMN).substring(0, 5);
+        String ucus_tarih = rs.getString(UCUS_TARIH_COLUMN);
+        String ucus_sure = rs.getString(UCUS_SURE_COLUMN);
+    
+        String varis_saat = calculateArrivalTime(UCUS_SAAT_COLUMN, UCUS_SURE_COLUMN);
+    
+        String firma_ad = rs.getString(FIRMA_AD_COLUMN);
+        String firma_logo = rs.getString(FIRMA_LOGO_COLUMN);
+        Double ucus_ucret = rs.getDouble(UCUS_UCRET_COLUMN);
+    
+        String[] ucus_sure_parts = ucus_sure.split(":");
+        String ucus_s = ucus_sure_parts[0];
+        String ucus_d = ucus_sure_parts[1];
+    
+        return new Rezervasyon(ucus_tarih, ucus_id, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, 
+                               ucus_saat, ucus_sure, firma_ad, firma_logo, ucus_ucret, ucus_s, ucus_d, varis_saat);
+    }
+    
+    private String calculateArrivalTime(String ucus_saat, String ucus_sure) {
+        String[] ucus_saat_parts = ucus_saat.split(":");
+        String[] ucus_sure_parts = ucus_sure.split(":");
+    
+        int saat = (Integer.parseInt(ucus_saat_parts[0]) + Integer.parseInt(ucus_sure_parts[0])) % 24;
+        int dakika = (Integer.parseInt(ucus_saat_parts[1]) + Integer.parseInt(ucus_sure_parts[1])) % 60;
+    
+        String formattedHour = String.format("%02d", saat);
+        String formattedMinute = String.format("%02d", dakika);
+    
+        return formattedHour + ":" + formattedMinute;
     }
     
     public Rezervasyon ucusbilgileri(int id) {
