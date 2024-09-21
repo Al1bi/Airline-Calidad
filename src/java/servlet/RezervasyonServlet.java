@@ -18,6 +18,12 @@ import model.Rezervasyon;
 @WebServlet(urlPatterns = {"/ucussorgulama", "/admin/rezervasyonliste", "/admin/rezervasyoniptal", "/rezervasyonsorgulama", "/rezervasyonolustur", "/rezervasyonislemlerim", "/gosterrezervasyonislemlerim", "/rezervasyonguncelle", "/reziptal"})
 public class RezervasyonServlet extends HttpServlet {
 
+    private static String KULLANICI_YETKI = "kullanici_yetki";
+    private static String GIRIS = "giris";
+    private static String UCAKBILETI = "ucakbileti";
+    private static String UTF_8 = "UTF-8";
+    private static String ISO_8859_1 = "ISO-8859-1";
+    private static String YOLCU_SOYAD = "yolcu_soyad";
     private static final long serialVersionUID = 1L;
     private HavaalaniDAO havaalaniDAO;
     private RezervasyonDAO rezervasyonDAO;
@@ -78,10 +84,10 @@ public class RezervasyonServlet extends HttpServlet {
     private void reziptal(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 1) {
-            response.sendRedirect("ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 1) {
+            response.sendRedirect(UCAKBILETI);
         } else {
             int rezervasyon_id = Integer.parseInt(request.getParameter("rezervasyon_id"));
             String kullanici_sifre = (String) session.getAttribute("kullanici_sifre");
@@ -98,14 +104,14 @@ public class RezervasyonServlet extends HttpServlet {
     private void rezervasyonguncelle(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 1) {
-            response.sendRedirect("ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 1) {
+            response.sendRedirect(UCAKBILETI);
         } else {
             int id = Integer.parseInt(request.getParameter("id"));
-            String yolcu_ad = new String((request.getParameter("yolcu_ad" + id)).getBytes("ISO-8859-1"), "UTF-8");
-            String yolcu_soyad = new String((request.getParameter("yolcu_soyad" + id)).getBytes("ISO-8859-1"), "UTF-8");
+            String yolcu_ad = new String((request.getParameter("yolcu_ad" + id)).getBytes(ISO_8859_1), UTF_8);
+            String yolcu_soyad = new String((request.getParameter(YOLCU_SOYAD + id)).getBytes(ISO_8859_1), UTF_8);
             String yolcu_tc = request.getParameter("yolcu_tc" + id);
             String yolcu_tarih = request.getParameter("yolcu_tarih" + id);
             String yolcu_email = request.getParameter("yolcu_email" + id);
@@ -119,10 +125,10 @@ public class RezervasyonServlet extends HttpServlet {
     private void rezervasyonislemlerim(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 1) {
-            response.sendRedirect("ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 1) {
+            response.sendRedirect(UCAKBILETI);
         } else {
             int kullanici_id = (int) session.getAttribute("kullanici_id");
             rezervasyonDAO.iptaldurum1(kullanici_id);
@@ -138,10 +144,10 @@ public class RezervasyonServlet extends HttpServlet {
     private void gosterrezervasyonislemlerim(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 1) {
-            response.sendRedirect("ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 1) {
+            response.sendRedirect(UCAKBILETI);
         } else {
             int ucus_id = Integer.parseInt(request.getParameter("ucus_id"));
             int kullanici_id = (int) session.getAttribute("kullanici_id");
@@ -168,8 +174,8 @@ public class RezervasyonServlet extends HttpServlet {
                 for (int i = 1; i <= (c_sayi + y_sayi); i++) {
                     pnr_no = getAlphaNumericString(8);
                     yolcu_tip = Integer.parseInt(request.getParameter("yolcu_tip" + i));
-                    yolcu_ad = new String((request.getParameter("yolcu_ad" + i)).getBytes("ISO-8859-1"), "UTF-8");
-                    yolcu_soyad = new String((request.getParameter("yolcu_soyad" + i)).getBytes("ISO-8859-1"), "UTF-8");
+                    yolcu_ad = new String((request.getParameter("yolcu_ad" + i)).getBytes(ISO_8859_1), UTF_8);
+                    yolcu_soyad = new String((request.getParameter(YOLCU_SOYAD + i)).getBytes(ISO_8859_1), UTF_8);
                     yolcu_tc = request.getParameter("yolcu_tc" + i);
                     yolcu_tarih = request.getParameter("yolcu_tarih" + i);
                     yolcu_koltuk = request.getParameter("yolcu_koltuk" + i);
@@ -196,9 +202,9 @@ public class RezervasyonServlet extends HttpServlet {
     private void rezervasyoniptal(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
             response.sendRedirect("../ucakbileti");
         } else {
             int rezervasyon_id = Integer.parseInt(request.getParameter("id"));
@@ -228,9 +234,9 @@ public class RezervasyonServlet extends HttpServlet {
     private void rezervasyonlistele(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
             response.sendRedirect("../ucakbileti");
         } else {
             List<Rezervasyon> rezervasyonliste = rezervasyonDAO.rezervasyonlistele();
@@ -243,10 +249,10 @@ public class RezervasyonServlet extends HttpServlet {
     private void rezervasyonolustur(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
             response.sendRedirect("giris?rezervasyon=basarisiz");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 1) {
-            response.sendRedirect("ucakbileti");
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 1) {
+            response.sendRedirect(UCAKBILETI);
         } else {
             int id = Integer.parseInt(request.getParameter("id"));
             Rezervasyon ucusbilgileri = rezervasyonDAO.ucusbilgileri(id);
@@ -271,7 +277,7 @@ public class RezervasyonServlet extends HttpServlet {
     private void rezervasyonsorgulama(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         String pnr_no = request.getParameter("pnr_no");
-        String yolcu_soyad = new String((request.getParameter("yolcu_soyad")).getBytes("ISO-8859-1"), "UTF-8");
+        String yolcu_soyad = new String((request.getParameter(YOLCU_SOYAD)).getBytes(ISO_8859_1), UTF_8);
         Rezervasyon rezervasyongiris = new Rezervasyon(pnr_no, yolcu_soyad);
         request.setAttribute("rezervasyongiris", rezervasyongiris);
 
