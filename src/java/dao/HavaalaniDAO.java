@@ -18,6 +18,7 @@ public class HavaalaniDAO {
 
     // Definir la constante para evitar duplicación de "havaalani_sehir_id"
     private static final String HAVAALANI_SEHIR_ID = "havaalani_sehir_id";
+    private static final String HAVAALANI_ULKE_ID = "havaalani_ulke_id";
 
     private static final String HAVAALANI_SELECT_ALL = "SELECT havaalani_id, havaalani_ad, havaalani_kod, havaalani_ulke.havaalani_ulke_id, havaalani_ulke.havaalani_ulke_ad, havaalani_sehir." + HAVAALANI_SEHIR_ID + ", havaalani_sehir.havaalani_sehir_ad  FROM havaalani INNER JOIN havaalani_ulke ON havaalani.havaalani_ulke_id= havaalani_ulke.havaalani_ulke_id INNER JOIN havaalani_sehir ON havaalani.havaalani_sehir_id= havaalani_sehir.havaalani_sehir_id;";
     private static final String HAVAALANI_INSERT = "INSERT INTO havaalani (havaalani_ad, havaalani_kod, havaalani_sehir_id, havaalani_ulke_id) VALUES (?,?,?,?);";
@@ -52,7 +53,7 @@ public class HavaalaniDAO {
             while (rs.next()) {
                 int havaalani_sehir_id = rs.getInt(HAVAALANI_SEHIR_ID);
                 String havaalani_sehir_ad = rs.getString("havaalani_sehir_ad");
-                int havaalani_ulke_id = rs.getInt("havaalani_ulke_id");
+                int havaalani_ulke_id = rs.getInt(HAVAALANI_ULKE_ID);
                 String havaalani_ulke_ad = rs.getString("havaalani_ulke_ad");
                 String havaalani_ad = rs.getString("havaalani_ad");
                 String havaalani_kod = rs.getString("havaalani_kod");
@@ -87,7 +88,7 @@ public class HavaalaniDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(HAVAALANI_ULKE_SELECT_ALL);) {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                int havaalani_ulke_id = rs.getInt("havaalani_ulke_id");
+                int havaalani_ulke_id = rs.getInt(HAVAALANI_ULKE_ID);
                 String havaalani_ulke_ad = rs.getString("havaalani_ulke_ad");
                 havaalaniulke.add(new Havaalani_ulke(havaalani_ulke_id, havaalani_ulke_ad));
             }
@@ -129,7 +130,7 @@ public class HavaalaniDAO {
             while (rs.next()) {
                 String havaalani_ad = rs.getString("havaalani_ad");
                 String havaalani_kod = rs.getString("havaalani_kod");
-                int havaalani_ulke_id = rs.getInt("havaalani_ulke_id");
+                int havaalani_ulke_id = rs.getInt(HAVAALANI_ULKE_ID);
                 int havaalani_sehir_id = rs.getInt(HAVAALANI_SEHIR_ID);
                 havaalani = new Havaalani(id, havaalani_ulke_id, havaalani_sehir_id, havaalani_ad, havaalani_kod);
             }
