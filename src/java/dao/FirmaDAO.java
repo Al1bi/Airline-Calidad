@@ -22,7 +22,10 @@ public class FirmaDAO {
     private static final String FIRMA_SELECT_ID = "select * from firma where firma_id=?;";
     private static final String FIRMA_UPDATE = "update firma set firma_ad = ?, firma_logo=? where firma_id = ?;";
     
-    public FirmaDAO() {}
+    public FirmaDAO() {
+        // Este constructor está vacío porque aún no se ha definido la lógica de inicialización necesaria.
+        // En futuras implementaciones, se podría incluir la configuración inicial de recursos.
+    }
     
     protected Connection getConnection() {
         Connection connection = null;
