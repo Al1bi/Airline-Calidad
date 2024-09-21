@@ -53,6 +53,9 @@ public class Havaalani_ulkeServlet extends HttpServlet {
                 case "/admin/ulkesil":
                     ulkesil(request, response);
                     break;
+                case default:
+                    ServletException(action);
+                    break;
             }
         } catch (SQLException ex) {
             throw new ServletException(ex);
