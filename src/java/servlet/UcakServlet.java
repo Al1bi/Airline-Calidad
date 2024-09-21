@@ -19,6 +19,10 @@ import model.Ucak;
 
 public class UcakServlet extends HttpServlet {
 
+    private static String KULLANICI_YETKI = "kullanici_yetki";
+    private static String GIRIS = "giris";
+    private static String ROUTE_UCAKBILETI = "../ucakbileti"
+    private static String UCAKLISTE = "ucakliste";
     private static final long serialVersionUID = 1L;
     private UcakDAO ucakDAO;
 
@@ -67,13 +71,13 @@ public class UcakServlet extends HttpServlet {
     private void ucakliste(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(ROUTE_UCAKBILETI);
         } else {
             List<Ucak> ucakliste = ucakDAO.ucaklistele();
-            request.setAttribute("ucakliste", ucakliste);
+            request.setAttribute(UCAKLISTE, ucakliste);
             RequestDispatcher dispatcher = request.getRequestDispatcher("ucaklistele.jsp");
             dispatcher.forward(request, response);
         }
@@ -82,10 +86,10 @@ public class UcakServlet extends HttpServlet {
     private void ucakekle(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(ROUTE_UCAKBILETI);
         } else {
             List<Firma> firma = ucakDAO.firma();
             request.setAttribute("firma", firma);
@@ -97,41 +101,41 @@ public class UcakServlet extends HttpServlet {
     private void gosterucakekle(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(ROUTE_UCAKBILETI);
         } else {
             int firma_id = Integer.parseInt(request.getParameter("firma_id"));
             String ucak_ad = new String((request.getParameter("ucak_ad")).getBytes("ISO-8859-1"), "UTF-8");
             int ucak_koltuk = Integer.parseInt(request.getParameter("ucak_koltuk"));
             Ucak yeniucak = new Ucak(ucak_ad, ucak_koltuk, firma_id);
             ucakDAO.ucakekle(yeniucak);
-            response.sendRedirect("ucakliste");
+            response.sendRedirect(UCAKLISTE);
         }
     }
 
     private void ucaksil(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(ROUTE_UCAKBILETI);
         } else {
             int ucak_id = Integer.parseInt(request.getParameter("id"));
             ucakDAO.ucaksil(ucak_id);
-            response.sendRedirect("ucakliste");
+            response.sendRedirect(UCAKLISTE);
         }
     }
 
     private void ucakguncelle(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(ROUTE_UCAKBILETI);
         } else {
             int id = Integer.parseInt(request.getParameter("id"));
             Ucak ucak = ucakDAO.ucaksec(id);
@@ -146,10 +150,10 @@ public class UcakServlet extends HttpServlet {
     private void gosterucakguncelle(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(ROUTE_UCAKBILETI);
         } else {
             int ucak_id = Integer.parseInt(request.getParameter("ucak_id"));
             int firma_id = Integer.parseInt(request.getParameter("firma_id"));
@@ -157,7 +161,7 @@ public class UcakServlet extends HttpServlet {
             String ucak_ad = new String((request.getParameter("ucak_ad")).getBytes("ISO-8859-1"), "UTF-8");
             Ucak ucak = new Ucak(ucak_id, ucak_ad, ucak_koltuk, firma_id);
             ucakDAO.ucakguncelle(ucak);
-            response.sendRedirect("ucakliste");
+            response.sendRedirect(UCAKLISTE);
         }
     }
 }
