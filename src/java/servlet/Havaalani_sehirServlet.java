@@ -54,6 +54,10 @@ public class Havaalani_sehirServlet extends HttpServlet {
                 case "/admin/sehirsil":
                     sehirsil(request, response);
                     break;
+                case default:
+                    throw new ServletException(action);
+                    break;
+
             }
         } catch (SQLException ex) {
             throw new ServletException(ex);
