@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var searchActive = false;
+    let searchActive = false;
     initSearchForm();
     initSearch();
 
@@ -10,9 +10,9 @@ function initSearch() {
             {
                 $('.search_tab').removeClass('active');
                 $(this).addClass('active');
-                var clickedIndex = $('.search_tab').index(this);
+                let clickedIndex = $('.search_tab').index(this);
 
-                var panels = $('.search_panel');
+                let panels = $('.search_panel');
                 panels.removeClass('active');
                 $(panels[clickedIndex]).addClass('active');
             });
@@ -22,9 +22,9 @@ function initSearch() {
     {
         if($('.search_form').length)
         {
-            var searchForm = $('.search_form');
-            var searchInput = $('.search_content_input');
-            var searchButton = $('.content_search');
+            let searchForm = $('.search_form');
+            let searchInput = $('.search_content_input');
+            let searchButton = $('.content_search');
 
             searchButton.on('click', function(event)
             {
@@ -59,8 +59,8 @@ function initSearch() {
 });
 
 window.addEventListener("DOMContentLoaded", function(e) {
-    var links = document.getElementsByTagName("A");
-    for(var i=0; i < links.length; i++) {
+    let links = document.getElementsByTagName("A");
+    for(let i=0; i < links.length; i++) {
         if(!links[i].hash) continue;
         if(links[i].origin + links[i].pathname != self.location.href) continue;
         (function(anchorPoint) {
