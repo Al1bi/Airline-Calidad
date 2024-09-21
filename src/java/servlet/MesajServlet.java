@@ -49,6 +49,9 @@ public class MesajServlet extends HttpServlet {
                 case "/gostermesajekle":
                     gostermesajekle(request, response);
                     break;
+                default:
+                    throw new ServletException(action);
+                    break;
             }
         } catch (SQLException ex) {
             throw new ServletException(ex);
