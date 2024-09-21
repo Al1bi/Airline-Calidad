@@ -18,33 +18,43 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <style>
+                    #dataTable {
+                        border-collapse: collapse;
+                        width: 100%;
+                    }
+                
+                    #dataTable th, #dataTable td {
+                        padding: 8px;
+                    }
+                </style>
+                <table class="table table-bordered" id="dataTable">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Kalkış Noktası</th>
-                            <th>Varış Noktası</th>
-                            <th>Uçuş Tarih</th>
-                            <th>Uçuş Saat</th>
-                            <th>Süre</th>
-                            <th>Uçuş Firması</th>
-                            <th>Uçuştaki Uçak</th>
-                            <th>Uçuş Ücreti</th>
-                            <th>İşlemler</th>
+                            <th id="numero">#</th>
+                            <th id="kalkis-noktasi">Kalkış Noktası</th>
+                            <th id="varis-noktasi">Varış Noktası</th>
+                            <th id="ucus-tarihi">Uçuş Tarih</th>
+                            <th id="ucus-saati">Uçuş Saat</th>
+                            <th id="sure">Süre</th>
+                            <th id="empresa">Uçuş Firması</th>
+                            <th id="ucustaki-ucak">Uçuştaki Uçak</th>
+                            <th id="ucus-ucreti">Uçuş Ücreti</th>
+                            <th id="islemler">İşlemler</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>#</th>
-                            <th>Kalkış Noktası</th>
-                            <th>Varış Noktası</th>
-                            <th>Uçuş Tarih</th>
-                            <th>Uçuş Saat</th>
-                            <th>Süre</th>
-                            <th>Uçuş Firması</th>
-                            <th>Uçuştaki Uçak</th>
-                            <th>Uçuş Ücreti</th>
-                            <th>İşlemler</th>
+                            <th id="numero">#</th>
+                            <th id="kalkis-noktasi">Kalkış Noktası</th>
+                            <th id="varis-noktasi">Varış Noktası</th>
+                            <th id="ucus-tarihi">Uçuş Tarih</th>
+                            <th id="ucus-saati">Uçuş Saat</th>
+                            <th id="sure">Süre</th>
+                            <th id="ucus-firmasi">Uçuş Firması</th>
+                            <th id="ucustaki-ucak">Uçuştaki Uçak</th>
+                            <th id="ucus-ucreti">Uçuş Ücreti</th>
+                            <th id="islemler">İşlemler</th>
                         </tr>
                     </tfoot>
                     <tbody>
