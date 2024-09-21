@@ -26,7 +26,10 @@ public class CevapDAO {
                                                 "INNER JOIN  mesaj ON (mesaj.mesaj_id = cevap.mesaj_id)"+
                                                 "where cevap_id=?;";
     
-    public CevapDAO() {}
+    public CevapDAO() {
+        // Este constructor está vacío porque aún no se ha definido la lógica de inicialización necesaria.
+        // En futuras implementaciones, se podría incluir la configuración inicial de recursos.
+    }
     
     protected Connection getConnection() {
         Connection connection = null;
