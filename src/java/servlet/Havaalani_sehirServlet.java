@@ -18,6 +18,10 @@ import model.Havaalani_sehir;
 
 public class Havaalani_sehirServlet extends HttpServlet {
 
+    private static String KULLANICI_YETKI = "kullanici_yetki";
+    private static String GIRIS = "giris";
+    private static String ROUTE_UCAKBILETI = "../ucakbileti";
+    private static String SEHIRLISTE = "sehirliste";
     private static final long serialVersionUID = 1L;
     private Havaalani_sehirDAO havaalani_sehirDAO;
 
@@ -67,13 +71,13 @@ public class Havaalani_sehirServlet extends HttpServlet {
     private void sehirliste(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(ROUTE_UCAKBILETI);
         } else {
             List<Havaalani_sehir> sehirliste = havaalani_sehirDAO.sehirlistele();
-            request.setAttribute("sehirliste", sehirliste);
+            request.setAttribute(SEHIRLISTE, sehirliste);
             RequestDispatcher dispatcher = request.getRequestDispatcher("sehirlistele.jsp");
             dispatcher.forward(request, response);
         }
@@ -82,10 +86,10 @@ public class Havaalani_sehirServlet extends HttpServlet {
     private void sehirekle(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(ROUTE_UCAKBILETI);
         } else {
             RequestDispatcher dispatcher = request.getRequestDispatcher("sehirekle.jsp");
             dispatcher.forward(request, response);
@@ -95,39 +99,39 @@ public class Havaalani_sehirServlet extends HttpServlet {
     private void gostersehirekle(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(ROUTE_UCAKBILETI);
         } else {
             String havaalani_sehir_ad = new String((request.getParameter("havaalani_sehir_ad")).getBytes("ISO-8859-1"), "UTF-8");
             Havaalani_sehir yenisehir = new Havaalani_sehir(havaalani_sehir_ad);
             havaalani_sehirDAO.sehirekle(yenisehir);
-            response.sendRedirect("sehirliste");
+            response.sendRedirect(SEHIRLISTE);
         }
     }
 
     private void sehirsil(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(ROUTE_UCAKBILETI);
         } else {
             int havaalani_sehir_id = Integer.parseInt(request.getParameter("id"));
             havaalani_sehirDAO.sehirsil(havaalani_sehir_id);
-            response.sendRedirect("sehirliste");
+            response.sendRedirect(SEHIRLISTE);
         }
     }
 
     private void sehirguncelle(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(ROUTE_UCAKBILETI);
         } else {
             int id = Integer.parseInt(request.getParameter("id"));
             Havaalani_sehir sehir = havaalani_sehirDAO.sehirsec(id);
@@ -140,16 +144,16 @@ public class Havaalani_sehirServlet extends HttpServlet {
     private void gostersehirguncelle(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(ROUTE_UCAKBILETI);
         } else {
             int havaalani_sehir_id = Integer.parseInt(request.getParameter("havaalani_sehir_id"));
             String havaalani_sehir_ad = new String((request.getParameter("havaalani_sehir_ad")).getBytes("ISO-8859-1"), "UTF-8");
             Havaalani_sehir sehir = new Havaalani_sehir(havaalani_sehir_id, havaalani_sehir_ad);
             havaalani_sehirDAO.sehirguncelle(sehir);
-            response.sendRedirect("sehirliste");
+            response.sendRedirect(SEHIRLISTE);
         }
     }
 }
