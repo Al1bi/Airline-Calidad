@@ -55,6 +55,9 @@ public class UcakServlet extends HttpServlet {
                 case "/admin/gosterucakguncelle":
                     gosterucakguncelle(request, response);
                     break;
+                default:
+                    throw new ServletException(action);
+                    break;
             }
         } catch (SQLException ex) {
             throw new ServletException(ex);
