@@ -42,6 +42,7 @@ public class UcusServlet extends HttpServlet {
                 case "/admin/ucusolustur":
                     ucusolustur(request, response);
                     break;
+                default:
                 case "/admin/gosterucusolustur":
                     gosterucusolustur(request, response);
                     break;

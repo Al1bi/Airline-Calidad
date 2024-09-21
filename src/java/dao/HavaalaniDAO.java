@@ -14,7 +14,7 @@ import model.Havaalani_ulke;
 public class HavaalaniDAO {
     private final String jdbcURL = "jdbc:mysql://localhost:3306/hawkeye";
     private final String jdbcKullaniciname = "root";
-    private final String jdbcPassword = "123456";  
+    private final String jdbcPassword = System.getenv("SECRET");;  
     
     
     private static final String HAVAALANI_SELECT_ALL = "SELECT havaalani_id, havaalani_ad, havaalani_kod, havaalani_ulke.havaalani_ulke_id, havaalani_ulke.havaalani_ulke_ad, havaalani_sehir.havaalani_sehir_id, havaalani_sehir.havaalani_sehir_ad  FROM havaalani INNER JOIN havaalani_ulke ON havaalani.havaalani_ulke_id= havaalani_ulke.havaalani_ulke_id INNER JOIN havaalani_sehir ON havaalani.havaalani_sehir_id= havaalani_sehir.havaalani_sehir_id;";
