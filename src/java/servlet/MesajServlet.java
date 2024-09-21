@@ -19,6 +19,9 @@ import model.Mesaj;
 
 public class MesajServlet extends HttpServlet {
 
+    private static String KULLANICI_YETKI = "kullanici_yetki";
+    private static String UTF_8 = "UTF-8";
+    private static String ISO_8859_1 = "ISO-8859-1";
     private static final long serialVersionUID = 1L;
     private MesajDAO mesajDAO;
 
@@ -61,9 +64,9 @@ public class MesajServlet extends HttpServlet {
     private void mesajliste(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
             response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
             response.sendRedirect("../ucakbileti");
         } else {
             List<Mesaj> mesajliste = mesajDAO.mesajlistele();
@@ -76,9 +79,9 @@ public class MesajServlet extends HttpServlet {
     private void mesajsil(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
             response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
             response.sendRedirect("../ucakbileti");
         } else {
             int mesaj_id = Integer.parseInt(request.getParameter("id"));
@@ -95,10 +98,10 @@ public class MesajServlet extends HttpServlet {
 
     private void gostermesajekle(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
-        String mesaj_adsoyad = new String((request.getParameter("mesaj_adsoyad")).getBytes("ISO-8859-1"), "UTF-8");
+        String mesaj_adsoyad = new String((request.getParameter("mesaj_adsoyad")).getBytes(ISO_8859_1), UTF_8);
         String mesaj_email = request.getParameter("mesaj_email");
-        String mesaj_konu = new String((request.getParameter("mesaj_konu")).getBytes("ISO-8859-1"), "UTF-8");
-        String mesaj_icerik = new String((request.getParameter("mesaj_icerik")).getBytes("ISO-8859-1"), "UTF-8");
+        String mesaj_konu = new String((request.getParameter("mesaj_konu")).getBytes(ISO_8859_1), UTF_8);
+        String mesaj_icerik = new String((request.getParameter("mesaj_icerik")).getBytes(ISO_8859_1), UTF_8);
         Mesaj yenimesaj = new Mesaj(mesaj_adsoyad, mesaj_email, mesaj_konu, mesaj_icerik);
         mesajDAO.mesajekle(yenimesaj);
         response.sendRedirect("iletisim?durum=basarili");
