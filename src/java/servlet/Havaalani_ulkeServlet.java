@@ -18,6 +18,10 @@ import model.Havaalani_ulke;
 
 public class Havaalani_ulkeServlet extends HttpServlet {
 
+    private static String KULLANICI_YETKI = "kullanici_yetki";
+    private static String GIRIS = "giris";
+    private static String ROUTE_UCAKBILETI = "../ucakbileti";
+    private static String ULKELISTE = "ulkeliste";
     private static final long serialVersionUID = 1L;
     private Havaalani_ulkeDAO havaalani_ulkeDAO;
 
@@ -65,13 +69,13 @@ public class Havaalani_ulkeServlet extends HttpServlet {
     private void ulkeliste(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(ROUTE_UCAKBILETI);
         } else {
             List<Havaalani_ulke> ulkeliste = havaalani_ulkeDAO.ulkelistele();
-            request.setAttribute("ulkeliste", ulkeliste);
+            request.setAttribute(ULKELISTE, ulkeliste);
             RequestDispatcher dispatcher = request.getRequestDispatcher("ulkelistele.jsp");
             dispatcher.forward(request, response);
         }
@@ -80,10 +84,10 @@ public class Havaalani_ulkeServlet extends HttpServlet {
     private void ulkeekle(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(ROUTE_UCAKBILETI);
         } else {
             RequestDispatcher dispatcher = request.getRequestDispatcher("ulkeekle.jsp");
             dispatcher.forward(request, response);
@@ -93,25 +97,25 @@ public class Havaalani_ulkeServlet extends HttpServlet {
     private void gosterulkeekle(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(ROUTE_UCAKBILETI);
         } else {
             String havaalani_ulke_ad = new String((request.getParameter("havaalani_ulke_ad")).getBytes("ISO-8859-1"), "UTF-8");
             Havaalani_ulke yeniulke = new Havaalani_ulke(havaalani_ulke_ad);
             havaalani_ulkeDAO.ulkeekle(yeniulke);
-            response.sendRedirect("ulkeliste");
+            response.sendRedirect(ULKELISTE);
         }
     }
 
     private void ulkeguncelle(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(ROUTE_UCAKBILETI);
         } else {
             int id = Integer.parseInt(request.getParameter("id"));
             Havaalani_ulke ulke = havaalani_ulkeDAO.ulkesec(id);
@@ -124,30 +128,30 @@ public class Havaalani_ulkeServlet extends HttpServlet {
     private void gosterulkeguncelle(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(ROUTE_UCAKBILETI);
         } else {
             int havaalani_ulke_id = Integer.parseInt(request.getParameter("havaalani_ulke_id"));
             String havaalani_ulke_ad = new String((request.getParameter("havaalani_ulke_ad")).getBytes("ISO-8859-1"), "UTF-8");
             Havaalani_ulke ulke = new Havaalani_ulke(havaalani_ulke_id, havaalani_ulke_ad);
             havaalani_ulkeDAO.ulkeguncelle(ulke);
-            response.sendRedirect("ulkeliste");
+            response.sendRedirect(ULKELISTE);
         }
     }
 
     private void ulkesil(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(ROUTE_UCAKBILETI);
         } else {
             int havaalani_ulke_id = Integer.parseInt(request.getParameter("id"));
             havaalani_ulkeDAO.ulkesil(havaalani_ulke_id);
-            response.sendRedirect("ulkeliste");
+            response.sendRedirect(ULKELISTE);
         }
     }
 }
