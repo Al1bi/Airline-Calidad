@@ -65,6 +65,9 @@ public class RezervasyonServlet extends HttpServlet {
                 case "/reziptal":
                     reziptal(request, response);
                     break;
+                default:
+                    throw new ServletException(action);
+                    break;
 
             }
         } catch (SQLException ex) {
