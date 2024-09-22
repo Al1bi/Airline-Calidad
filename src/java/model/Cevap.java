@@ -15,6 +15,7 @@ public class Cevap {
     int mesaj_cevap;
 
     public Cevap() {
+        //I don't know why the method is empty, probably in the future could be implemented
     }
 
     public static class CevapParams {
