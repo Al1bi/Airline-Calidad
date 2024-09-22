@@ -29,12 +29,9 @@ public class Havaalani_ulkeDAO {
         Connection connection = null;
          
         try {
-            Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(jdbcURL,jdbcKullaniciname,jdbcPassword);
            
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return connection;
