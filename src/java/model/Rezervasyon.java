@@ -124,32 +124,53 @@ public class Rezervasyon  {
     }
     
     
-    public Rezervasyon(String pnr_no, String yolcu_ad, String yolcu_soyad, String yolcu_email, String yolcu_tel, String yolcu_tc, int yolcu_tip, String koltuk_no, int kullanici_id, int ucus_id, String yolcu_tarih, Double yolcu_ucret) {
-        this.pnr_no = pnr_no;
-        this.yolcu_ad = yolcu_ad;
-        this.yolcu_soyad = yolcu_soyad;
-        this.yolcu_email = yolcu_email;
-        this.yolcu_tel = yolcu_tel;
-        this.yolcu_tc = yolcu_tc;
-        this.yolcu_tip = yolcu_tip;
-        this.koltuk_no = koltuk_no;
-        this.kullanici_id = kullanici_id;
-        this.ucus_id = ucus_id;
-        this.yolcu_tarih = yolcu_tarih;
-        this.yolcu_ucret = yolcu_ucret;
-    }
-    
-    public Rezervasyon() {
-    }
-    
-    public Rezervasyon(int sonuc) {
-        this.sonuc = sonuc;
-    }
+    public class Rezervasyon {
+     
+        private String pnr_no;
+        private String yolcu_ad;
+        private String yolcu_soyad;
+        private String yolcu_email;
+        private String yolcu_tel;
+        private String yolcu_tc;
+        private int yolcu_tip;
+        private String koltuk_no;
+        private int kullanici_id;
+        private int ucus_id;
+        private String yolcu_tarih;
+        private Double yolcu_ucret;
+        private int sonuc;
 
-    public Rezervasyon(String pnr_no, String yolcu_soyad) {
-        this.pnr_no = pnr_no;
-        this.yolcu_soyad = yolcu_soyad;
+        public Rezervasyon(String pnr_no, String yolcu_ad, String yolcu_soyad, 
+                           String yolcu_email, String yolcu_tel, String yolcu_tc, 
+                           int yolcu_tip, String koltuk_no, int kullanici_id, 
+                           int ucus_id, String yolcu_tarih, Double yolcu_ucret) {
+            this.pnr_no = pnr_no;
+            this.yolcu_ad = yolcu_ad;
+            this.yolcu_soyad = yolcu_soyad;
+            this.yolcu_email = yolcu_email;
+            this.yolcu_tel = yolcu_tel;
+            this.yolcu_tc = yolcu_tc;
+            this.yolcu_tip = yolcu_tip;
+            this.koltuk_no = koltuk_no;
+            this.kullanici_id = kullanici_id;
+            this.ucus_id = ucus_id;
+            this.yolcu_tarih = yolcu_tarih;
+            this.yolcu_ucret = yolcu_ucret;
+        }
+
+        public Rezervasyon() {
+        }
+
+        public Rezervasyon(int sonuc) {
+            this.sonuc = sonuc;
+        }
+    
+        public Rezervasyon(String pnr_no, String yolcu_soyad) {
+            this.pnr_no = pnr_no;
+            this.yolcu_soyad = yolcu_soyad;
+        }
     }
+    
 
     
     public Rezervasyon(String ucus_tarih, int ucus_id, String kalkis_sehir, String kalkis_ad, String kalkis_kod, String varis_sehir, String varis_ad, String varis_kod, String ucus_saat, String ucus_sure, String firma_ad, String firma_logo, Double ucus_ucret, String ucus_s, String ucus_d, String varis_saat, String ucak_ad, int ucak_koltuk) {
