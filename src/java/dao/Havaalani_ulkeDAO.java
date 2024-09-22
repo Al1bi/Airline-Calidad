@@ -1,5 +1,7 @@
 package dao;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Properties;
 
 import model.Havaalani_ulke;
 
@@ -16,7 +19,7 @@ public class Havaalani_ulkeDAO {
     
     private final String jdbcURL = "jdbc:mysql://localhost:3306/hawkeye";
     private final String jdbcKullaniciname = "root";
-    private final String jdbcPassword = "123456";    
+    private String jdbcPassword;    
     private static final Logger logger = Logger.getLogger(Havaalani_ulkeDAO.class.getName());
     
     
@@ -27,7 +30,19 @@ public class Havaalani_ulkeDAO {
     private static final String ULKE_DELETE = "delete from Havaalani_ulke where havaalani_ulke_id = ?;";
     private static final String ULKE_UPDATE = "update Havaalani_ulke set havaalani_ulke_ad = ? where havaalani_ulke_id = ?;";
     
-    public Havaalani_ulkeDAO() {}
+    public Havaalani_ulkeDAO() {
+        Properties configProps = new Properties();
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
+            if (input == null) {
+                System.out.println("Sorry, unable to find config.properties");
+                return;
+            }
+            configProps.load(input);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        jdbcPassword = configProps.getProperty("havaalani_ulke_dao.mail.pass");
+    }
     
     protected Connection getConnection() {
         Connection connection = null;
