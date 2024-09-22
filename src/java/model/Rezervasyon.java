@@ -173,64 +173,85 @@ public class Rezervasyon  {
     
 
     
-    public Rezervasyon(String ucus_tarih, int ucus_id, String kalkis_sehir, String kalkis_ad, String kalkis_kod, String varis_sehir, String varis_ad, String varis_kod, String ucus_saat, String ucus_sure, String firma_ad, String firma_logo, Double ucus_ucret, String ucus_s, String ucus_d, String varis_saat, String ucak_ad, int ucak_koltuk) {
-        this.ucus_tarih = ucus_tarih;
-        this.ucus_id = ucus_id;
-        this.kalkis_sehir = kalkis_sehir;
-        this.kalkis_ad = kalkis_ad;
-        this.kalkis_kod = kalkis_kod;
-        this.varis_sehir = varis_sehir;
-        this.varis_ad = varis_ad;
-        this.varis_kod = varis_kod;
-        this.ucus_saat = ucus_saat;
-        this.ucus_sure = ucus_sure;
-        this.firma_ad = firma_ad;
-        this.firma_logo = firma_logo;
-        this.ucus_ucret = ucus_ucret;
-        this.ucus_s = ucus_s;
-        this.ucus_d = ucus_d;
-        this.varis_saat = varis_saat;
-        this.ucak_ad = ucak_ad;
-        this.ucak_koltuk = ucak_koltuk;
-    }
-    public Rezervasyon(String ucus_tarih, int ucus_id, String kalkis_sehir, String kalkis_ad, String kalkis_kod, String varis_sehir, String varis_ad, String varis_kod, String ucus_saat, String ucus_sure, String firma_ad, String firma_logo, Double ucus_ucret, String ucus_s, String ucus_d, String varis_saat) {
-        this.ucus_tarih = ucus_tarih;
-        this.ucus_id = ucus_id;
-        this.kalkis_sehir = kalkis_sehir;
-        this.kalkis_ad = kalkis_ad;
-        this.kalkis_kod = kalkis_kod;
-        this.varis_sehir = varis_sehir;
-        this.varis_ad = varis_ad;
-        this.varis_kod = varis_kod;
-        this.ucus_saat = ucus_saat;
-        this.ucus_sure = ucus_sure;
-        this.firma_ad = firma_ad;
-        this.firma_logo = firma_logo;
-        this.ucus_ucret = ucus_ucret;
-        this.ucus_s = ucus_s;
-        this.ucus_d = ucus_d;
-        this.varis_saat = varis_saat;
-    }
+    public class Rezervasyon {
+        private String ucus_tarih;
+        private int ucus_id;
+        private String kalkis_sehir;
+        private String kalkis_ad;
+        private String kalkis_kod;
+        private String varis_sehir;
+        private String varis_ad;
+        private String varis_kod;
+        private String ucus_saat;
+        private String ucus_sure;
+        private String firma_ad;
+        private String firma_logo;
+        private Double ucus_ucret;
+        private String ucus_s;
+        private String ucus_d;
+        private String varis_saat;
+        private String ucak_ad;
+        private int ucak_koltuk;
+        private int yetiskin_sayi;
+        private int cocuk_sayi;
+        private int rezervasyon_id;
+        private String rezervasyon_tarih;
+        private String pnr_no;
+        private int havaalani_kalkis_id;
+        private int havaalani_varis_id;
+  
+        public Rezervasyon(String ucus_tarih, int ucus_id, String kalkis_sehir, String kalkis_ad, String kalkis_kod,
+                           String varis_sehir, String varis_ad, String varis_kod, String ucus_saat, 
+                           String ucus_sure, String firma_ad, String firma_logo, Double ucus_ucret, 
+                           String ucus_s, String ucus_d, String varis_saat, int ucak_koltuk) {
+            this(ucus_tarih, ucus_id, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, 
+                 varis_ad, varis_kod, ucus_saat, ucus_sure, firma_ad, firma_logo, 
+                 ucus_ucret, ucus_s, ucus_d, varis_saat);
+            this.ucak_koltuk = ucak_koltuk;
+        }
 
-    public Rezervasyon(int yetiskin_sayi, int cocuk_sayi) {
-        this.yetiskin_sayi = yetiskin_sayi;
-        this.cocuk_sayi = cocuk_sayi;
+        public Rezervasyon(String ucus_tarih, int ucus_id, String kalkis_sehir, String kalkis_ad, String kalkis_kod,
+                           String varis_sehir, String varis_ad, String varis_kod, String ucus_saat, 
+                           String ucus_sure, String firma_ad, String firma_logo, Double ucus_ucret, 
+                           String ucus_s, String ucus_d, String varis_saat) {
+            this.ucus_tarih = ucus_tarih;
+            this.ucus_id = ucus_id;
+            this.kalkis_sehir = kalkis_sehir;
+            this.kalkis_ad = kalkis_ad;
+            this.kalkis_kod = kalkis_kod;
+            this.varis_sehir = varis_sehir;
+            this.varis_ad = varis_ad;
+            this.varis_kod = varis_kod;
+            this.ucus_saat = ucus_saat;
+            this.ucus_sure = ucus_sure;
+            this.firma_ad = firma_ad;
+            this.firma_logo = firma_logo;
+            this.ucus_ucret = ucus_ucret;
+            this.ucus_s = ucus_s;
+            this.ucus_d = ucus_d;
+            this.varis_saat = varis_saat;
+        }
+
+        public Rezervasyon(int yetiskin_sayi, int cocuk_sayi) {
+            this.yetiskin_sayi = yetiskin_sayi;
+            this.cocuk_sayi = cocuk_sayi;
+        }
+    
+        public Rezervasyon(int rezervasyon_id, String rezervasyon_tarih, String pnr_no, String yolcu_soyad) {
+            this.rezervasyon_id = rezervasyon_id;
+            this.rezervasyon_tarih = rezervasyon_tarih;
+            this.pnr_no = pnr_no;
+        }
+    
+        public Rezervasyon(int havaalani_kalkis_id, int havaalani_varis_id, String ucus_tarih, int yetiskin_sayi, int cocuk_sayi) {
+            this.havaalani_kalkis_id = havaalani_kalkis_id;
+            this.havaalani_varis_id = havaalani_varis_id;
+            this.ucus_tarih = ucus_tarih;
+            this.yetiskin_sayi = yetiskin_sayi;
+            this.cocuk_sayi = cocuk_sayi;
+        }
     }
     
-    public Rezervasyon(int rezervasyon_id, String rezervasyon_tarih, String pnr_no, String yolcu_soyad) {
-        this.rezervasyon_id = rezervasyon_id;
-        this.rezervasyon_tarih = rezervasyon_tarih;
-        this.pnr_no = pnr_no;
-        this.yolcu_soyad = yolcu_soyad;
-    }
-    
-    public Rezervasyon(int havaalani_kalkis_id, int havaalani_varis_id, String ucus_tarih, int yetiskin_sayi, int cocuk_sayi) {
-        this.havaalani_kalkis_id = havaalani_kalkis_id;
-        this.havaalani_varis_id = havaalani_varis_id;
-        this.ucus_tarih = ucus_tarih;
-        this.yetiskin_sayi = yetiskin_sayi;
-        this.cocuk_sayi = cocuk_sayi;
-    }
 
     public Rezervasyon(int rezervasyon_id, String rezervasyon_tarih, String pnr_no, String yolcu_ad, String yolcu_soyad, String yolcu_email, String yolcu_tel, String yolcu_tc, int yolcu_tip, String koltuk_no, int kullanici_id, int ucus_id) {
         this.rezervasyon_id = rezervasyon_id;
