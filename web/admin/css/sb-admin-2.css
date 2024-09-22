@@ -69,6 +69,7 @@ body {
   color: #858796;
   text-align: left;
   background-color: #fff;
+  height: 100%;
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -549,10 +550,10 @@ pre code {
 .container-lg,
 .container-xl {
   width: 100%;
-  padding-right: 0.75rem;
-  padding-left: 0.75rem;
   margin-right: auto;
   margin-left: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 @media (min-width: 576px) {
@@ -9718,9 +9719,7 @@ a.text-dark:hover, a.text-dark:focus {
   }
 }
 
-body {
-  height: 100%;
-}
+
 
 a:focus {
   outline: none;
@@ -9738,16 +9737,6 @@ a:focus {
 
 #wrapper #content-wrapper #content {
   flex: 1 0 auto;
-}
-
-.container,
-.container-fluid,
-.container-sm,
-.container-md,
-.container-lg,
-.container-xl {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
 }
 
 .scroll-to-top {
