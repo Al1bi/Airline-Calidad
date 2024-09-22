@@ -116,7 +116,7 @@ public class FirmaDAO {
                 logger.log(Level.SEVERE, "Message: {0}", e.getMessage());
                 Throwable t = ex.getCause();
                 while (t != null) {
-                    logger.log(Level.SEVERE, "Cause: {0}", t);
+                    logger.log(Level.SEVERE, "Cause: {0}", t.toString());
                     t = t.getCause();
                 }
             }
