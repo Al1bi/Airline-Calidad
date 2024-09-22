@@ -35,7 +35,7 @@ public class Havaalani_sehirDAO {
         Properties configProps = new Properties();
         try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
             if (input == null) {
-                System.out.println("Sorry, unable to find config.properties");
+                logger.log(Level.SEVERE, "No se pudo encontrar config.properties");
                 return;
             }
             configProps.load(input);
