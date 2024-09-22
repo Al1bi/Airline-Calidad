@@ -16,12 +16,12 @@ public class Havaalani_sehirDAO {
     private final String jdbcKullaniciname = "root";
     private final String jdbcPassword = "123456";    
     
-    private static final String SEHİR_SELECT_ID = "select * from havaalani_sehir where havaalani_sehir_id=?;";
-    private static final String SEHİR_SELECT_ALL = "select * from havaalani_sehir;";
-    private static final String SEHİR_INSERT = "INSERT INTO havaalani_sehir (havaalani_sehir_ad) VALUES " +
+    private static final String SEHIR_SELECT_ID = "select * from havaalani_sehir where havaalani_sehir_id=?;";
+    private static final String SEHIR_SELECT_ALL = "select * from havaalani_sehir;";
+    private static final String SEHIR_INSERT = "INSERT INTO havaalani_sehir (havaalani_sehir_ad) VALUES " +
         " (?);"; 
-    private static final String SEHİR_DELETE = "delete from havaalani_sehir where havaalani_sehir_id = ?;";
-    private static final String SEHİR_UPDATE = "update havaalani_sehir set havaalani_sehir_ad = ? where havaalani_sehir_id = ?;";
+    private static final String SEHIR_DELETE = "delete from havaalani_sehir where havaalani_sehir_id = ?;";
+    private static final String SEHIR_UPDATE = "update havaalani_sehir set havaalani_sehir_ad = ? where havaalani_sehir_id = ?;";
     
     public Havaalani_sehirDAO() {}
     
@@ -43,7 +43,7 @@ public class Havaalani_sehirDAO {
     public List<Havaalani_sehir> sehirlistele() {
         List<Havaalani_sehir> sehirler = new ArrayList<> ();
         try (Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SEHİR_SELECT_ALL);) {
+            PreparedStatement preparedStatement = connection.prepareStatement(SEHIR_SELECT_ALL);) {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 int havaalani_sehir_id = rs.getInt("havaalani_sehir_id");
@@ -59,7 +59,7 @@ public class Havaalani_sehirDAO {
     public void sehirekle(Havaalani_sehir sehir) throws SQLException {  
         try (           
             Connection connection = getConnection();                                
-            PreparedStatement preparedStatement = connection.prepareStatement(SEHİR_INSERT)) {
+            PreparedStatement preparedStatement = connection.prepareStatement(SEHIR_INSERT)) {
             preparedStatement.setString(1, sehir.getHavaalani_sehir_ad());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -69,7 +69,7 @@ public class Havaalani_sehirDAO {
     
     public boolean sehirsil(int id) throws SQLException {
         boolean silinenSatir;
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(SEHİR_DELETE);) {
+        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(SEHIR_DELETE);) {
             statement.setInt(1, id);
             silinenSatir = statement.executeUpdate() > 0;
         }
@@ -79,7 +79,7 @@ public class Havaalani_sehirDAO {
     public boolean sehirguncelle(Havaalani_sehir sehir) throws SQLException {
         boolean guncellenenSatir;
         try (Connection connection = getConnection(); 
-            PreparedStatement statement = connection.prepareStatement(SEHİR_UPDATE);) {
+            PreparedStatement statement = connection.prepareStatement(SEHIR_UPDATE);) {
             statement.setString(1, sehir.getHavaalani_sehir_ad());           
             statement.setInt(2, sehir.getHavaalani_sehir_id());
             guncellenenSatir = statement.executeUpdate() > 0;
@@ -90,7 +90,7 @@ public class Havaalani_sehirDAO {
     public Havaalani_sehir sehirsec(int id) {
         Havaalani_sehir sehir = null;
         try (Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SEHİR_SELECT_ID);) {
+            PreparedStatement preparedStatement = connection.prepareStatement(SEHIR_SELECT_ID);) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
