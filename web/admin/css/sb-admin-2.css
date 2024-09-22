@@ -10363,7 +10363,7 @@ a:focus {
 
 .sidebar.toggled #sidebarToggle::after {
   content: '\f105';
-  font-family: 'Font Awesome 5 Free';
+  font-family: Helvetica, Arial, Verdana, Tahoma, sans-serif;
   margin-left: 0.25rem;
 }
 
