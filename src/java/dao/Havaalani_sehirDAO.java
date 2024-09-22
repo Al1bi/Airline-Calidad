@@ -30,9 +30,6 @@ public class Havaalani_sehirDAO {
     // Definir un logger para la clase
     private static final Logger logger = Logger.getLogger(Havaalani_sehirDAO.class.getName());
 
-    public Havaalani_sehirDAO() {}
-
-    
     public Havaalani_sehirDAO() {
 
         Properties configProps = new Properties();

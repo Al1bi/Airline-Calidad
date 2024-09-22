@@ -30,10 +30,9 @@ public class UcusDAO {
     private String UCAK_AD = "ucak_ad";
     private final String jdbcURL = "jdbc:mysql://localhost:3306/hawkeye";
     private final String jdbcKullaniciname = "root";
-    private final String jdbcPassword = "123456";
-    private static final Logger logger = Logger.getLogger(UcusDAO.class.getName());
-   
     private String jdbcPassword;   
+
+    private static final Logger logger = Logger.getLogger(UcusDAO.class.getName());
 
     private static final String UCUS_INSERT ="INSERT INTO ucus (ucus_kalkis_id, ucus_varis_id, ucus_tarih, ucus_saat, ucus_sure, firma_id, ucak_id, ucus_ucret) VALUES (?,?,?,?,?,?,?,?);";
     private static final String FIRMA_SELECT_ALL = "select * from firma;";

@@ -19,12 +19,10 @@ public class MesajDAO {
     
     private final String jdbcURL = "jdbc:mysql://localhost:3306/hawkeye";
     private final String jdbcKullaniciname = "root";
-    private final String jdbcPassword = "123456";    
-    
+    private String jdbcPassword;     
+      
     private static final Logger logger = Logger.getLogger(MesajDAO.class.getName());
-
-    private String jdbcPassword;       
-    
+      
     private static final String MESAJ_SELECT_ALL = "select * from mesaj;";
     private static final String MESAJ_DELETE = "delete from mesaj where mesaj_id = ?;";
     private static final String MESAJ_OKUNMA_UPDATE = "update mesaj set mesaj_okunma=1 where mesaj_id = ?;";

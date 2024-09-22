@@ -23,11 +23,10 @@ public class KullaniciDAO {
     private String KULLANICI_YETKI = "kullanici_yetki";
     private final String jdbcURL = "jdbc:mysql://localhost:3306/hawkeye";
     private final String jdbcKullaniciname = "root";
-    private final String jdbcPassword = "123456";    
+    private String jdbcPassword;    
 
     // Definir un logger para la clase
-    private static final Logger logger = Logger.getLogger(KullaniciDAO.class.getName());
-    private String jdbcPassword;    
+    private static final Logger logger = Logger.getLogger(KullaniciDAO.class.getName()); 
     
     private static final String KULLANICI_INSERT = "INSERT INTO kullanicilar" +
             "  (kullanici_ad, kullanici_soyad, kullanici_email, kullanici_sifre, kullanici_yetki) VALUES " +
@@ -44,6 +43,7 @@ public class KullaniciDAO {
     private static final String SIFRE_KONTROL_SELECT = "select * from kullanicilar where kullanici_id=? and kullanici_sifre=?;";
     private static final String SIFRE_UPDATE = "update kullanicilar set kullanici_sifre = ? where kullanici_id = ?;";
     private static final String HESAP_DELETE = "delete from kullanicilar where kullanici_id = ?;";
+    
     public KullaniciDAO() {
         Properties configProps = new Properties();
         try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
