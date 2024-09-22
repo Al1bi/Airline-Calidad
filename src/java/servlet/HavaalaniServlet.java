@@ -53,6 +53,9 @@ public class HavaalaniServlet extends HttpServlet{
                 case "/admin/gosterhavaalaniguncelle":
                     gosterhavaalaniguncelle(request, response);
                     break;
+                case default:
+                    throw new ServletException(action);
+                    break;
             }
         } catch (SQLException ex) {
             throw new ServletException(ex);
