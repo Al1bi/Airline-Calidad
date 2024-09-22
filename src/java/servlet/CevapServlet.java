@@ -56,6 +56,9 @@ public class CevapServlet extends HttpServlet {
                 case "/admin/cevapincele":
                     cevapincele(request, response);
                     break;  
+                default:
+                    throw new ServletException(action);
+                    break;
             }
         } catch (SQLException ex) {
             throw new ServletException(ex);
