@@ -25,7 +25,6 @@ import java.nio.file.Paths;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/admin/firmaliste", "/admin/firmaekle", "/admin/gosterfirmaekle", "/admin/firmasil", "/admin/firmaguncelle", "/admin/gosterfirmaguncelle"})
-
 public class FirmaServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private FirmaDAO firmaDAO;
@@ -46,7 +45,6 @@ public class FirmaServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         String action = request.getServletPath();
-       
         try {
             switch (action) {
                 case "/admin/firmaliste":
@@ -117,8 +115,7 @@ public class FirmaServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("firmaguncelle.jsp");
             request.setAttribute("firma", firma);
             dispatcher.forward(request, response);
-        }
-        
+        }    
     }
 
     private void firmasil(HttpServletRequest request, HttpServletResponse response)
