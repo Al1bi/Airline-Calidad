@@ -18,6 +18,7 @@ public class Ucus {
     protected String ucus_varis;
 
     public Ucus() {
+        //I don't know why the method is empty, probably in the future could be implemented
     }
 
     public class UcusDetay {
