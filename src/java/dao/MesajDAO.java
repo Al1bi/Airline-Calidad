@@ -1,5 +1,7 @@
 package dao;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+
 import model.Mesaj;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +23,7 @@ public class MesajDAO {
     
     private static final Logger logger = Logger.getLogger(MesajDAO.class.getName());
 
+    private String jdbcPassword;       
     
     private static final String MESAJ_SELECT_ALL = "select * from mesaj;";
     private static final String MESAJ_DELETE = "delete from mesaj where mesaj_id = ?;";
@@ -27,7 +32,19 @@ public class MesajDAO {
     private static final String MESAJ_INSERT = "INSERT INTO mesaj  (mesaj_adsoyad, mesaj_email, mesaj_konu, mesaj_icerik) VALUES " +
         " (?,?,?,?);"; 
     
-    public MesajDAO() {}
+    public MesajDAO() {
+        Properties configProps = new Properties();
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
+            if (input == null) {
+                System.out.println("Sorry, unable to find config.properties");
+                return;
+            }
+            configProps.load(input);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        jdbcPassword = configProps.getProperty("mesaj_dao.mail.pass");
+    }
     
     protected Connection getConnection() {
         Connection connection = null;
