@@ -17,6 +17,10 @@ import model.Kullanici;
 
 public class KullaniciDAO {
     
+    private String KULLANICI_ID = "kullanici_id";
+    private String KULLANICI_AD = "kullanici_ad";
+    private String KULLANICI_SOYAD = "kullanici_soyad";
+    private String KULLANICI_YETKI = "kullanici_yetki";
     private final String jdbcURL = "jdbc:mysql://localhost:3306/hawkeye";
     private final String jdbcKullaniciname = "root";
     private final String jdbcPassword = "123456";    
@@ -72,11 +76,11 @@ public class KullaniciDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(KULLANICI_SELECT_ALL);) {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                int kullanici_id = rs.getInt("kullanici_id");
-                String kullanici_ad = rs.getString("kullanici_ad");
-                String kullanici_soyad = rs.getString("kullanici_soyad");
+                int kullanici_id = rs.getInt(KULLANICI_ID);
+                String kullanici_ad = rs.getString(KULLANICI_AD);
+                String kullanici_soyad = rs.getString(KULLANICI_SOYAD);
                 String kullanici_email = rs.getString("kullanici_email");
-                int kullanici_yetki = rs.getInt("kullanici_yetki");
+                int kullanici_yetki = rs.getInt(KULLANICI_YETKI);
                 uyeler.add(new Kullanici(kullanici_id, kullanici_ad, kullanici_soyad, kullanici_email, kullanici_yetki));
             }
         } catch (SQLException e) {
@@ -131,8 +135,8 @@ public class KullaniciDAO {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                String kullanici_ad = rs.getString("kullanici_ad");
-                String kullanici_soyad = rs.getString("kullanici_soyad");
+                String kullanici_ad = rs.getString(KULLANICI_AD);
+                String kullanici_soyad = rs.getString(KULLANICI_SOYAD);
                 String kullanici_email = rs.getString("kullanici_email");
                 String kullanici_sifre = rs.getString("kullanici_sifre");
                 kullanici = new Kullanici(id, kullanici_ad,kullanici_soyad,kullanici_email, kullanici_sifre);
@@ -296,10 +300,10 @@ public class KullaniciDAO {
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
-                int kullanici_id = rs.getInt("kullanici_id");
-                String kullanici_ad = rs.getString("kullanici_ad");
-                String kullanici_soyad = rs.getString("kullanici_soyad");
-                int kullanici_yetki = rs.getInt("kullanici_yetki");
+                int kullanici_id = rs.getInt(KULLANICI_ID);
+                String kullanici_ad = rs.getString(KULLANICI_AD);
+                String kullanici_soyad = rs.getString(KULLANICI_SOYAD);
+                int kullanici_yetki = rs.getInt(KULLANICI_YETKI);
                 kullanici = new Kullanici(kullanici_id, kullanici_ad, kullanici_soyad, kullanici_email, kullanici_yetki);
             }
         } catch (SQLException e) {
@@ -321,10 +325,10 @@ public class KullaniciDAO {
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
-                int kullanici_id = rs.getInt("kullanici_id");
-                String kullanici_ad = rs.getString("kullanici_ad");
-                String kullanici_soyad = rs.getString("kullanici_soyad");
-                int kullanici_yetki = rs.getInt("kullanici_yetki");
+                int kullanici_id = rs.getInt(KULLANICI_ID);
+                String kullanici_ad = rs.getString(KULLANICI_AD);
+                String kullanici_soyad = rs.getString(KULLANICI_SOYAD);
+                int kullanici_yetki = rs.getInt(KULLANICI_YETKI);
                 kullanici = new Kullanici(kullanici_id, kullanici_ad, kullanici_soyad, admin_email, kullanici_yetki);
             }
         } catch (SQLException e) {
