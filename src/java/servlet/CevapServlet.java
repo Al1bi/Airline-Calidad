@@ -3,6 +3,7 @@ package servlet;
 import dao.CevapDAO;
 import dao.MesajDAO;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.PasswordAuthentication;
 import java.sql.SQLException;
 import java.util.*;
@@ -148,11 +149,23 @@ public class CevapServlet extends HttpServlet {
             String cevap_icerik = new String((request.getParameter("cevap_icerik")).getBytes("ISO-8859-1"), UTF_8);
             Cevap yenicevap = new Cevap(mesaj_id,cevap_icerik,cevap_baslik);
 
+            Properties configProps = new Properties();
+            try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
+                if (input == null) {
+                    System.out.println("Sorry, unable to find config.properties");
+                    return;
+                }
+                configProps.load(input);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
             final String to = mesaj_email; 
             final String subject = cevap_baslik;
             final String messg = cevap_icerik;
-            final String from = "mail@gmail.com";
-            final String pass = "sifre";
+            final String from = configProps.getProperty("mail.from");
+            final String pass = configProps.getProperty("mail.pass");
+    
 
             Properties props = new Properties();    
             props.put("mail.smtp.host", "smtp.gmail.com");    
