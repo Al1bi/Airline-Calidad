@@ -156,44 +156,6 @@ public class FirmaServlet extends HttpServlet {
         
     }
     
-    private void gosterFirmaGuncelle(HttpServletRequest solicitud, HttpServletResponse respuesta) 
-        throws SQLException, ServletException, IOException {
-    
-        HttpSession sesion = solicitud.getSession();
-        
-        if (!esUsuarioAutorizado(sesion, respuesta)) {
-            return;
-        }
-        
-        String firmaAd = null;
-        String firmaLogo = null;
-        int firmaId = 0;
-        
-        respuesta.setContentType("text/html; charset=UTF-8");
-
-        if (!ServletFileUpload.isMultipartContent(solicitud)) {
-            return;
-        }
-
-        List<FileItem> campos = parsearSolicitud(solicitud);
-        if (campos == null || campos.isEmpty()) {
-            return;
-        }
-
-        for (FileItem campo : campos) {
-            if (campo.isFormField()) {
-                firmaAd = obtenerValorFormulario(campo, "firma_ad", firmaAd);
-                firmaId = obtenerValorEnteroFormulario(campo, "firma_id", firmaId);
-            } else {
-                firmaLogo = manejarArchivo(campo, firmaLogo);
-            }
-        }
-
-        if (firmaAd != null && firmaLogo != null) {
-            eliminarArchivoAntiguo(firmaLogo);
-            actualizarFirma(firmaId, firmaAd, firmaLogo);
-        }
-    }
 
     private boolean esUsuarioAutorizado(HttpSession sesion, HttpServletResponse respuesta) throws IOException {
         Integer usuarioAutorizacion = (Integer) sesion.getAttribute(KULLANICI_YETKI);
