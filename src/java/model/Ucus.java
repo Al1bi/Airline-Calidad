@@ -18,17 +18,30 @@ public class Ucus {
     public Ucus() {
     }
 
-    public Ucus(int ucus_id, int ucus_kalkis_id, int ucus_varis_id, String ucus_tarih, String ucus_saat, String ucus_sure, int firma_id, int ucak_id, double ucus_ucret) {
-        this.ucus_id = ucus_id;
-        this.ucus_kalkis_id = ucus_kalkis_id;
-        this.ucus_varis_id = ucus_varis_id;
-        this.ucus_tarih = ucus_tarih;
-        this.ucus_saat = ucus_saat;
-        this.ucus_sure = ucus_sure;
-        this.firma_id = firma_id;
-        this.ucak_id = ucak_id;
-        this.ucus_ucret = ucus_ucret;
+    public class UcusDetay {
+        private String ucus_tarih;
+        private String ucus_saat;
+        private String ucus_sure;
+
+        public UcusDetay(String ucus_tarih, String ucus_saat, String ucus_sure) {
+            this.ucus_tarih = ucus_tarih;
+            this.ucus_saat = ucus_saat;
+            this.ucus_sure = ucus_sure;
+        }
+
+        public String getUcus_tarih() {
+            return ucus_tarih;
+        }
+    
+        public String getUcus_saat() {
+            return ucus_saat;
+        }
+    
+        public String getUcus_sure() {
+            return ucus_sure;
+        }
     }
+    
 
     public Ucus(int ucus_id, String ucus_tarih, String ucus_saat, String ucus_sure, double ucus_ucret, String firma_ad, String ucak_ad, String ucus_kalkis, String ucus_varis) {
         this.ucus_id = ucus_id;
