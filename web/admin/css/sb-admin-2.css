@@ -195,6 +195,9 @@ pre {
   margin-bottom: 1rem;
   overflow: auto;
   -ms-overflow-style: scrollbar;
+  display: block;
+  font-size: 87.5%;
+  color: #3a3b45;
 }
 
 figure {
@@ -525,11 +528,6 @@ kbd kbd {
   font-weight: 700;
 }
 
-pre {
-  display: block;
-  font-size: 87.5%;
-  color: #3a3b45;
-}
 
 pre code {
   font-size: inherit;
