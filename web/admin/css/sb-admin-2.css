@@ -10476,7 +10476,7 @@ a:focus {
     border: 0;
     font-weight: 900;
     content: '\f107';
-    font-family: 'Font Awesome 5 Free';
+    font-family: Helvetica, Arial, Verdana, Tahoma, sans-serif;
   }
   .sidebar .nav-item .nav-link[data-toggle="collapse"].collapsed::after {
     content: '\f105';
