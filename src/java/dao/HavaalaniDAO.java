@@ -32,14 +32,9 @@ public class HavaalaniDAO {
 
     protected Connection getConnection() {
         Connection connection = null;
-         
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(jdbcURL,jdbcKullaniciname,jdbcPassword);
-           
+            connection = DriverManager.getConnection(jdbcURL, jdbcKullaniciname, jdbcPassword);
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return connection;
