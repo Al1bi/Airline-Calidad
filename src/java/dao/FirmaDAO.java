@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import model.Firma;
 
@@ -22,6 +24,9 @@ public class FirmaDAO {
     private static final String FIRMA_SELECT_ID = "select * from firma where firma_id=?;";
     private static final String FIRMA_UPDATE = "update firma set firma_ad = ?, firma_logo=? where firma_id = ?;";
     
+    // Definir un logger para la clase
+    private static final Logger logger = Logger.getLogger(FirmaDAO.class.getName());
+
     public FirmaDAO() {
         // Este constructor está vacío porque aún no se ha definido la lógica de inicialización necesaria.
         // En futuras implementaciones, se podría incluir la configuración inicial de recursos.
@@ -29,15 +34,10 @@ public class FirmaDAO {
     
     protected Connection getConnection() {
         Connection connection = null;
-         
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(jdbcURL,jdbcKullaniciname,jdbcPassword);
-           
+            connection = DriverManager.getConnection(jdbcURL, jdbcKullaniciname, jdbcPassword);
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error al obtener la conexión: {0}", e.getMessage());
         }
         return connection;
     }
@@ -111,13 +111,12 @@ public class FirmaDAO {
     private void printSQLException(SQLException ex) {
         for (Throwable e: ex) {
             if (e instanceof SQLException) {
-                e.printStackTrace(System.err);
-                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
-                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
-                System.err.println("Message: " + e.getMessage());
+                logger.log(Level.SEVERE, "SQLState: {0}", ((SQLException) e).getSQLState());
+                logger.log(Level.SEVERE, "Error Code: {0}", ((SQLException) e).getErrorCode());
+                logger.log(Level.SEVERE, "Message: {0}", e.getMessage());
                 Throwable t = ex.getCause();
                 while (t != null) {
-                    System.out.println("Cause: " + t);
+                    logger.log(Level.SEVERE, "Cause: {0}", t.toString());
                     t = t.getCause();
                 }
             }

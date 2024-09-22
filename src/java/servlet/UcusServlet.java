@@ -21,6 +21,10 @@ import model.Ucus;
 
 public class UcusServlet extends HttpServlet {
 
+    private static String KULLANICI_YETKI = "kullanici_yetki";
+    private static String GIRIS = "giris";
+    private static String ROUTE_UCAKBILETI = "../ucakbileti";
+    private static String GUNCELUCUSLISTE = "guncelucusliste";
     private static final long serialVersionUID = 1L;
     private UcusDAO ucusDAO;
 
@@ -70,27 +74,27 @@ public class UcusServlet extends HttpServlet {
     private void ucussil(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(ROUTE_UCAKBILETI);
         } else {
             int ucus_id = Integer.parseInt(request.getParameter("id"));
             ucusDAO.ucussil(ucus_id);
-            response.sendRedirect("guncelucusliste");
+            response.sendRedirect(GUNCELUCUSLISTE);
         }
     }
 
     private void guncelucusliste(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(ROUTE_UCAKBILETI);
         } else {
             List<Ucus> guncelucusliste = ucusDAO.guncelucusliste();
-            request.setAttribute("guncelucusliste", guncelucusliste);
+            request.setAttribute(GUNCELUCUSLISTE, guncelucusliste);
             RequestDispatcher dispatcher = request.getRequestDispatcher("guncelucuslarilistele.jsp");
             dispatcher.forward(request, response);
         }
@@ -99,10 +103,10 @@ public class UcusServlet extends HttpServlet {
     private void gecmisucusliste(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(ROUTE_UCAKBILETI);
         } else {
             List<Ucus> gecmisucusliste = ucusDAO.gecmisucusliste();
             request.setAttribute("gecmisucusliste", gecmisucusliste);
@@ -114,10 +118,10 @@ public class UcusServlet extends HttpServlet {
     private void ucusolustur(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(ROUTE_UCAKBILETI);
         } else {
             List<Havaalani> havaalani = ucusDAO.havaalani();
             request.setAttribute("havaalani", havaalani);
@@ -136,10 +140,10 @@ public class UcusServlet extends HttpServlet {
     private void gosterucusolustur(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(ROUTE_UCAKBILETI);
         } else {
             int ucus_kalkis_id = Integer.parseInt(request.getParameter("ucus_kalkis_id"));
             int ucus_varis_id = Integer.parseInt(request.getParameter("ucus_varis_id"));
@@ -156,7 +160,7 @@ public class UcusServlet extends HttpServlet {
                 response.sendRedirect("guncelucusliste?durum=basarisiz");
             } else {
                 ucusDAO.ucusolustur(yeniucus);
-                response.sendRedirect("guncelucusliste");
+                response.sendRedirect(GUNCELUCUSLISTE);
             }
         }
     }
@@ -164,10 +168,10 @@ public class UcusServlet extends HttpServlet {
     private void ucusguncelle(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(ROUTE_UCAKBILETI);
         } else {
             int id = Integer.parseInt(request.getParameter("id"));
             Ucus ucus = ucusDAO.ucussec(id);
@@ -186,10 +190,10 @@ public class UcusServlet extends HttpServlet {
     private void gosterucusguncelle(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        } else if ((Integer) session.getAttribute("kullanici_yetki") != 2) {
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
+            response.sendRedirect(ROUTE_UCAKBILETI);
         } else {
             int ucus_id = Integer.parseInt(request.getParameter("ucus_id"));
             int ucus_kalkis_id = Integer.parseInt(request.getParameter("ucus_kalkis_id"));
@@ -202,7 +206,7 @@ public class UcusServlet extends HttpServlet {
             Double ucus_ucret = Double.parseDouble(request.getParameter("ucus_ucret"));
             Ucus ucus = new Ucus(ucus_id, ucus_kalkis_id, ucus_varis_id, ucus_tarih, ucus_saat, ucus_sure, firma_id, ucak_id, ucus_ucret);
             ucusDAO.ucusguncelle(ucus);
-            response.sendRedirect("guncelucusliste");
+            response.sendRedirect(GUNCELUCUSLISTE);
         }
     }
 
