@@ -52,6 +52,8 @@ html {
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  position: relative;
+  min-height: 100%;
 }
 
 article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
@@ -67,6 +69,7 @@ body {
   color: #858796;
   text-align: left;
   background-color: #fff;
+  height: 100%;
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -77,6 +80,10 @@ hr {
   box-sizing: content-box;
   height: 0;
   overflow: visible;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -93,7 +100,6 @@ abbr[title],
 abbr[data-original-title] {
   text-decoration: underline;
   -webkit-text-decoration: underline dotted;
-  text-decoration: underline dotted;
   cursor: help;
   border-bottom: 0;
   -webkit-text-decoration-skip-ink: none;
@@ -192,6 +198,9 @@ pre {
   margin-bottom: 1rem;
   overflow: auto;
   -ms-overflow-style: scrollbar;
+  display: block;
+  font-size: 87.5%;
+  color: #3a3b45;
 }
 
 figure {
@@ -420,13 +429,6 @@ h6, .h6 {
   line-height: 1.2;
 }
 
-hr {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  border: 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-}
-
 small,
 .small {
   font-size: 80%;
@@ -529,11 +531,6 @@ kbd kbd {
   font-weight: 700;
 }
 
-pre {
-  display: block;
-  font-size: 87.5%;
-  color: #3a3b45;
-}
 
 pre code {
   font-size: inherit;
@@ -553,10 +550,10 @@ pre code {
 .container-lg,
 .container-xl {
   width: 100%;
-  padding-right: 0.75rem;
-  padding-left: 0.75rem;
   margin-right: auto;
   margin-left: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 @media (min-width: 576px) {
@@ -3123,10 +3120,6 @@ input[type="button"].btn-block {
   margin-left: 0;
 }
 
-.dropright .dropdown-toggle::after {
-  vertical-align: 0;
-}
-
 .dropleft .dropdown-menu {
   top: 0;
   right: 100%;
@@ -3142,10 +3135,6 @@ input[type="button"].btn-block {
   content: "";
 }
 
-.dropleft .dropdown-toggle::after {
-  display: none;
-}
-
 .dropleft .dropdown-toggle::before {
   display: inline-block;
   margin-right: 0.255em;
@@ -3158,10 +3147,6 @@ input[type="button"].btn-block {
 
 .dropleft .dropdown-toggle:empty::after {
   margin-left: 0;
-}
-
-.dropleft .dropdown-toggle::before {
-  vertical-align: 0;
 }
 
 .dropdown-menu[x-placement^="top"], .dropdown-menu[x-placement^="right"], .dropdown-menu[x-placement^="bottom"], .dropdown-menu[x-placement^="left"] {
@@ -4325,6 +4310,7 @@ input[type="button"].btn-block {
 .navbar-expand > .container-fluid, .navbar-expand > .container-sm, .navbar-expand > .container-md, .navbar-expand > .container-lg, .navbar-expand > .container-xl {
   padding-right: 0;
   padding-left: 0;
+  flex-wrap: nowrap;
 }
 
 .navbar-expand .navbar-nav {
@@ -4338,11 +4324,6 @@ input[type="button"].btn-block {
 .navbar-expand .navbar-nav .nav-link {
   padding-right: 0.5rem;
   padding-left: 0.5rem;
-}
-
-.navbar-expand > .container,
-.navbar-expand > .container-fluid, .navbar-expand > .container-sm, .navbar-expand > .container-md, .navbar-expand > .container-lg, .navbar-expand > .container-xl {
-  flex-wrap: nowrap;
 }
 
 .navbar-expand .navbar-collapse {
@@ -4706,10 +4687,6 @@ input[type="button"].btn-block {
   padding-right: 0.5rem;
   color: #858796;
   content: "/";
-}
-
-.breadcrumb-item + .breadcrumb-item:hover::before {
-  text-decoration: underline;
 }
 
 .breadcrumb-item + .breadcrumb-item:hover::before {
@@ -9742,14 +9719,7 @@ a.text-dark:hover, a.text-dark:focus {
   }
 }
 
-html {
-  position: relative;
-  min-height: 100%;
-}
 
-body {
-  height: 100%;
-}
 
 a:focus {
   outline: none;
@@ -9767,16 +9737,6 @@ a:focus {
 
 #wrapper #content-wrapper #content {
   flex: 1 0 auto;
-}
-
-.container,
-.container-fluid,
-.container-sm,
-.container-md,
-.container-lg,
-.container-xl {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
 }
 
 .scroll-to-top {
@@ -10496,7 +10456,6 @@ a:focus {
   }
   .sidebar .nav-item .nav-link {
     display: block;
-    width: 100%;
     text-align: left;
     padding: 1rem;
     width: 14rem;
