@@ -1,5 +1,7 @@
 package dao;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Properties;
 
 import model.Havaalani_sehir;
 
@@ -16,8 +19,8 @@ public class Havaalani_sehirDAO {
 
     private final String jdbcURL = "jdbc:mysql://localhost:3306/hawkeye";
     private final String jdbcKullaniciname = "root";
-    private final String jdbcPassword = "123456";
-
+    private String jdbcPassword;    
+    
     private static final String SEHIR_SELECT_ID = "select * from havaalani_sehir where havaalani_sehir_id=?;";
     private static final String SEHIR_SELECT_ALL = "select * from havaalani_sehir;";
     private static final String SEHIR_INSERT = "INSERT INTO havaalani_sehir (havaalani_sehir_ad) VALUES (?);";
@@ -29,6 +32,22 @@ public class Havaalani_sehirDAO {
 
     public Havaalani_sehirDAO() {}
 
+    
+    public Havaalani_sehirDAO() {
+
+        Properties configProps = new Properties();
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
+            if (input == null) {
+                System.out.println("Sorry, unable to find config.properties");
+                return;
+            }
+            configProps.load(input);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        jdbcPassword = configProps.getProperty("havaalani_sehir_dao.mail.pass");
+    }
+    
     protected Connection getConnection() {
         Connection connection = null;
         try {

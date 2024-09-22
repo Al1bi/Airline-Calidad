@@ -163,8 +163,8 @@ public class CevapServlet extends HttpServlet {
             final String to = mesaj_email; 
             final String subject = cevap_baslik;
             final String messg = cevap_icerik;
-            final String from = configProps.getProperty("mail.from");
-            final String pass = configProps.getProperty("mail.pass");
+            final String from = configProps.getProperty("cevap_servlet.mail.from");
+            final String pass = configProps.getProperty("cevap_servlet.mail.pass");
     
 
             Properties props = new Properties();    
