@@ -10,12 +10,17 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Rezervasyon;
 
 public class RezervasyonDAO {
     private final String jdbcURL = "jdbc:mysql://localhost:3306/hawkeye";
     private final String jdbcKullaniciname = "root";
-    private final String jdbcPassword = System.getenv("DB_PASSWORD");    
+    private final String jdbcPassword = System.getenv("DB_PASSWORD"); 
+     // Definir un logger para la clase
+     private static final Logger logger = Logger.getLogger(RezervasyonDAO.class.getName());
+   
     
     public static final String DATE_PATTERN = "aaaa-MM-dd";
     public static final String TIME_PATTERN = "HH:mm"; 
@@ -700,15 +705,14 @@ public class RezervasyonDAO {
     }
     
     private void printSQLException(SQLException ex) {
-        for (Throwable e: ex) {
+        for (Throwable e : ex) {
             if (e instanceof SQLException) {
-                e.printStackTrace(System.err);
-                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
-                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
-                System.err.println("Message: " + e.getMessage());
+                logger.log(Level.SEVERE, "SQLState: {0}", ((SQLException) e).getSQLState());
+                logger.log(Level.SEVERE, "Error Code: {0}", ((SQLException) e).getErrorCode());
+                logger.log(Level.SEVERE, "Message: {0}", e.getMessage());
                 Throwable t = ex.getCause();
                 while (t != null) {
-                    System.out.println("Cause: " + t);
+                    logger.log(Level.SEVERE, "Cause: {0}", t.toString());
                     t = t.getCause();
                 }
             }
