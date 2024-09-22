@@ -1,5 +1,7 @@
 package dao;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Properties;
+
 import model.Firma;
 import model.Havaalani;
 import model.Ucak;
@@ -23,6 +27,7 @@ public class UcusDAO {
     private final String jdbcPassword = "123456";
     private static final Logger logger = Logger.getLogger(UcusDAO.class.getName());
    
+    private String jdbcPassword;   
 
     private static final String UCUS_INSERT ="INSERT INTO ucus (ucus_kalkis_id, ucus_varis_id, ucus_tarih, ucus_saat, ucus_sure, firma_id, ucak_id, ucus_ucret) VALUES (?,?,?,?,?,?,?,?);";
     private static final String FIRMA_SELECT_ALL = "select * from firma;";
@@ -48,7 +53,19 @@ public class UcusDAO {
                                 "join ucak as k on k.ucak_id=u.ucak_id\n" +
                                 "where u.ucak_id=? and u.ucus_tarih=? and ((u.ucus_saat BETWEEN ? AND ?) or (ADDTIME(u.ucus_saat, u.ucus_sure) BETWEEN ? AND ?));";
     
-    public UcusDAO() {}
+    public UcusDAO() {
+        Properties configProps = new Properties();
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
+            if (input == null) {
+                System.out.println("Sorry, unable to find config.properties");
+                return;
+            }
+            configProps.load(input);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        jdbcPassword = configProps.getProperty("ucus_dao.mail.pass");
+    }
     
     protected Connection getConnection() {
         Connection connection = null;
