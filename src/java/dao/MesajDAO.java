@@ -8,12 +8,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Mesaj;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MesajDAO {
     
     private final String jdbcURL = "jdbc:mysql://localhost:3306/hawkeye";
     private final String jdbcKullaniciname = "root";
-    private final String jdbcPassword = "123456";       
+    private final String jdbcPassword = "123456";    
+    
+    private static final Logger logger = Logger.getLogger(MesajDAO.class.getName());
+
     
     private static final String MESAJ_SELECT_ALL = "select * from mesaj;";
     private static final String MESAJ_DELETE = "delete from mesaj where mesaj_id = ?;";
@@ -103,15 +108,14 @@ public class MesajDAO {
     }
     
     private void printSQLException(SQLException ex) {
-        for (Throwable e: ex) {
+        for (Throwable e : ex) {
             if (e instanceof SQLException) {
-                e.printStackTrace(System.err);
-                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
-                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
-                System.err.println("Message: " + e.getMessage());
+                logger.log(Level.SEVERE, "SQLState: {0}", ((SQLException) e).getSQLState());
+                logger.log(Level.SEVERE, "Error Code: {0}", ((SQLException) e).getErrorCode());
+                logger.log(Level.SEVERE, "Message: {0}", e.getMessage());
                 Throwable t = ex.getCause();
                 while (t != null) {
-                    System.out.println("Cause: " + t);
+                    logger.log(Level.SEVERE, "Cause: {0}", t.toString());
                     t = t.getCause();
                 }
             }
