@@ -1,5 +1,7 @@
 package dao;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Properties;
 
 import model.Kullanici;
 
@@ -20,6 +23,7 @@ public class KullaniciDAO {
 
     // Definir un logger para la clase
     private static final Logger logger = Logger.getLogger(KullaniciDAO.class.getName());
+    private String jdbcPassword;    
     
     private static final String KULLANICI_INSERT = "INSERT INTO kullanicilar" +
             "  (kullanici_ad, kullanici_soyad, kullanici_email, kullanici_sifre, kullanici_yetki) VALUES " +
@@ -36,7 +40,19 @@ public class KullaniciDAO {
     private static final String SIFRE_KONTROL_SELECT = "select * from kullanicilar where kullanici_id=? and kullanici_sifre=?;";
     private static final String SIFRE_UPDATE = "update kullanicilar set kullanici_sifre = ? where kullanici_id = ?;";
     private static final String HESAP_DELETE = "delete from kullanicilar where kullanici_id = ?;";
-    public KullaniciDAO() {}
+    public KullaniciDAO() {
+        Properties configProps = new Properties();
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
+            if (input == null) {
+                System.out.println("Sorry, unable to find config.properties");
+                return;
+            }
+            configProps.load(input);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        jdbcPassword = configProps.getProperty("kullanici_dao.mail.pass");
+    }
 
     protected Connection getConnection() {
         Connection connection = null;
