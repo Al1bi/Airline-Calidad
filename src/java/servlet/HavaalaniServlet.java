@@ -18,7 +18,13 @@ import model.Havaalani_ulke;
 @WebServlet(urlPatterns = {"/admin/havaalaniliste", "/admin/havaalaniekle", "/admin/gosterhavaalaniekle", "/admin/havaalanisil", "/admin/havaalaniguncelle", "/admin/gosterhavaalaniguncelle"})
 
 public class HavaalaniServlet extends HttpServlet{
-    private static final long serialVersionUID = 1L;
+
+    private static String KULLANICI_YETKI = "kullanici_yetki";
+    private static String GIRIS = "giris";
+    private static String ROUTE_UCAKBILETI = "../ucakbileti";
+    private static String HAVAALANILISTE = "havaalaniliste";
+    private static String UTF_8 = "UTF-8";
+    private static String ISO_8859_1 = "ISO-8859-1";
     private HavaalaniDAO havaalaniDAO;
 
     public void init() {
@@ -65,13 +71,13 @@ public class HavaalaniServlet extends HttpServlet{
     private void havaalaniliste(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, IOException, ServletException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        }else if((Integer) session.getAttribute("kullanici_yetki") != 2){
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        }else if((Integer) session.getAttribute(KULLANICI_YETKI) != 2){
+            response.sendRedirect(ROUTE_UCAKBILETI);
         }else{
             List<Havaalani> havaalaniliste = havaalaniDAO.havaalaniliste();
-            request.setAttribute("havaalaniliste", havaalaniliste);
+            request.setAttribute(HAVAALANILISTE, havaalaniliste);
             RequestDispatcher dispatcher = request.getRequestDispatcher("havaalanilistele.jsp");
             dispatcher.forward(request, response);
         }    
@@ -80,10 +86,10 @@ public class HavaalaniServlet extends HttpServlet{
     private void havaalaniekle(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        }else if((Integer) session.getAttribute("kullanici_yetki") != 2){
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        }else if((Integer) session.getAttribute(KULLANICI_YETKI) != 2){
+            response.sendRedirect(ROUTE_UCAKBILETI);
         }else{
             List<Havaalani_sehir> havaalanisehir = havaalaniDAO.havaalanisehir();
             request.setAttribute("havaalanisehir", havaalanisehir);
@@ -97,42 +103,42 @@ public class HavaalaniServlet extends HttpServlet{
     private void gosterhavaalaniekle(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        }else if((Integer) session.getAttribute("kullanici_yetki") != 2){
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        }else if((Integer) session.getAttribute(KULLANICI_YETKI) != 2){
+            response.sendRedirect(ROUTE_UCAKBILETI);
         }else{
             int havaalani_ulke_id = Integer.parseInt(request.getParameter("havaalani_ulke_id"));
             int havaalani_sehir_id = Integer.parseInt(request.getParameter("havaalani_sehir_id"));
-            String havaalani_ad = new String((request.getParameter("havaalani_ad")).getBytes("ISO-8859-1"), "UTF-8");
-            String havaalani_kod = new String((request.getParameter("havaalani_kod")).getBytes("ISO-8859-1"), "UTF-8");
+            String havaalani_ad = new String((request.getParameter("havaalani_ad")).getBytes(ISO_8859_1), UTF_8);
+            String havaalani_kod = new String((request.getParameter("havaalani_kod")).getBytes(ISO_8859_1), UTF_8);
             Havaalani yenihavaalani = new Havaalani(havaalani_ulke_id, havaalani_sehir_id, havaalani_ad, havaalani_kod);
             havaalaniDAO.havaalaniekle(yenihavaalani);
-            response.sendRedirect("havaalaniliste");
+            response.sendRedirect(HAVAALANILISTE);
         }
     }
     
     private void havaalanisil(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        }else if((Integer) session.getAttribute("kullanici_yetki") != 2){
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        }else if((Integer) session.getAttribute(KULLANICI_YETKI) != 2){
+            response.sendRedirect(ROUTE_UCAKBILETI);
         }else{
             int havaalani_id = Integer.parseInt(request.getParameter("id"));
             havaalaniDAO.havaalanisil(havaalani_id);
-            response.sendRedirect("havaalaniliste");
+            response.sendRedirect(HAVAALANILISTE);
         }
     }
     
     private void havaalaniguncelle(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        }else if((Integer) session.getAttribute("kullanici_yetki") != 2){
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        }else if((Integer) session.getAttribute(KULLANICI_YETKI) != 2){
+            response.sendRedirect(ROUTE_UCAKBILETI);
         }else{
             int id = Integer.parseInt(request.getParameter("id"));
             Havaalani havaalani = havaalaniDAO.havaalanisec(id);
@@ -149,19 +155,19 @@ public class HavaalaniServlet extends HttpServlet{
     private void gosterhavaalaniguncelle(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        }else if((Integer) session.getAttribute("kullanici_yetki") != 2){
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        }else if((Integer) session.getAttribute(KULLANICI_YETKI) != 2){
+            response.sendRedirect(ROUTE_UCAKBILETI);
         }else{
             int havaalani_id = Integer.parseInt(request.getParameter("havaalani_id"));
             int havaalani_sehir_id = Integer.parseInt(request.getParameter("havaalani_sehir_id"));
             int havaalani_ulke_id = Integer.parseInt(request.getParameter("havaalani_ulke_id"));
-            String havaalani_ad = new String((request.getParameter("havaalani_ad")).getBytes("ISO-8859-1"), "UTF-8");
-            String havaalani_kod = new String((request.getParameter("havaalani_kod")).getBytes("ISO-8859-1"), "UTF-8");
+            String havaalani_ad = new String((request.getParameter("havaalani_ad")).getBytes(ISO_8859_1), UTF_8);
+            String havaalani_kod = new String((request.getParameter("havaalani_kod")).getBytes(ISO_8859_1), UTF_8);
             Havaalani havaalani = new Havaalani(havaalani_id, havaalani_ulke_id, havaalani_sehir_id, havaalani_ad, havaalani_kod);
             havaalaniDAO.havaalaniguncelle(havaalani);
-            response.sendRedirect("havaalaniliste");
+            response.sendRedirect(HAVAALANILISTE);
         }
         
     }
