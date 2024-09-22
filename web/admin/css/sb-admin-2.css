@@ -10344,7 +10344,7 @@ a:focus {
 .sidebar #sidebarToggle::after {
   font-weight: 900;
   content: '\f104';
-  font-family: 'Font Awesome 5 Free';
+  font-family: Helvetica, Arial, Verdana, Tahoma, sans-serif;
   margin-right: 0.1rem;
 }
 
