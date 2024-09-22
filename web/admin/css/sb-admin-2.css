@@ -10734,7 +10734,7 @@ a:focus {
   line-height: 51px;
   font-weight: 900;
   content: '\f107';
-  font-family: 'Font Awesome 5 Free';
+  font-family: Helvetica, Arial, Verdana, Tahoma, sans-serif;
   color: #d1d3e2;
 }
 
