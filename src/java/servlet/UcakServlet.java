@@ -21,7 +21,7 @@ public class UcakServlet extends HttpServlet {
 
     private static String KULLANICI_YETKI = "kullanici_yetki";
     private static String GIRIS = "giris";
-    private static String ROUTE_UCAKBILETI = "../ucakbileti"
+    private static String ROUTE_UCAKBILETI = "../ucakbileti";
     private static String UCAKLISTE = "ucakliste";
     private static final long serialVersionUID = 1L;
     private UcakDAO ucakDAO;

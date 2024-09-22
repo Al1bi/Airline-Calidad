@@ -76,7 +76,7 @@ public class UcusServlet extends HttpServlet {
         HttpSession session = request.getSession();
         if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
             response.sendRedirect(GIRIS);
-        } else if ((Integer) session.getAttribute(KULLANICI_YETKI)) != 2) {
+        } else if ((Integer) session.getAttribute(KULLANICI_YETKI) != 2) {
             response.sendRedirect(ROUTE_UCAKBILETI);
         } else {
             int ucus_id = Integer.parseInt(request.getParameter("id"));

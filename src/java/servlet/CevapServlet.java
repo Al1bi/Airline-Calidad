@@ -3,6 +3,7 @@ package servlet;
 import dao.CevapDAO;
 import dao.MesajDAO;
 import java.io.IOException;
+import java.net.PasswordAuthentication;
 import java.sql.SQLException;
 import java.util.*;
 import javax.mail.*;
@@ -22,6 +23,12 @@ import model.Mesaj;
 @WebServlet(urlPatterns = {"/admin/mesajcevapla", "/admin/gostermesajcevapla", "/admin/cevapliste", "/admin/cevapsil", "/admin/cevapincele"})
 
 public class CevapServlet extends HttpServlet {
+
+    private static String KULLANICI_YETKI = "kullanici_yetki";
+    private static String GIRIS = "giris";
+    private static String ROUTE_UCAKBILETI = "../ucakbileti";
+    private static String CEVAPLISTE = "cevapliste";
+    private static String UTF_8 = "UTF-8";
     private static final long serialVersionUID = 1L;
     private CevapDAO cevapDAO;
     private MesajDAO mesajDAO;
@@ -68,13 +75,13 @@ public class CevapServlet extends HttpServlet {
     private void cevapliste(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, IOException, ServletException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        }else if((Integer) session.getAttribute("kullanici_yetki") != 2){
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        }else if((Integer) session.getAttribute(KULLANICI_YETKI) != 2){
+            response.sendRedirect(ROUTE_UCAKBILETI);
         }else{
             List<Cevap> cevapliste = cevapDAO.cevaplistele();
-            request.setAttribute("cevapliste", cevapliste);
+            request.setAttribute(CEVAPLISTE, cevapliste);
             RequestDispatcher dispatcher = request.getRequestDispatcher("cevaplistele.jsp");
             dispatcher.forward(request, response);
         }
@@ -83,10 +90,10 @@ public class CevapServlet extends HttpServlet {
     private void cevapincele(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, IOException, ServletException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        }else if((Integer) session.getAttribute("kullanici_yetki") != 2){
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        }else if((Integer) session.getAttribute(KULLANICI_YETKI) != 2){
+            response.sendRedirect(ROUTE_UCAKBILETI);
         }else{
             int cevap_id = Integer.parseInt(request.getParameter("id"));
             Cevap cevap = cevapDAO.cevapincele(cevap_id);
@@ -99,24 +106,24 @@ public class CevapServlet extends HttpServlet {
     private void cevapsil(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        }else if((Integer) session.getAttribute("kullanici_yetki") != 2){
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        }else if((Integer) session.getAttribute(KULLANICI_YETKI) != 2){
+            response.sendRedirect(ROUTE_UCAKBILETI);
         }else{
             int cevap_id = Integer.parseInt(request.getParameter("id"));
             cevapDAO.cevapsil(cevap_id);
-            response.sendRedirect("cevapliste");
+            response.sendRedirect(CEVAPLISTE);
         } 
     }
     
     private void mesajcevapla(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, ServletException, IOException {
         HttpSession session = request.getSession();
-        if ((Integer) session.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        }else if((Integer) session.getAttribute("kullanici_yetki") != 2){
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) session.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        }else if((Integer) session.getAttribute(KULLANICI_YETKI) != 2){
+            response.sendRedirect(ROUTE_UCAKBILETI);
         }else{
             int id = Integer.parseInt(request.getParameter("id"));
             mesajDAO.mesajokunma(id);
@@ -130,15 +137,15 @@ public class CevapServlet extends HttpServlet {
     private void gostermesajcevapla(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, IOException {
         HttpSession sessionn = request.getSession();
-        if ((Integer) sessionn.getAttribute("kullanici_yetki") == null) {
-            response.sendRedirect("giris");
-        }else if((Integer) sessionn.getAttribute("kullanici_yetki") != 2){
-            response.sendRedirect("../ucakbileti");
+        if ((Integer) sessionn.getAttribute(KULLANICI_YETKI) == null) {
+            response.sendRedirect(GIRIS);
+        }else if((Integer) sessionn.getAttribute(KULLANICI_YETKI) != 2){
+            response.sendRedirect(ROUTE_UCAKBILETI);
         }else{
             int mesaj_id = Integer.parseInt(request.getParameter("mesaj_id"));
             String mesaj_email = request.getParameter("mesaj_email");
-            String cevap_baslik = new String((request.getParameter("cevap_baslik")).getBytes("ISO-8859-1"), "UTF-8");
-            String cevap_icerik = new String((request.getParameter("cevap_icerik")).getBytes("ISO-8859-1"), "UTF-8");
+            String cevap_baslik = new String((request.getParameter("cevap_baslik")).getBytes("ISO-8859-1"), UTF_8);
+            String cevap_icerik = new String((request.getParameter("cevap_icerik")).getBytes("ISO-8859-1"), UTF_8);
             Cevap yenicevap = new Cevap(mesaj_id,cevap_icerik,cevap_baslik);
 
             final String to = mesaj_email; 
@@ -164,15 +171,15 @@ public class CevapServlet extends HttpServlet {
             try {    
                MimeMessage message = new MimeMessage(session);
                message.addRecipient(Message.RecipientType.TO,new InternetAddress(to));    
-               message.setSubject(subject, "UTF-8");    
-               message.setText(messg, "UTF-8");    
+               message.setSubject(subject, UTF_8);    
+               message.setText(messg, UTF_8);    
                Transport.send(message);    
             } catch (MessagingException e) {throw new RuntimeException(e);
 
             }        
             mesajDAO.mesajcevap(mesaj_id);
             cevapDAO.cevapekle(yenicevap);
-            response.sendRedirect("cevapliste");
+            response.sendRedirect(CEVAPLISTE);
         }    
     }
 }
