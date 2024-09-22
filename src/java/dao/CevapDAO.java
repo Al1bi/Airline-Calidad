@@ -154,7 +154,7 @@ public class CevapDAO {
                 logger.log(Level.SEVERE, "Message: {0}", e.getMessage());
                 Throwable t = ex.getCause();
                 while (t != null) {
-                    logger.log(Level.SEVERE, "Cause: {0}", t);
+                    logger.log(Level.SEVERE, "SQLState: {0}", ((SQLException) e).getSQLState());
                     t = t.getCause();
                 }
             }
