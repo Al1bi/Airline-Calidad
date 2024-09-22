@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Havaalani;
 import model.Havaalani_sehir;
 import model.Havaalani_ulke;
@@ -16,17 +18,25 @@ public class HavaalaniDAO {
     private final String jdbcKullaniciname = "root";
     private final String jdbcPassword = System.getenv("SECRET");
 
-    // Definir la constante para evitar duplicación de "havaalani_sehir_id"
+    // Definir constantes para evitar duplicación
     private static final String HAVAALANI_SEHIR_ID = "havaalani_sehir_id";
     private static final String HAVAALANI_ULKE_ID = "havaalani_ulke_id";
 
-    private static final String HAVAALANI_SELECT_ALL = "SELECT havaalani_id, havaalani_ad, havaalani_kod, havaalani_ulke.havaalani_ulke_id, havaalani_ulke.havaalani_ulke_ad, havaalani_sehir." + HAVAALANI_SEHIR_ID + ", havaalani_sehir.havaalani_sehir_ad  FROM havaalani INNER JOIN havaalani_ulke ON havaalani.havaalani_ulke_id= havaalani_ulke.havaalani_ulke_id INNER JOIN havaalani_sehir ON havaalani.havaalani_sehir_id= havaalani_sehir.havaalani_sehir_id;";
+    private static final String HAVAALANI_SELECT_ALL = "SELECT havaalani_id, havaalani_ad, havaalani_kod, "
+            + "havaalani_ulke.havaalani_ulke_id, havaalani_ulke.havaalani_ulke_ad, "
+            + "havaalani_sehir." + HAVAALANI_SEHIR_ID + ", havaalani_sehir.havaalani_sehir_ad "
+            + "FROM havaalani "
+            + "INNER JOIN havaalani_ulke ON havaalani.havaalani_ulke_id = havaalani_ulke.havaalani_ulke_id "
+            + "INNER JOIN havaalani_sehir ON havaalani.havaalani_sehir_id = havaalani_sehir.havaalani_sehir_id;";
     private static final String HAVAALANI_INSERT = "INSERT INTO havaalani (havaalani_ad, havaalani_kod, havaalani_sehir_id, havaalani_ulke_id) VALUES (?,?,?,?);";
-    private static final String HAVAALANI_SEHIR_SELECT_ALL = "select * from havaalani_sehir;";
-    private static final String HAVAALANI_ULKE_SELECT_ALL = "select * from havaalani_ulke;";
-    private static final String HAVAALANI_DELETE = "delete from havaalani where havaalani_id = ?;";
-    private static final String HAVAALANI_SELECT_ID = "SELECT * FROM havaalani  where havaalani_id=?;";
-    private static final String HAVAALANI_UPDATE = "update havaalani set havaalani_ad = ?, havaalani_kod=?, havaalani_ulke_id=?, havaalani_sehir_id=? where havaalani_id = ?;";
+    private static final String HAVAALANI_SEHIR_SELECT_ALL = "SELECT * FROM havaalani_sehir;";
+    private static final String HAVAALANI_ULKE_SELECT_ALL = "SELECT * FROM havaalani_ulke;";
+    private static final String HAVAALANI_DELETE = "DELETE FROM havaalani WHERE havaalani_id = ?;";
+    private static final String HAVAALANI_SELECT_ID = "SELECT * FROM havaalani WHERE havaalani_id=?;";
+    private static final String HAVAALANI_UPDATE = "UPDATE havaalani SET havaalani_ad = ?, havaalani_kod = ?, havaalani_ulke_id = ?, havaalani_sehir_id = ? WHERE havaalani_id = ?;";
+
+    // Definir un logger para la clase
+    private static final Logger logger = Logger.getLogger(HavaalaniDAO.class.getName());
 
     public HavaalaniDAO() {}
 
@@ -35,7 +45,7 @@ public class HavaalaniDAO {
         try {
             connection = DriverManager.getConnection(jdbcURL, jdbcKullaniciname, jdbcPassword);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error al obtener la conexión: {0}", e.getMessage());
         }
         return connection;
     }
@@ -94,8 +104,7 @@ public class HavaalaniDAO {
     }
 
     public void havaalaniekle(Havaalani havaalani) throws SQLException {  
-        try (           
-            Connection connection = getConnection();                                 
+        try (Connection connection = getConnection();                                 
             PreparedStatement preparedStatement = connection.prepareStatement(HAVAALANI_INSERT)) {
             preparedStatement.setString(1, havaalani.getHavaalani_ad());
             preparedStatement.setString(2, havaalani.getHavaalani_kod());
@@ -109,7 +118,8 @@ public class HavaalaniDAO {
 
     public boolean havaalanisil(int id) throws SQLException {
         boolean silinenSatir;
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(HAVAALANI_DELETE);) {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(HAVAALANI_DELETE);) {
             statement.setInt(1, id);
             silinenSatir = statement.executeUpdate() > 0;
         }
@@ -137,7 +147,8 @@ public class HavaalaniDAO {
 
     public boolean havaalaniguncelle(Havaalani havaalani) throws SQLException {
         boolean guncellenenSatir;
-        try (Connection connection = getConnection(); PreparedStatement statement = connection.prepareStatement(HAVAALANI_UPDATE);) {
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(HAVAALANI_UPDATE);) {
             statement.setString(1, havaalani.getHavaalani_ad());
             statement.setString(2, havaalani.getHavaalani_kod());
             statement.setInt(3, havaalani.getHavaalani_ulke_id());
@@ -149,15 +160,14 @@ public class HavaalaniDAO {
     }
 
     private void printSQLException(SQLException ex) {
-        for (Throwable e: ex) {
+        for (Throwable e : ex) {
             if (e instanceof SQLException) {
-                e.printStackTrace(System.err);
-                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
-                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
-                System.err.println("Message: " + e.getMessage());
+                logger.log(Level.SEVERE, "SQLState: {0}", ((SQLException) e).getSQLState());
+                logger.log(Level.SEVERE, "Error Code: {0}", ((SQLException) e).getErrorCode());
+                logger.log(Level.SEVERE, "Message: {0}", e.getMessage());
                 Throwable t = ex.getCause();
                 while (t != null) {
-                    System.out.println("Cause: " + t);
+                    logger.log(Level.SEVERE, "Cause: {0}", t.toString());
                     t = t.getCause();
                 }
             }
