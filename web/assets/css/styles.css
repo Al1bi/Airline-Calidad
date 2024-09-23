@@ -233,10 +233,7 @@ body {
 
 .btn-outline-warning {
     border-color: #FF7F00;
-}
-
-.btn-outline-warning:hover {
-    background-color: #FF7F00;
+    color: #000;
 }
 
 .btn-outline-warning:active {
@@ -432,11 +429,8 @@ body {
     border-color: #FF7F00;
 }
 
-.btn-outline-warning {
-    color: #000;
-}
-
 .btn-outline-warning:hover {
+    background-color: #FF7F00;
     color: #fff ! important;
 }
 
@@ -652,6 +646,7 @@ html .ui-button.ui-state-disabled:active {
     cursor: default;
     -ms-touch-action: none;
     touch-action: none;
+    top: -0.8em;
 }
 
 .ui-slider.ui-widget-content {
@@ -924,16 +919,6 @@ ul.timeline > li.clock:after {
     text-align: left;
 }
 
-.ui-slider .ui-slider-handle {
-    position: absolute;
-    z-index: 2;
-    width: 1.8em;
-    height: 1.8em;
-    cursor: default;
-    -ms-touch-action: none;
-    touch-action: none;
-}
-
 .ui-slider .ui-slider-range {
     position: absolute;
     z-index: 1;
@@ -950,10 +935,6 @@ ul.timeline > li.clock:after {
 
 .ui-slider-horizontal {
     height: 0.8em;
-}
-
-.ui-slider-horizontal .ui-slider-handle {
-    top: -0.8em;
 }
 
 .ui-slider-horizontal .ui-slider-range {
@@ -1032,7 +1013,6 @@ ul.timeline > li.clock:after {
 }
 
 .ui-menu .ui-state-focus,
-.ui-menu .ui-state-active,
 .ui-menu .ui-state-active {
     background-color: #f2f2f2 !important;
 }
