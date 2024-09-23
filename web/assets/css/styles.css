@@ -236,10 +236,6 @@ body {
     color: #000;
 }
 
-.btn-outline-warning:hover {
-    background-color: #FF7F00;
-}
-
 .btn-outline-warning:active {
     background-color: #FF7F00;
 }
@@ -434,6 +430,7 @@ body {
 }
 
 .btn-outline-warning:hover {
+    background-color: #FF7F00;
     color: #fff ! important;
 }
 
