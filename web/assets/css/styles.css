@@ -233,6 +233,7 @@ body {
 
 .btn-outline-warning {
     border-color: #FF7F00;
+    color: #000;
 }
 
 .btn-outline-warning:hover {
@@ -430,10 +431,6 @@ body {
     color: #fff;
     background-color: #FF7F00;
     border-color: #FF7F00;
-}
-
-.btn-outline-warning {
-    color: #000;
 }
 
 .btn-outline-warning:hover {
