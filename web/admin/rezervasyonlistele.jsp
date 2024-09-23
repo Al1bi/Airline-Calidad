@@ -9,23 +9,23 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="dataTable" >
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Rezervasyon Tarihi</th>
-                            <th>PNR</th>
-                            <th>Soyad</th>
-                            <th>İşlemler</th>
+                            <th scope="col">#</th>
+                            <th scope="col">Rezervasyon Tarihi</th>
+                            <th scope="col">PNR</th>
+                            <th scope="col">Soyad</th>
+                            <th scope="col">İşlemler</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>#</th>
-                            <th>Rezervasyon Tarihi</th>
-                            <th>PNR</th>
-                            <th>Soyad</th>
-                            <th>İşlemler</th>
+                            <ths cope="col">#</th>
+                            <th scope="col">Rezervasyon Tarihi</th>
+                            <th scope="col">PNR</th>
+                            <th scope="col">Soyad</th>
+                            <th scope="col">İşlemler</th>
                         </tr>
                     </tfoot>
                     <tbody>
