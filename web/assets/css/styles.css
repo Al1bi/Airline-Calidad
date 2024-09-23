@@ -738,7 +738,6 @@ ul.timeline > li.clock:after {
     position: absolute;
     border-radius: 50%;
     border: 1px solid #FF7F00;
-    background: white;
     left: 20px;
     width: 20px;
     height: 20px;
