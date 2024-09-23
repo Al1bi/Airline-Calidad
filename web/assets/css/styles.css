@@ -844,7 +844,6 @@ ul.timeline > li.clock:after {
 
 .ui-datepicker tbody td {
     padding: 0;
-    /*border-right: 1px solid #808080;*/
 }
 
 .ui-datepicker tbody td:last-child {
