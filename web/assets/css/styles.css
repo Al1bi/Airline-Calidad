@@ -1013,7 +1013,6 @@ ul.timeline > li.clock:after {
 }
 
 .ui-menu .ui-state-focus,
-.ui-menu .ui-state-active,
 .ui-menu .ui-state-active {
     background-color: #f2f2f2 !important;
 }
