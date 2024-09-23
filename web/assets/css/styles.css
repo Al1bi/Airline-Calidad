@@ -646,6 +646,7 @@ html .ui-button.ui-state-disabled:active {
     cursor: default;
     -ms-touch-action: none;
     touch-action: none;
+    top: -0.8em;
 }
 
 .ui-slider.ui-widget-content {
@@ -934,10 +935,6 @@ ul.timeline > li.clock:after {
 
 .ui-slider-horizontal {
     height: 0.8em;
-}
-
-.ui-slider-horizontal .ui-slider-handle {
-    top: -0.8em;
 }
 
 .ui-slider-horizontal .ui-slider-range {
