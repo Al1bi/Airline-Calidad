@@ -918,16 +918,6 @@ ul.timeline > li.clock:after {
     text-align: left;
 }
 
-.ui-slider .ui-slider-handle {
-    position: absolute;
-    z-index: 2;
-    width: 1.8em;
-    height: 1.8em;
-    cursor: default;
-    -ms-touch-action: none;
-    touch-action: none;
-}
-
 .ui-slider .ui-slider-range {
     position: absolute;
     z-index: 1;
