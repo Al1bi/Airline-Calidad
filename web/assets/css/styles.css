@@ -725,7 +725,6 @@ ul.timeline > li.circle:after {
     position: absolute;
     border-radius: 50%;
     border: 1px solid #4285f4;
-    background: #ffffff;
     left: 18px;
     width: 25px;
     height: 25px;
