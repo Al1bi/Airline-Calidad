@@ -31,7 +31,6 @@ public class KullaniciServlet extends HttpServlet {
     private static final String KULLANICI_YETKI = "kullanici_yetki";
     private static final String GIRIS_PAGE = "giris";
     private static final String UCAK_BILETI_URL = "../ucakbileti";
-    private static final String KULLANICI_ID = "kullaniciId";
     private static final String UCAK_BILETI_PAGE = "ucakbileti";
     private static final String ENCODING_UTF8 = "UTF-8";
     private static final String ENCODING_ISO_8859_1 = "ISO-8859-1";
