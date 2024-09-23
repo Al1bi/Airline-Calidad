@@ -1,5 +1,7 @@
 package dao;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Properties;
+
 import model.Firma;
 import model.Havaalani;
 import model.Ucak;
@@ -18,11 +22,17 @@ import model.Ucus;
 
 public class UcusDAO {
     
+    private String UCUS_TARIH = "ucus_tarih";
+    private String UCUS_SAAT = "ucus_saat";
+    private String UCUS_SURE = "ucus_sure";
+    private String UCUS_UCRET = "ucus_ucret";
+    private String FIRMA_AD = "firma_ad";
+    private String UCAK_AD = "ucak_ad";
     private final String jdbcURL = "jdbc:mysql://localhost:3306/hawkeye";
     private final String jdbcKullaniciname = "root";
-    private final String jdbcPassword = "123456";
+    private String jdbcPassword;   
+
     private static final Logger logger = Logger.getLogger(UcusDAO.class.getName());
-   
 
     private static final String UCUS_INSERT ="INSERT INTO ucus (ucus_kalkis_id, ucus_varis_id, ucus_tarih, ucus_saat, ucus_sure, firma_id, ucak_id, ucus_ucret) VALUES (?,?,?,?,?,?,?,?);";
     private static final String FIRMA_SELECT_ALL = "select * from firma;";
@@ -48,7 +58,19 @@ public class UcusDAO {
                                 "join ucak as k on k.ucak_id=u.ucak_id\n" +
                                 "where u.ucak_id=? and u.ucus_tarih=? and ((u.ucus_saat BETWEEN ? AND ?) or (ADDTIME(u.ucus_saat, u.ucus_sure) BETWEEN ? AND ?));";
     
-    public UcusDAO() {}
+    public UcusDAO() {
+        Properties configProps = new Properties();
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
+            if (input == null) {
+                logger.log(Level.SEVERE, "No se pudo encontrar config.properties");
+                return;
+            }
+            configProps.load(input);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        jdbcPassword = configProps.getProperty("ucus_dao.mail.pass");
+    }
     
     protected Connection getConnection() {
         Connection connection = null;
@@ -100,12 +122,12 @@ public class UcusDAO {
                 
                 int ucus_kalkis_id = rs.getInt("ucus_kalkis_id");
                 int ucus_varis_id = rs.getInt("ucus_varis_id");
-                String ucus_tarih = rs.getString("ucus_tarih");
-                String ucus_saat = rs.getString("ucus_saat");
-                String ucus_sure = rs.getString("ucus_sure");
+                String ucus_tarih = rs.getString(UCUS_TARIH);
+                String ucus_saat = rs.getString(UCUS_SAAT);
+                String ucus_sure = rs.getString(UCUS_SURE);
                 int firma_id = rs.getInt("firma_id");
                 int ucak_id = rs.getInt("ucak_id");
-                Double ucus_ucret = rs.getDouble("ucus_ucret");
+                Double ucus_ucret = rs.getDouble(UCUS_UCRET);
                 ucus = new Ucus(id,ucus_kalkis_id,ucus_varis_id,ucus_tarih,ucus_saat,ucus_sure,firma_id,ucak_id,ucus_ucret);
             }
         } catch (SQLException e) {
@@ -190,12 +212,12 @@ public class UcusDAO {
                 int ucus_id = rs.getInt("ucus_id");
                 String ucus_kalkis = rs.getString("kalkis_ad");
                 String ucus_varis = rs.getString("varis_ad");
-                String ucus_tarih = rs.getString("ucus_tarih");
-                String ucus_saat = rs.getString("ucus_saat");
-                String ucus_sure = rs.getString("ucus_sure");
-                String firma_ad = rs.getString("firma_ad");
-                String ucak_ad = rs.getString("ucak_ad");
-                Double ucus_ucret = rs.getDouble("ucus_ucret");
+                String ucus_tarih = rs.getString(UCUS_TARIH);
+                String ucus_saat = rs.getString(UCUS_SAAT);
+                String ucus_sure = rs.getString(UCUS_SURE);
+                String firma_ad = rs.getString(FIRMA_AD);
+                String ucak_ad = rs.getString(UCAK_AD);
+                Double ucus_ucret = rs.getDouble(UCUS_UCRET);
                 ucuslar.add(new Ucus(ucus_id, ucus_tarih,ucus_saat, ucus_sure, ucus_ucret,firma_ad,ucak_ad,ucus_kalkis,ucus_varis));
             }
         } catch (SQLException e) {
@@ -218,13 +240,13 @@ public class UcusDAO {
                 int ucus_id = rs.getInt("ucus_id");
                 String ucus_kalkis = rs.getString("kalkis_ad");
                 String ucus_varis = rs.getString("varis_ad");
-                String ucus_tarih = rs.getString("ucus_tarih");
-                String ucus_saat = rs.getString("ucus_saat");
+                String ucus_tarih = rs.getString(UCUS_TARIH);
+                String ucus_saat = rs.getString(UCUS_SAAT);
                 ucus_saat=ucus_saat.substring(0, 5);
-                String ucus_sure = rs.getString("ucus_sure");
-                String firma_ad = rs.getString("firma_ad");
-                String ucak_ad = rs.getString("ucak_ad");
-                Double ucus_ucret = rs.getDouble("ucus_ucret");
+                String ucus_sure = rs.getString(UCUS_SURE);
+                String firma_ad = rs.getString(FIRMA_AD);
+                String ucak_ad = rs.getString(UCAK_AD);
+                Double ucus_ucret = rs.getDouble(UCUS_UCRET);
                 ucuslar.add(new Ucus(ucus_id, ucus_tarih,ucus_saat, ucus_sure, ucus_ucret,firma_ad,ucak_ad,ucus_kalkis,ucus_varis));
             }
         } catch (SQLException e) {
@@ -240,7 +262,7 @@ public class UcusDAO {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 int firma_id = rs.getInt("firma_id");
-                String firma_ad = rs.getString("firma_ad");               
+                String firma_ad = rs.getString(FIRMA_AD);               
                 firma.add(new Firma(firma_id, firma_ad));
             }
         } catch (SQLException e) {
@@ -256,7 +278,7 @@ public class UcusDAO {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 int ucak_id = rs.getInt("ucak_id");
-                String ucak_ad = rs.getString("ucak_ad");               
+                String ucak_ad = rs.getString(UCAK_AD);               
                 ucak.add(new Ucak(ucak_id, ucak_ad));
             }
         } catch (SQLException e) {

@@ -38,7 +38,9 @@ public class HavaalaniDAO {
     // Definir un logger para la clase
     private static final Logger logger = Logger.getLogger(HavaalaniDAO.class.getName());
 
-    public HavaalaniDAO() {}
+    public HavaalaniDAO() {
+        //I don't know why the method is empty, probably in the future could be implemented
+    }
 
     protected Connection getConnection() {
         Connection connection = null;

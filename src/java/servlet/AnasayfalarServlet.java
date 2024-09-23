@@ -44,6 +44,9 @@ public class AnasayfalarServlet extends HttpServlet{
                 case "/admin/panel":
                     panel(request, response);
                     break;
+                default:
+                    throw new ServletException(action);
+                    break;
             }
         } catch (SQLException ex) {
             throw new ServletException(ex);

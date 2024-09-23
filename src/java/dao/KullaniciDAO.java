@@ -1,5 +1,7 @@
 package dao;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -9,17 +11,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Properties;
 
 import model.Kullanici;
 
 public class KullaniciDAO {
     
+    private String KULLANICI_ID = "kullanici_id";
+    private String KULLANICI_AD = "kullanici_ad";
+    private String KULLANICI_SOYAD = "kullanici_soyad";
+    private String KULLANICI_YETKI = "kullanici_yetki";
     private final String jdbcURL = "jdbc:mysql://localhost:3306/hawkeye";
     private final String jdbcKullaniciname = "root";
-    private final String jdbcPassword = "123456";    
+    private String jdbcPassword;    
 
     // Definir un logger para la clase
-    private static final Logger logger = Logger.getLogger(KullaniciDAO.class.getName());
+    private static final Logger logger = Logger.getLogger(KullaniciDAO.class.getName()); 
     
     private static final String KULLANICI_INSERT = "INSERT INTO kullanicilar" +
             "  (kullanici_ad, kullanici_soyad, kullanici_email, kullanici_sifre, kullanici_yetki) VALUES " +
@@ -36,7 +43,20 @@ public class KullaniciDAO {
     private static final String SIFRE_KONTROL_SELECT = "select * from kullanicilar where kullanici_id=? and kullanici_sifre=?;";
     private static final String SIFRE_UPDATE = "update kullanicilar set kullanici_sifre = ? where kullanici_id = ?;";
     private static final String HESAP_DELETE = "delete from kullanicilar where kullanici_id = ?;";
-    public KullaniciDAO() {}
+    
+    public KullaniciDAO() {
+        Properties configProps = new Properties();
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
+            if (input == null) {
+                logger.log(Level.SEVERE, "No se pudo encontrar config.properties");
+                return;
+            }
+            configProps.load(input);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        jdbcPassword = configProps.getProperty("kullanici_dao.mail.pass");
+    }
 
     protected Connection getConnection() {
         Connection connection = null;
@@ -56,11 +76,11 @@ public class KullaniciDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(KULLANICI_SELECT_ALL);) {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                int kullanici_id = rs.getInt("kullanici_id");
-                String kullanici_ad = rs.getString("kullanici_ad");
-                String kullanici_soyad = rs.getString("kullanici_soyad");
+                int kullanici_id = rs.getInt(KULLANICI_ID);
+                String kullanici_ad = rs.getString(KULLANICI_AD);
+                String kullanici_soyad = rs.getString(KULLANICI_SOYAD);
                 String kullanici_email = rs.getString("kullanici_email");
-                int kullanici_yetki = rs.getInt("kullanici_yetki");
+                int kullanici_yetki = rs.getInt(KULLANICI_YETKI);
                 uyeler.add(new Kullanici(kullanici_id, kullanici_ad, kullanici_soyad, kullanici_email, kullanici_yetki));
             }
         } catch (SQLException e) {
@@ -115,8 +135,8 @@ public class KullaniciDAO {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                String kullanici_ad = rs.getString("kullanici_ad");
-                String kullanici_soyad = rs.getString("kullanici_soyad");
+                String kullanici_ad = rs.getString(KULLANICI_AD);
+                String kullanici_soyad = rs.getString(KULLANICI_SOYAD);
                 String kullanici_email = rs.getString("kullanici_email");
                 String kullanici_sifre = rs.getString("kullanici_sifre");
                 kullanici = new Kullanici(id, kullanici_ad,kullanici_soyad,kullanici_email, kullanici_sifre);
@@ -280,10 +300,10 @@ public class KullaniciDAO {
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
-                int kullanici_id = rs.getInt("kullanici_id");
-                String kullanici_ad = rs.getString("kullanici_ad");
-                String kullanici_soyad = rs.getString("kullanici_soyad");
-                int kullanici_yetki = rs.getInt("kullanici_yetki");
+                int kullanici_id = rs.getInt(KULLANICI_ID);
+                String kullanici_ad = rs.getString(KULLANICI_AD);
+                String kullanici_soyad = rs.getString(KULLANICI_SOYAD);
+                int kullanici_yetki = rs.getInt(KULLANICI_YETKI);
                 kullanici = new Kullanici(kullanici_id, kullanici_ad, kullanici_soyad, kullanici_email, kullanici_yetki);
             }
         } catch (SQLException e) {
@@ -305,10 +325,10 @@ public class KullaniciDAO {
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
-                int kullanici_id = rs.getInt("kullanici_id");
-                String kullanici_ad = rs.getString("kullanici_ad");
-                String kullanici_soyad = rs.getString("kullanici_soyad");
-                int kullanici_yetki = rs.getInt("kullanici_yetki");
+                int kullanici_id = rs.getInt(KULLANICI_ID);
+                String kullanici_ad = rs.getString(KULLANICI_AD);
+                String kullanici_soyad = rs.getString(KULLANICI_SOYAD);
+                int kullanici_yetki = rs.getInt(KULLANICI_YETKI);
                 kullanici = new Kullanici(kullanici_id, kullanici_ad, kullanici_soyad, admin_email, kullanici_yetki);
             }
         } catch (SQLException e) {

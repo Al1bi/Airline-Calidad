@@ -31,7 +31,6 @@ public class KullaniciServlet extends HttpServlet {
     private static final String KULLANICI_YETKI = "kullanici_yetki";
     private static final String GIRIS_PAGE = "giris";
     private static final String UCAK_BILETI_URL = "../ucakbileti";
-    private static final String KULLANICI_ID = "kullaniciId";
     private static final String UCAK_BILETI_PAGE = "ucakbileti";
     private static final String ENCODING_UTF8 = "UTF-8";
     private static final String ENCODING_ISO_8859_1 = "ISO-8859-1";
@@ -124,6 +123,10 @@ public class KullaniciServlet extends HttpServlet {
             }
         } catch (SQLException ex) {
             throw new ServletException(ex);
+        } catch (EmailSendingException ex) {
+            request.setAttribute("error", "Error al enviar el correo: " + ex.getMessage());
+            RequestDispatcher dispatcher = request.getRequestDispatcher("error.jsp");
+            dispatcher.forward(request, response);
         }
     }
 
@@ -311,54 +314,55 @@ public class KullaniciServlet extends HttpServlet {
     }
 
     private void gostersifremiunuttum(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, IOException {
+            throws SQLException, IOException, EmailSendingException {
         HttpSession sessionn = request.getSession();
         if ((Integer) sessionn.getAttribute(KULLANICI_YETKI) == null) {
-            String kullanici_email = request.getParameter(KULLANICI_EMAIL);
-            Boolean kontrol = kullaniciDAO.uyekontrol(kullanici_email);
+                String kullanici_email = request.getParameter(KULLANICI_EMAIL);
+                Boolean kontrol = kullaniciDAO.uyekontrol(kullanici_email);
             if (kontrol == false) {
                 Kullanici kullanici = kullaniciDAO.sifreal(kullanici_email);
                 String kullanici_sifre = kullanici.getKullanici_sifre();
                 final String to = kullanici_email;
-                final String subject = "HAWKEYE Giriş Şifresi";
+                 final String subject = "HAWKEYE Giriş Şifresi";
                 final String messg = "Sisteme giriş için şifreniz : " + kullanici_sifre;
                 final String from = "mail@gmail.com";
                 final String pass = "sifre";
 
                 Properties props = new Properties();
-                props.put("mail.smtp.host", "smtp.gmail.com");
-                props.put("mail.smtp.socketFactory.port", "465");
-                props.put("mail.smtp.ssl.checkserveridentity", "true");
-                props.put("mail.smtp.socketFactory.class",
-                        "javax.net.ssl.SSLSocketFactory");
-                props.put("mail.smtp.auth", "true");
-                props.put("mail.smtp.port", "465");
-                Session session = Session.getDefaultInstance(props,
-                        new javax.mail.Authenticator() {
-                            @Override
-                            protected PasswordAuthentication getPasswordAuthentication() {
-                                return new PasswordAuthentication(from, pass);
-                            }
-                        });
-                try {
-                    MimeMessage message = new MimeMessage(session);
-                    message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-                    message.setSubject(subject, ENCODING_UTF8);
-                    message.setText(messg, ENCODING_UTF8);
-                    Transport.send(message);
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.ssl.checkserveridentity", "true");
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
 
-                } catch (MessagingException e) {
-                    throw new RuntimeException(e);
+        Session mailSession = Session.getDefaultInstance(props,
+                new javax.mail.Authenticator() {
+                    @Override
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(from, pass);
+                    }
+                });
 
-                }
-                response.sendRedirect("sifremiunuttum?durum=basarili");
-            } else {
-                response.sendRedirect("sifremiunuttum?durum=basarisiz");
-            }
-        } else {
-            response.sendRedirect(UCAK_BILETI_PAGE);
+        try {
+            MimeMessage message = new MimeMessage(mailSession);
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            message.setSubject(subject, ENCODING_UTF8);
+            message.setText(messg, ENCODING_UTF8);
+            Transport.send(message);
+
+        } catch (MessagingException e) {
+            throw new EmailSendingException("Error al enviar el correo a " + to, e);
         }
+
+        response.sendRedirect("sifremiunuttum?durum=basarili");
+    } else {
+        response.sendRedirect("sifremiunuttum?durum=basarisiz");
     }
+} else {
+    response.sendRedirect(UCAK_BILETI_PAGE);
+}
+}
 
     private void gosteruyeol(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {

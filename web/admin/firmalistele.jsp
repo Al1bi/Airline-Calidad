@@ -10,21 +10,21 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="dataTable">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Firma Adı</th>
-                            <th>Firma Logosu</th>
-                            <th>İşlemler</th>
+                            <th scope="col">#</th>
+                            <th scope="col">Firma Adı</th>
+                            <th scope="col">Firma Logosu</th>
+                            <th scope="col">Islemler</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>#</th>
-                            <th>Firma Adı</th>
-                            <th>Firma Logosu</th>
-                            <th>İşlemler</th>
+                            <th scope="col">#</th>
+                            <th scope="col">Firma Adı</th>
+                            <th scope="col">Firma Logosu</th>
+                            <th scope="col">Islemler</th>
                         </tr>
                     </tfoot>
                     <tbody>

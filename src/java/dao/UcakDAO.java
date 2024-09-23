@@ -1,5 +1,7 @@
 package dao;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Properties;
 
 import model.Ucak;
 import model.Firma;
@@ -17,7 +20,7 @@ public class UcakDAO {
     
     private final String jdbcURL = "jdbc:mysql://localhost:3306/hawkeye";
     private final String jdbcKullaniciname = "root";
-    private final String jdbcPassword = "123456";  
+    private String jdbcPassword;  
     private static final Logger logger = Logger.getLogger(UcakDAO.class.getName());
  
 
@@ -28,7 +31,19 @@ public class UcakDAO {
     private static final String UCAK_UPDATE = "update ucak set ucak_ad = ?, ucak_koltuk=?, firma_id=? where ucak_id = ?;";
     private static final String UCAK_SELECT_ID = "SELECT * FROM ucak  where ucak_id=?;";
     
-    public UcakDAO() {}
+    public UcakDAO() {
+        Properties configProps = new Properties();
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
+            if (input == null) {
+                logger.log(Level.SEVERE, "No se pudo encontrar config.properties");
+                return;
+            }
+            configProps.load(input);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        jdbcPassword = configProps.getProperty("ucak_dao.mail.pass");
+    }
     
     protected Connection getConnection() {
         Connection connection = null;

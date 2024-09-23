@@ -18,25 +18,25 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="dataTable" >
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Ad</th>
-                            <th>Soyad</th>
-                            <th>Email</th>
-                            <th>Yetki</th>
-                            <th>İşlemler</th>
+                            <th scope="col">#</th>
+                            <th scope="col">Ad</th>
+                            <th scope="col">Soyad</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Yetki</th>
+                            <th scope="col">İşlemler</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>#</th>
-                            <th>Ad</th>
-                            <th>Soyad</th>
-                            <th>Email</th>
-                            <th>Yetki</th>
-                            <th>İşlemler</th>
+                            <th scope="col">#</th>
+                            <th scope="col">Ad</th>
+                            <th scope="col">Soyad</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Yetki</th>
+                            <th scope="col">İşlemler</th>
                         </tr>
                     </tfoot>
                     <tbody>

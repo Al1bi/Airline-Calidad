@@ -19,8 +19,7 @@ public class RezervasyonDAO {
     private final String jdbcKullaniciname = "root";
     private final String jdbcPassword = System.getenv("DB_PASSWORD"); 
      // Definir un logger para la clase
-     private static final Logger logger = Logger.getLogger(RezervasyonDAO.class.getName());
-   
+    private static final Logger logger = Logger.getLogger(RezervasyonDAO.class.getName());
     
     public static final String DATE_PATTERN = "aaaa-MM-dd";
     public static final String TIME_PATTERN = "HH:mm"; 
@@ -47,8 +46,6 @@ public class RezervasyonDAO {
     public static final String UCUS_ID_COLUMN = "ucus_id";  
     public static final String UCUS_UCRET_COLUMN = "ucus_ucret";  
     public static final String SONUC_COLUMN = "sonuc";  
-
-
     
     private static final String TEKYON_SORGULAMA_SELECT1="select distinct ucus_id,(ucak.ucak_koltuk-(SELECT COUNT(ucus_id) FROM rezervasyon WHERE ucus_id=ucus.ucus_id )) as bos_koltuk, a.havaalani_sehir_ad as kalkis_sehir, b.havaalani_sehir_ad as varis_sehir ,s.havaalani_ad as kalkis_ad,s.havaalani_kod as kalkis_kod, p.havaalani_ad as varis_ad, p.havaalani_kod as varis_kod, ucus_tarih, ucus_saat, ucus_sure, firma.firma_ad,firma.firma_logo , ucak.ucak_ad, ucus_ucret from ucus JOIN havaalani JOIN havaalani_sehir\n" +
                                     "INNER JOIN  ucak ON (ucak.ucak_id = ucus.ucak_id)\n" +
