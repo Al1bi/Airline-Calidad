@@ -21,7 +21,7 @@
                     </thead>
                     <tfoot>
                         <tr>
-                            <ths cope="col">#</th>
+                            <th scope="col">#</th>
                             <th scope="col">Rezervasyon Tarihi</th>
                             <th scope="col">PNR</th>
                             <th scope="col">Soyad</th>
