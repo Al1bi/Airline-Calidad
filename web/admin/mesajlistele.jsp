@@ -12,22 +12,22 @@
                 <table class="table table-bordered" id="dataTable">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Gönderen Ad Soyad</th>
-                            <th>Konu</th>
-                            <th>Tarih</th>
-                            <th>Durum</th>
-                            <th>İşlemler</th>
+                            <th scope="col">#</th>
+                            <th scope="col">Gönderen Ad Soyad</th>
+                            <th scope="col">Konu</th>
+                            <th scope="col">Tarih</th>
+                            <th scope="col">Durum</th>
+                            <th scope="col">İşlemler</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>#</th>
-                            <th>Gönderen Ad Soyad</th>
-                            <th>Konu</th>
-                            <th>Tarih</th>
-                            <th>Durum</th>
-                            <th>İşlemler</th>
+                            <th scope="col">#</th>
+                            <th scope="col">Gönderen Ad Soyad</th>
+                            <th scope="col">Konu</th>
+                            <th scope="col">Tarih</th>
+                            <th scope="col">Durum</th>
+                            <th scope="col">İşlemler</th>
                         </tr>
                     </tfoot>
                     <tbody>
