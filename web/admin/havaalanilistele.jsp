@@ -13,22 +13,22 @@
                 <table class="table table-bordered" id="dataTable">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Ülke Adı</th>
-                            <th>Şehir Adı</th>
-                            <th>Havaalanı Adı</th>
-                            <th>Havaalanı Kodu</th>
-                            <th>İşlemler</th>
+                            <th scope="col">#</th>
+                            <th scope="col">Ülke Adı</th>
+                            <th scope="col">Şehir Adı</th>
+                            <th scope="col">Havaalanı Adı</th>
+                            <th scope="col">Havaalanı Kodu</th>
+                            <th scope="col">İşlemler</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>#</th>
-                            <th>Ülke Adı</th>
-                            <th>Şehir Adı</th>
-                            <th>Havaalanı Adı</th>
-                            <th>Havaalanı Kodu</th>
-                            <th>İşlemler</th>
+                            <th scope="col">#</th>
+                            <th scope="col">Ülke Adı</th>
+                            <th scope="col">Şehir Adı</th>
+                            <th scope="col">Havaalanı Adı</th>
+                            <th scope="col">Havaalanı Kodu</th>
+                            <th scope="col">İşlemler</th>
                         </tr>
                     </tfoot>
                     <tbody>
