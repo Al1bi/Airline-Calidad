@@ -3,6 +3,7 @@ package servlet;
 import dao.HavaalaniDAO;
 import dao.RezervasyonDAO;
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -189,15 +190,20 @@ public class RezervasyonServlet extends HttpServlet {
     }
 
     private static String getAlphaNumericString(int n) {
-        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                + "0123456789";
-        StringBuilder sb = new StringBuilder(n);
-        for (int i = 0; i < n; i++) {
-            int index = (int) (AlphaNumericString.length() * Math.random());
-            sb.append(AlphaNumericString.charAt(index));
-        }
-        return sb.toString();
+    String alphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    StringBuilder sb = new StringBuilder(n);
+
+    SecureRandom secureRandom = new SecureRandom();
+
+    int length = alphaNumericString.length();
+
+    for (int i = 0; i < n; i++) {
+        int index = secureRandom.nextInt(length);
+        sb.append(alphaNumericString.charAt(index));
     }
+    
+    return sb.toString();
+}
 
     private void rezervasyoniptal(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {

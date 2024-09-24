@@ -340,7 +340,8 @@ public class RezervasyonDAO {
         String u_saat = calculateNextHour(currentFormattedTime);
         String currentDate = getCurrentDate();
     
-        String query = rezervasyon.getUcus_tarih().equals(currentDate) ? TEKYON_SORGULAMA_SELECT2 : TEKYON_SORGULAMA_SELECT1;
+        String query = rezervasyon.getUcus_tarih().equals(currentDate)
+                                   ? TEKYON_SORGULAMA_SELECT2 : TEKYON_SORGULAMA_SELECT1;
         executeQueryAndPopulateResults(rez, rezervasyon, u_saat, query);
     
         return rez;

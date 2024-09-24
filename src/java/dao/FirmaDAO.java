@@ -31,17 +31,8 @@ public class FirmaDAO {
     private static final Logger logger = Logger.getLogger(FirmaDAO.class.getName());
 
     public FirmaDAO() {
-        Properties configProps = new Properties();
-        try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
-            if (input == null) {
-                logger.log(Level.SEVERE, "No se pudo encontrar config.properties");
-                return;
-            }
-            configProps.load(input);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        jdbcPassword = configProps.getProperty("firma_dao.mail.pass");  
+        // Este constructor está vacío porque aún no se ha definido la lógica de inicialización necesaria.
+        // En futuras implementaciones, se podría incluir la configuración inicial de recursos. 
     }
     
     protected Connection getConnection() {
