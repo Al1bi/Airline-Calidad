@@ -413,8 +413,7 @@ public class RezervasyonDAO {
         String ucus_s = ucus_sure_parts[0];
         String ucus_d = ucus_sure_parts[1];
     
-        return new Rezervasyon(ucus_tarih, ucus_id, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, 
-                               ucus_saat, ucus_sure, firma_ad, firma_logo, ucus_ucret, ucus_s, ucus_d, varis_saat);
+        return new Rezervasyon(ucus_id, ucus_tarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucus_saat, ucus_sure, firma_ad, firma_logo, ucus_ucret);
     }
     
     private String calculateArrivalTime(String ucus_saat, String ucus_sure) {
