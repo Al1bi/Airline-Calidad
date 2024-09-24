@@ -10,19 +10,19 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="dataTable" >
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Ülke Adı</th>
-                            <th>İşlemler</th>
+                            <th scope="cols">#</th>
+                            <th scope="cols">Ülke Adı</th>
+                            <th scope="cols">İşlemler</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>#</th>
-                            <th>Ülke Adı</th>
-                            <th>İşlemler</th>
+                            <th scope="cols">#</th>
+                            <th scope="cols">Ülke Adı</th>
+                            <th scope="cols">İşlemler</th>
                         </tr>
                     </tfoot>
                     <tbody>
