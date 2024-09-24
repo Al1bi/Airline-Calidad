@@ -13,7 +13,9 @@
 <script src="vendor/datatables/jquery.dataTables.min.js"></script>
 <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 <script src="js/demo/datatables-demo.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://unpkg.com/sweetalert@2.1.2/dist/sweetalert.min.js"
+        integrity="sha384-hlt8yN5Z8P7R7g8q/yt6vHeT3F2Qn3GgCz1zw3uDAIl/N6K06C5h2eW8ke2gk3kCr"
+        crossorigin="anonymous"></script>
 
 </body>
 </html>
