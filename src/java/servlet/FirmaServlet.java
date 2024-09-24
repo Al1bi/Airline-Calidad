@@ -31,7 +31,7 @@ public class FirmaServlet extends HttpServlet {
     private static final String KULLANICI_YETKI = "kullanici_yetki";
     private static final String GIRIS_PAGE = "giris";
     private static final String UCAK_BILETI_PAGE = "../ucakbileti";
-    private static final String ASSETS_DATA_PATH = "C:\\Users\\Asus\\Documents\\NetBeansProjects\\hawkeye\\web\\assets\\data\\";
+    private static final String ASSETS_DATA_PATH = "C://Users//Asus//Documents//NetBeansProjects//hawkeye//web//assets//data//";
 
     public void init() {
         firmaDAO = new FirmaDAO();
