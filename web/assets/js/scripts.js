@@ -23,7 +23,6 @@ function initSearch() {
         if($('.search_form').length)
         {
             let searchForm = $('.search_form');
-            let searchInput = $('.search_content_input');
             let searchButton = $('.content_search');
 
             searchButton.on('click', function(event)
