@@ -404,15 +404,13 @@ public class RezervasyonDAO {
         String ucus_tarih = rs.getString(UCUS_TARIH_COLUMN);
         String ucus_sure = rs.getString(UCUS_SURE_COLUMN);
     
-        String varis_saat = calculateArrivalTime(UCUS_SAAT_COLUMN, UCUS_SURE_COLUMN);
+        
     
         String firma_ad = rs.getString(FIRMA_AD_COLUMN);
         String firma_logo = rs.getString(FIRMA_LOGO_COLUMN);
         Double ucus_ucret = rs.getDouble(UCUS_UCRET_COLUMN);
     
-        String[] ucus_sure_parts = ucus_sure.split(":");
-        String ucus_s = ucus_sure_parts[0];
-        String ucus_d = ucus_sure_parts[1];
+        
     
         return new Rezervasyon(ucus_id, ucus_tarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucus_saat, ucus_sure, firma_ad, firma_logo, ucus_ucret);
     }
