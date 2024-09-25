@@ -39,7 +39,7 @@ public class Havaalani_ulkeDAO {
             }
             configProps.load(input);
         } catch (IOException ex) {
-            ex.printStackTrace();
+            logger.log(Level.SEVERE, "Error al cargar el archivo de configuración", ex);
         }
         jdbcPassword = configProps.getProperty("havaalani_ulke_dao.mail.pass");
     }
@@ -51,7 +51,7 @@ public class Havaalani_ulkeDAO {
             connection = DriverManager.getConnection(jdbcURL,jdbcKullaniciname,jdbcPassword);
            
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error al cargar el archivo de configuración", ex);    
         }
         return connection;
     }   

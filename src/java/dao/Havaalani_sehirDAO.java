@@ -40,7 +40,7 @@ public class Havaalani_sehirDAO {
             }
             configProps.load(input);
         } catch (IOException ex) {
-            ex.printStackTrace();
+            logger.log(Level.SEVERE, "Error al cargar el archivo de configuración", ex);
         }
         jdbcPassword = configProps.getProperty("havaalani_sehir_dao.mail.pass");
     }

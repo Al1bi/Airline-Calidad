@@ -134,7 +134,7 @@ public class RezervasyonDAO {
             connection = DriverManager.getConnection(jdbcURL,jdbcKullaniciname,jdbcPassword);
            
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error al cargar el archivo de configuración", ex);
         } 
         return connection;
     }
