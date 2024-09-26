@@ -415,19 +415,6 @@ public class RezervasyonDAO {
         return new Rezervasyon(ucus_id, ucus_tarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucus_saat, ucus_sure, firma_ad, firma_logo, ucus_ucret);
     }
     
-    private String calculateArrivalTime(String ucus_saat, String ucus_sure) {
-        String[] ucus_saat_parts = ucus_saat.split(":");
-        String[] ucus_sure_parts = ucus_sure.split(":");
-    
-        int saat = (Integer.parseInt(ucus_saat_parts[0]) + Integer.parseInt(ucus_sure_parts[0])) % 24;
-        int dakika = (Integer.parseInt(ucus_saat_parts[1]) + Integer.parseInt(ucus_sure_parts[1])) % 60;
-    
-        String formattedHour = String.format("%02d", saat);
-        String formattedMinute = String.format("%02d", dakika);
-    
-        return formattedHour + ":" + formattedMinute;
-    }
-    
     public Rezervasyon ucusbilgileri(int id) {
         Rezervasyon rez=null;
         try (Connection connection = getConnection();
