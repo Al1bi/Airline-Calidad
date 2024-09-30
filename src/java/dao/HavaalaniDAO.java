@@ -64,8 +64,8 @@ public class HavaalaniDAO {
                 String havaalaniUlkeAd = rs.getString("havaalani_ulke_ad");
                 String havaalaniAd = rs.getString("havaalani_ad");
                 String havaalaniKod = rs.getString("havaalani_kod");
-                int havaalani_id = rs.getInt("havaalani_id");
-                havaalani.add(new Havaalani(havaalani_id, havaalaniUlkeId, havaalaniSehirId, havaalaniAd , havaalaniKod, havaalaniUlkeAd, havaalaniSehirAd));
+                int havaalaniId = rs.getInt("havaalani_id");
+                havaalani.add(new Havaalani(havaalaniId, havaalaniUlkeId, havaalaniSehirId, havaalaniAd , havaalaniKod, havaalaniUlkeAd, havaalaniSehirAd));
             }
         } catch (SQLException e) {
             printSQLException(e);
