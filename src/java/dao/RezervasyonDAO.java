@@ -265,7 +265,7 @@ public class RezervasyonDAO {
                 int durum = rs.getInt("durum");
                 String pnrNo = rs.getString("pnrNo");
                 String yolcuAd = rs.getString(YOLCU_AD_COLUMN);
-                String yolcu_soyad = rs.getString("yolcu_soyad");
+                String yolcuSoyad = rs.getString("yolcu_soyad");
                 String yolcu_email = rs.getString(YOLCU_EMAIL_COLUMN );
                 String yolcu_tel = rs.getString(YOLCU_TEL_COLUMN);
                 String yolcu_tc = rs.getString(YOLCU_TC_COLUMN);
@@ -309,7 +309,7 @@ public class RezervasyonDAO {
                 String firma_logo=rs.getString(FIRMA_LOGO_COLUMN);
                 String ucak_ad=rs.getString(UCAK_AD_COLUMN);
                 String rezervasyon_tarih=rs.getString(REZERVASYON_TARIH_COLUMN);          
-                rez.add(new Rezervasyon(durum, rezervasyon_id, rezervasyon_tarih, pnrNo,yolcuAd, yolcu_soyad,yolcu_email, yolcu_tel, yolcu_tc, yolcu_tip, koltuk_no, ucus_tarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucus_saat, ucus_sure, firma_ad, firma_logo, ucus_s, ucus_d, varis_saat,ucak_ad, yolcu_tarih, yolcu_ucret));
+                rez.add(new Rezervasyon(durum, rezervasyon_id, rezervasyon_tarih, pnrNo,yolcuAd, yolcuSoyad,yolcu_email, yolcu_tel, yolcu_tc, yolcu_tip, koltuk_no, ucus_tarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucus_saat, ucus_sure, firma_ad, firma_logo, ucus_s, ucus_d, varis_saat,ucak_ad, yolcu_tarih, yolcu_ucret));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -504,7 +504,7 @@ public class RezervasyonDAO {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 String ucusSaat = rs.getString(UCUS_SAAT_COLUMN);
-                ucusSaat=ucus_saat.substring(0, 5);
+                ucusSaat=ucusSaat.substring(0, 5);
                 String ucus_sure = rs.getString(UCUS_SURE_COLUMN); 
                 String[] ARRAYucus_sure = ucus_sure.split(":"); 
                 String ucus_s = ARRAYucus_sure[0];
@@ -603,7 +603,7 @@ public class RezervasyonDAO {
                 int durum = rs.getInt("durum");
                 String pnrNo = rs.getString("pnrNo");
                 String yolcuAd = rs.getString(YOLCU_AD_COLUMN);
-                String yolcu_soyad = rs.getString("yolcu_soyad");
+                String yolcuSoyad = rs.getString("yolcu_soyad");
                 String yolcu_email = rs.getString(YOLCU_EMAIL_COLUMN );
                 String yolcu_tel = rs.getString(YOLCU_TEL_COLUMN);
                 String yolcu_tc = rs.getString(YOLCU_TC_COLUMN);
@@ -647,7 +647,7 @@ public class RezervasyonDAO {
                 String firma_logo=rs.getString(FIRMA_LOGO_COLUMN);
                 String ucak_ad=rs.getString(UCAK_AD_COLUMN);
                 String rezervasyon_tarih=rs.getString(REZERVASYON_TARIH_COLUMN);          
-                rez.add(new Rezervasyon(durum, rezervasyon_id, rezervasyon_tarih, pnrNo,yolcuAd, yolcu_soyad,yolcu_email, yolcu_tel, yolcu_tc, yolcu_tip, koltuk_no, ucus_tarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucusSaat, ucus_sure, firma_ad, firma_logo, ucus_s, ucus_d, varis_saat,ucak_ad, yolcu_tarih, yolcu_ucret));
+                rez.add(new Rezervasyon(durum, rezervasyon_id, rezervasyon_tarih, pnrNo,yolcuAd, yolcuSoyad,yolcu_email, yolcu_tel, yolcu_tc, yolcu_tip, koltuk_no, ucus_tarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucusSaat, ucus_sure, firma_ad, firma_logo, ucus_s, ucus_d, varis_saat,ucak_ad, yolcu_tarih, yolcu_ucret));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -662,7 +662,7 @@ public class RezervasyonDAO {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 int koltukNo = rs.getInt(KOLTUK_NO_COLUMN);
-                rezervasyonlar.add(new Rezervasyon(koltuk_no));
+                rezervasyonlar.add(new Rezervasyon(koltukNo));
             }
         } catch (SQLException e) {
             printSQLException(e);
