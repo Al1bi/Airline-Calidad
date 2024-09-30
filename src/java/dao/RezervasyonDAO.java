@@ -43,57 +43,57 @@ public class RezervasyonDAO {
     public static final String FIRMA_LOGO_COLUMN = "firma_logo";
     public static final String UCAK_AD_COLUMN = "ucak_ad";
     public static final String REZERVASYON_TARIH_COLUMN = "rezervasyon_tarih";  
-    public static final String UCUS_ID_COLUMN = "ucus_id";  
+    public static final String ucusId_COLUMN = "ucusId";  
     public static final String UCUS_UCRET_COLUMN = "ucus_ucret";  
     public static final String SONUC_COLUMN = "sonuc";  
     
-    private static final String TEKYON_SORGULAMA_SELECT1="select distinct ucus_id,(ucak.ucak_koltuk-(SELECT COUNT(ucus_id) FROM rezervasyon WHERE ucus_id=ucus.ucus_id )) as bos_koltuk, a.havaalani_sehir_ad as kalkis_sehir, b.havaalani_sehir_ad as varis_sehir ,s.havaalani_ad as kalkis_ad,s.havaalani_kod as kalkis_kod, p.havaalani_ad as varis_ad, p.havaalani_kod as varis_kod, ucus_tarih, ucus_saat, ucus_sure, firma.firma_ad,firma.firma_logo , ucak.ucak_ad, ucus_ucret from ucus JOIN havaalani JOIN havaalani_sehir\n" +
+    private static final String TEKYON_SORGULAMA_SELECT1="select distinct ucusId,(ucak.ucak_koltuk-(SELECT COUNT(ucusId) FROM rezervasyon WHERE ucusId=ucus.ucusId )) as bos_koltuk, a.havaalani_sehir_ad as kalkis_sehir, b.havaalani_sehir_ad as varis_sehir ,s.havaalani_ad as kalkis_ad,s.havaalani_kod as kalkis_kod, p.havaalani_ad as varis_ad, p.havaalani_kod as varis_kod, ucus_tarih, ucus_saat, ucus_sure, firma.firma_ad,firma.firma_logo , ucak.ucak_ad, ucus_ucret from ucus JOIN havaalani JOIN havaalani_sehir\n" +
                                     "INNER JOIN  ucak ON (ucak.ucak_id = ucus.ucak_id)\n" +
                                     "INNER JOIN  firma ON (firma.firma_id = ucus.firma_id)\n" +
                                     "INNER JOIN  havaalani s ON (s.havaalani_id = ucus.ucus_kalkis_id)\n" +
                                     "INNER JOIN  havaalani p ON (p.havaalani_id = ucus.ucus_varis_id)\n" +
                                     "INNER JOIN  havaalani_sehir a ON (a.havaalani_sehir_id = s.havaalani_sehir_id)\n" +
                                     "INNER JOIN  havaalani_sehir b ON (b.havaalani_sehir_id = p.havaalani_sehir_id)\n" +
-                                    "WHERE s.havaalani_id = ? AND p.havaalani_id =? AND ucus_tarih=? AND (ucak.ucak_koltuk-(SELECT COUNT(ucus_id) FROM rezervasyon WHERE ucus_id=ucus.ucus_id )) >= ?;";
-    private static final String TEKYON_SORGULAMA_SELECT2="select distinct ucus_id,(ucak.ucak_koltuk-(SELECT COUNT(ucus_id) FROM rezervasyon WHERE ucus_id=ucus.ucus_id )) as bos_koltuk, a.havaalani_sehir_ad as kalkis_sehir, b.havaalani_sehir_ad as varis_sehir ,s.havaalani_ad as kalkis_ad,s.havaalani_kod as kalkis_kod, p.havaalani_ad as varis_ad, p.havaalani_kod as varis_kod, ucus_tarih, ucus_saat, ucus_sure, firma.firma_ad,firma.firma_logo , ucak.ucak_ad, ucus_ucret from ucus JOIN havaalani JOIN havaalani_sehir\n" +
+                                    "WHERE s.havaalani_id = ? AND p.havaalani_id =? AND ucus_tarih=? AND (ucak.ucak_koltuk-(SELECT COUNT(ucusId) FROM rezervasyon WHERE ucusId=ucus.ucusId )) >= ?;";
+    private static final String TEKYON_SORGULAMA_SELECT2="select distinct ucusId,(ucak.ucak_koltuk-(SELECT COUNT(ucusId) FROM rezervasyon WHERE ucusId=ucus.ucusId )) as bos_koltuk, a.havaalani_sehir_ad as kalkis_sehir, b.havaalani_sehir_ad as varis_sehir ,s.havaalani_ad as kalkis_ad,s.havaalani_kod as kalkis_kod, p.havaalani_ad as varis_ad, p.havaalani_kod as varis_kod, ucus_tarih, ucus_saat, ucus_sure, firma.firma_ad,firma.firma_logo , ucak.ucak_ad, ucus_ucret from ucus JOIN havaalani JOIN havaalani_sehir\n" +
                                     "INNER JOIN  ucak ON (ucak.ucak_id = ucus.ucak_id)\n" +
                                     "INNER JOIN  firma ON (firma.firma_id = ucus.firma_id)\n" +
                                     "INNER JOIN  havaalani s ON (s.havaalani_id = ucus.ucus_kalkis_id)\n" +
                                     "INNER JOIN  havaalani p ON (p.havaalani_id = ucus.ucus_varis_id)\n" +
                                     "INNER JOIN  havaalani_sehir a ON (a.havaalani_sehir_id = s.havaalani_sehir_id)\n" +
                                     "INNER JOIN  havaalani_sehir b ON (b.havaalani_sehir_id = p.havaalani_sehir_id)\n" +
-                                    "WHERE s.havaalani_id = ? AND p.havaalani_id =? AND ucus_tarih=? AND ucus_saat > ? AND (ucak.ucak_koltuk-(SELECT COUNT(ucus_id) FROM rezervasyon WHERE ucus_id=ucus.ucus_id )) >= ?;";
+                                    "WHERE s.havaalani_id = ? AND p.havaalani_id =? AND ucus_tarih=? AND ucus_saat > ? AND (ucak.ucak_koltuk-(SELECT COUNT(ucusId) FROM rezervasyon WHERE ucusId=ucus.ucusId )) >= ?;";
     private static final String REZERVASYON_SELECT_COUNT="SELECT COUNT(*) as sonuc FROM rezervasyon WHERE rezervasyon_tarih BETWEEN ? AND ?;";
     private static final String UCUS_SELECT_COUNT="SELECT count(*) as sonuc FROM ucus WHERE ucus_tarih >= ? ;";
     private static final String MESAJ_SELECT_COUNT="SELECT count(*) as sonuc FROM mesaj WHERE mesaj_okunma = 0;";
     private static final String REZERVASYON_DELETE = "delete from rezervasyon where rezervasyon_id = ?;";
     private static final String REZERVASYON_SELECT_PNRNO="SELECT * FROM rezervasyon where pnrNo=? and yolcu_soyad=?;";
-    private static final String REZERVASYON_SELECT_UCUS_ID="select DISTINCT k.ucak_ad, u.ucus_saat, u.ucus_tarih, u.ucus_sure, yolcu_ad, yolcu_soyad, yolcu_email, yolcu_tc, yolcu_tip, a.havaalani_sehir_ad AS kalkis_sehir, s.havaalani_ad as kalkis_ad, s.havaalani_kod as kalkis_kod, b.havaalani_sehir_ad as varis_sehir, p.havaalani_ad as varis_ad, p.havaalani_kod as varis_kod, f.firma_ad, f.firma_logo from rezervasyon JOIN havaalani JOIN havaalani_sehir JOIN ucus JOIN firma JOIN ucak\n" +
-                                    "INNER JOIN  ucus u ON (rezervasyon.ucus_id = ucus.ucus_id)\n" +
+    private static final String REZERVASYON_SELECT_ucusId="select DISTINCT k.ucak_ad, u.ucus_saat, u.ucus_tarih, u.ucus_sure, yolcu_ad, yolcu_soyad, yolcu_email, yolcu_tc, yolcu_tip, a.havaalani_sehir_ad AS kalkis_sehir, s.havaalani_ad as kalkis_ad, s.havaalani_kod as kalkis_kod, b.havaalani_sehir_ad as varis_sehir, p.havaalani_ad as varis_ad, p.havaalani_kod as varis_kod, f.firma_ad, f.firma_logo from rezervasyon JOIN havaalani JOIN havaalani_sehir JOIN ucus JOIN firma JOIN ucak\n" +
+                                    "INNER JOIN  ucus u ON (rezervasyon.ucusId = ucus.ucusId)\n" +
                                     "INNER JOIN  firma f ON (f.firma_id = u.firma_id)\n" +
                                     "INNER JOIN  ucak k ON (k.ucak_id = u.ucak_id)\n" +
                                     "INNER JOIN  havaalani s ON (u.ucus_kalkis_id = s.havaalani_id)\n" +
                                     "INNER JOIN  havaalani p ON (u.ucus_varis_id = p.havaalani_id)\n" +
                                     "INNER JOIN  havaalani_sehir a ON (s.havaalani_sehir_id = a.havaalani_sehir_id )\n" +
                                     "INNER JOIN  havaalani_sehir b ON (p.havaalani_sehir_id = b.havaalani_sehir_id)\n" +
-                                    "WHERE u.ucus_id=? and rezervasyon.rezervasyon_id=?;";
-    private static final String SELECT_UCUS_BILGILERI = "select distinct ucus_id,(ucak.ucak_koltuk-(SELECT COUNT(ucus_id) FROM rezervasyon WHERE ucus_id=ucus.ucus_id )) as bos_koltuk, a.havaalani_sehir_ad as kalkis_sehir, b.havaalani_sehir_ad as varis_sehir ,s.havaalani_ad as kalkis_ad,s.havaalani_kod as kalkis_kod, p.havaalani_ad as varis_ad, p.havaalani_kod as varis_kod, ucus_tarih, ucus_saat, ucus_sure, firma.firma_ad,firma.firma_logo , ucak.ucak_ad, ucak.ucak_koltuk, ucus_ucret from ucus JOIN havaalani JOIN havaalani_sehir\n" +
+                                    "WHERE u.ucusId=? and rezervasyon.rezervasyon_id=?;";
+    private static final String SELECT_UCUS_BILGILERI = "select distinct ucusId,(ucak.ucak_koltuk-(SELECT COUNT(ucusId) FROM rezervasyon WHERE ucusId=ucus.ucusId )) as bos_koltuk, a.havaalani_sehir_ad as kalkis_sehir, b.havaalani_sehir_ad as varis_sehir ,s.havaalani_ad as kalkis_ad,s.havaalani_kod as kalkis_kod, p.havaalani_ad as varis_ad, p.havaalani_kod as varis_kod, ucus_tarih, ucus_saat, ucus_sure, firma.firma_ad,firma.firma_logo , ucak.ucak_ad, ucak.ucak_koltuk, ucus_ucret from ucus JOIN havaalani JOIN havaalani_sehir\n" +
                                     "INNER JOIN  ucak ON (ucak.ucak_id = ucus.ucak_id)\n" +
                                     "INNER JOIN  firma ON (firma.firma_id = ucus.firma_id)\n" +
                                     "INNER JOIN  havaalani s ON (s.havaalani_id = ucus.ucus_kalkis_id)\n" +
                                     "INNER JOIN  havaalani p ON (p.havaalani_id = ucus.ucus_varis_id)\n" +
                                     "INNER JOIN  havaalani_sehir a ON (a.havaalani_sehir_id = s.havaalani_sehir_id)\n" +
                                     "INNER JOIN  havaalani_sehir b ON (b.havaalani_sehir_id = p.havaalani_sehir_id)\n" +
-                                    "WHERE ucus_id=?;";
+                                    "WHERE ucusId=?;";
     private static final String KOLTUK_BILGI_SELECT="SELECT koltuk_no FROM rezervasyon \n" +
-                                                "WHERE ucus_id=?\n" +
+                                                "WHERE ucusId=?\n" +
                                                 "ORDER BY koltuk_no ASC;";  
     private static final String KOLTUK_DOLU_SELECT="SELECT COUNT(koltuk_no) as koltuk_dolu FROM rezervasyon \n" +
-                                                "WHERE ucus_id=?;";
-    private static final String REZERVASYON_INSERT ="INSERT INTO rezervasyon (ucus_id, kullanici_id, pnrNo, yolcu_ad, yolcu_soyad, yolcu_email, yolcu_tel, yolcu_tc, yolcu_tip, yolcu_tarih, yolcu_ucret, koltuk_no) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";   
-    private static final String KOLTUK_NO_SELECT="SELECT * FROM rezervasyon WHERE ucus_id=? and koltuk_no=?;";
+                                                "WHERE ucusId=?;";
+    private static final String REZERVASYON_INSERT ="INSERT INTO rezervasyon (ucusId, kullanici_id, pnrNo, yolcu_ad, yolcu_soyad, yolcu_email, yolcu_tel, yolcu_tc, yolcu_tip, yolcu_tarih, yolcu_ucret, koltuk_no) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";   
+    private static final String KOLTUK_NO_SELECT="SELECT * FROM rezervasyon WHERE ucusId=? and koltuk_no=?;";
     private static final String REZERVASYON_ISLEMLERIM_SELECT="SELECT r.rezervasyon_id,r.durum ,r.rezervasyon_tarih, r.pnrNo, r.yolcu_ad, r.yolcu_soyad, r.yolcu_email, r.yolcu_tel, r.yolcu_tc, r.yolcu_tip, r.yolcu_tarih, r.yolcu_ucret, r.koltuk_no, u.ucus_tarih, u.ucus_saat, u.ucus_sure, k.havaalani_ad as kalkis_ad, k.havaalani_kod as kalkis_kod, v.havaalani_ad as varis_ad, v.havaalani_kod as varis_kod, s1.havaalani_sehir_ad as kalkis_sehir, s2.havaalani_sehir_ad as varis_sehir, f.firma_ad, f.firma_logo, p.ucak_ad from rezervasyon AS r\n" +
-                                                "JOIN ucus AS u ON u.ucus_id = r.ucus_id\n" +
+                                                "JOIN ucus AS u ON u.ucusId = r.ucusId\n" +
                                                 "JOIN havaalani AS k ON k.havaalani_id=u.ucus_kalkis_id \n" +
                                                 "JOIN havaalani AS v ON v.havaalani_id=u.ucus_varis_id\n" +
                                                 "JOIN havaalani_sehir AS s1 ON s1.havaalani_sehir_id=k.havaalani_sehir_id\n" +
@@ -103,17 +103,17 @@ public class RezervasyonDAO {
                                                 "WHERE r.kullanici_id=?\n"+
                                                 "ORDER BY r.rezervasyon_tarih DESC;";
     private static final String IPTAL_DURUM1="update rezervasyon r\n" +
-                                                "join ucus u on r.ucus_id = u.ucus_id\n" +
+                                                "join ucus u on r.ucusId = u.ucusId\n" +
                                                 "set r.durum = '1'\n" +
                                                 "WHERE (r.kullanici_id=? and u.ucus_tarih > ?) OR (u.ucus_tarih = ? and u.ucus_saat > ?);";
     private static final String IPTAL_DURUM0="update rezervasyon r\n" +
-                                                "join ucus u on r.ucus_id = u.ucus_id\n" +
+                                                "join ucus u on r.ucusId = u.ucusId\n" +
                                                 "set r.durum = '0'\n" +
                                                 "WHERE (r.kullanici_id=? and u.ucus_tarih < ?) OR (u.ucus_tarih = ? and u.ucus_saat < ?);";
     private static final String REZERVASYON_UPDATE = "update rezervasyon set yolcu_ad = ?, yolcu_soyad=?, yolcu_tc=?, yolcu_tarih=?, yolcu_email=?, yolcu_tel=? where rezervasyon_id = ?;";
     
     private static final String RZERVASYON_INCELE="SELECT r.rezervasyon_id,r.durum ,r.rezervasyon_tarih, r.pnrNo, r.yolcu_ad, r.yolcu_soyad, r.yolcu_email, r.yolcu_tel, r.yolcu_tc, r.yolcu_tip, r.yolcu_tarih, r.yolcu_ucret, r.koltuk_no, u.ucus_tarih, u.ucus_saat, u.ucus_sure, k.havaalani_ad as kalkis_ad, k.havaalani_kod as kalkis_kod, v.havaalani_ad as varis_ad, v.havaalani_kod as varis_kod, s1.havaalani_sehir_ad as kalkis_sehir, s2.havaalani_sehir_ad as varis_sehir, f.firma_ad, f.firma_logo, p.ucak_ad from rezervasyon AS r\n" +
-                                                "JOIN ucus AS u ON u.ucus_id = r.ucus_id\n" +
+                                                "JOIN ucus AS u ON u.ucusId = r.ucusId\n" +
                                                 "JOIN havaalani AS k ON k.havaalani_id=u.ucus_kalkis_id\n" +
                                                 "JOIN havaalani AS v ON v.havaalani_id=u.ucus_varis_id\n" +
                                                 "JOIN havaalani_sehir AS s1 ON s1.havaalani_sehir_id=k.havaalani_sehir_id\n" +
@@ -236,7 +236,7 @@ public class RezervasyonDAO {
         try (           
             Connection connection = getConnection();                                
             PreparedStatement preparedStatement = connection.prepareStatement(REZERVASYON_INSERT)) {
-            preparedStatement.setInt(1, rez.getUcus_id());
+            preparedStatement.setInt(1, rez.getucusId());
             preparedStatement.setInt(2, rez.getKullanici_id());
             preparedStatement.setString(3, rez.getpnrNo());
             preparedStatement.setString(4, rez.getYolcu_ad());
@@ -393,7 +393,7 @@ public class RezervasyonDAO {
     }
     
     private Rezervasyon extractRezervasyonFromResultSet(ResultSet rs) throws SQLException {
-        int ucusId = rs.getInt(UCUS_ID_COLUMN);
+        int ucusId = rs.getInt(ucusId_COLUMN);
         String kalkisSehir = rs.getString(KALKIS_SEHIR_COLUMN);
         String kalkisAd = rs.getString(KALKIS_AD_COLUMN);
         String kalkisKod = rs.getString(KALKIS_KOD_COLUMN);
@@ -423,7 +423,7 @@ public class RezervasyonDAO {
             ResultSet rs = statement.executeQuery();
             
             while (rs.next()) {
-                int ucusId = rs.getInt(UCUS_ID_COLUMN);
+                int ucusId = rs.getInt(ucusId_COLUMN);
                 String kalkisSehir=rs.getString(KALKIS_SEHIR_COLUMN);
                 String kalkisAd=rs.getString(KALKIS_AD_COLUMN);
                 String kalkisKod=rs.getString(KALKIS_KOD_COLUMN);
@@ -479,7 +479,7 @@ public class RezervasyonDAO {
             while (rs.next()) {
                 int rezervasyonId = rs.getInt(REZERVASYON_ID_COLUMN);
                 String rezervasyonTarih = rs.getString(REZERVASYON_TARIH_COLUMN);
-                int ucusId = rs.getInt(UCUS_ID_COLUMN);
+                int ucusId = rs.getInt(ucusId_COLUMN);
                 int kullaniciId = rs.getInt("kullanici_id"); 
                 String yolcuAd = rs.getString(YOLCU_AD_COLUMN);
                 String yolcuEmail = rs.getString(YOLCU_EMAIL_COLUMN );
@@ -495,11 +495,11 @@ public class RezervasyonDAO {
         return rezervasyon;
     }
     
-    public Rezervasyon rezervasyonbilgi(int ucus_id, int rezervasyon_id) {
+    public Rezervasyon rezervasyonbilgi(int ucusId, int rezervasyon_id) {
         Rezervasyon rezervasyon = null;
         try (Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(REZERVASYON_SELECT_UCUS_ID);) {
-            preparedStatement.setInt(1, ucus_id);
+            PreparedStatement preparedStatement = connection.prepareStatement(REZERVASYON_SELECT_ucusId);) {
+            preparedStatement.setInt(1, ucusId);
             preparedStatement.setInt(2, rezervasyon_id);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
