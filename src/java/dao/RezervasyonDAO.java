@@ -29,7 +29,7 @@ public class RezervasyonDAO {
     public static final String YOLCU_TC_COLUMN = "yolcu_tc";
     public static final String YOLCU_TIP_COLUMN = "yolcu_tip";
     public static final String KOLTUK_NO_COLUMN = "koltuk_no";
-    public static final String UCUS_SAAT_COLUMN = "ucus_saat";
+    public static final String ucusSaat_COLUMN = "ucusSaat";
     public static final String UCUS_TARIH_COLUMN = "ucus_tarih";
     public static final String UCUS_SURE_COLUMN = "ucus_seguro";
     public static final String REZERVASYON_ID_COLUMN = "Rezervasyon_id";
@@ -47,7 +47,7 @@ public class RezervasyonDAO {
     public static final String UCUS_UCRET_COLUMN = "ucus_ucret";  
     public static final String SONUC_COLUMN = "sonuc";  
     
-    private static final String TEKYON_SORGULAMA_SELECT1="select distinct ucus_id,(ucak.ucak_koltuk-(SELECT COUNT(ucus_id) FROM rezervasyon WHERE ucus_id=ucus.ucus_id )) as bos_koltuk, a.havaalani_sehir_ad as kalkis_sehir, b.havaalani_sehir_ad as varis_sehir ,s.havaalani_ad as kalkis_ad,s.havaalani_kod as kalkis_kod, p.havaalani_ad as varis_ad, p.havaalani_kod as varis_kod, ucus_tarih, ucus_saat, ucus_sure, firma.firma_ad,firma.firma_logo , ucak.ucak_ad, ucus_ucret from ucus JOIN havaalani JOIN havaalani_sehir\n" +
+    private static final String TEKYON_SORGULAMA_SELECT1="select distinct ucus_id,(ucak.ucak_koltuk-(SELECT COUNT(ucus_id) FROM rezervasyon WHERE ucus_id=ucus.ucus_id )) as bos_koltuk, a.havaalani_sehir_ad as kalkis_sehir, b.havaalani_sehir_ad as varis_sehir ,s.havaalani_ad as kalkis_ad,s.havaalani_kod as kalkis_kod, p.havaalani_ad as varis_ad, p.havaalani_kod as varis_kod, ucus_tarih, ucusSaat, ucus_sure, firma.firma_ad,firma.firma_logo , ucak.ucak_ad, ucus_ucret from ucus JOIN havaalani JOIN havaalani_sehir\n" +
                                     "INNER JOIN  ucak ON (ucak.ucak_id = ucus.ucak_id)\n" +
                                     "INNER JOIN  firma ON (firma.firma_id = ucus.firma_id)\n" +
                                     "INNER JOIN  havaalani s ON (s.havaalani_id = ucus.ucus_kalkis_id)\n" +
@@ -55,20 +55,20 @@ public class RezervasyonDAO {
                                     "INNER JOIN  havaalani_sehir a ON (a.havaalani_sehir_id = s.havaalani_sehir_id)\n" +
                                     "INNER JOIN  havaalani_sehir b ON (b.havaalani_sehir_id = p.havaalani_sehir_id)\n" +
                                     "WHERE s.havaalani_id = ? AND p.havaalani_id =? AND ucus_tarih=? AND (ucak.ucak_koltuk-(SELECT COUNT(ucus_id) FROM rezervasyon WHERE ucus_id=ucus.ucus_id )) >= ?;";
-    private static final String TEKYON_SORGULAMA_SELECT2="select distinct ucus_id,(ucak.ucak_koltuk-(SELECT COUNT(ucus_id) FROM rezervasyon WHERE ucus_id=ucus.ucus_id )) as bos_koltuk, a.havaalani_sehir_ad as kalkis_sehir, b.havaalani_sehir_ad as varis_sehir ,s.havaalani_ad as kalkis_ad,s.havaalani_kod as kalkis_kod, p.havaalani_ad as varis_ad, p.havaalani_kod as varis_kod, ucus_tarih, ucus_saat, ucus_sure, firma.firma_ad,firma.firma_logo , ucak.ucak_ad, ucus_ucret from ucus JOIN havaalani JOIN havaalani_sehir\n" +
+    private static final String TEKYON_SORGULAMA_SELECT2="select distinct ucus_id,(ucak.ucak_koltuk-(SELECT COUNT(ucus_id) FROM rezervasyon WHERE ucus_id=ucus.ucus_id )) as bos_koltuk, a.havaalani_sehir_ad as kalkis_sehir, b.havaalani_sehir_ad as varis_sehir ,s.havaalani_ad as kalkis_ad,s.havaalani_kod as kalkis_kod, p.havaalani_ad as varis_ad, p.havaalani_kod as varis_kod, ucus_tarih, ucusSaat, ucus_sure, firma.firma_ad,firma.firma_logo , ucak.ucak_ad, ucus_ucret from ucus JOIN havaalani JOIN havaalani_sehir\n" +
                                     "INNER JOIN  ucak ON (ucak.ucak_id = ucus.ucak_id)\n" +
                                     "INNER JOIN  firma ON (firma.firma_id = ucus.firma_id)\n" +
                                     "INNER JOIN  havaalani s ON (s.havaalani_id = ucus.ucus_kalkis_id)\n" +
                                     "INNER JOIN  havaalani p ON (p.havaalani_id = ucus.ucus_varis_id)\n" +
                                     "INNER JOIN  havaalani_sehir a ON (a.havaalani_sehir_id = s.havaalani_sehir_id)\n" +
                                     "INNER JOIN  havaalani_sehir b ON (b.havaalani_sehir_id = p.havaalani_sehir_id)\n" +
-                                    "WHERE s.havaalani_id = ? AND p.havaalani_id =? AND ucus_tarih=? AND ucus_saat > ? AND (ucak.ucak_koltuk-(SELECT COUNT(ucus_id) FROM rezervasyon WHERE ucus_id=ucus.ucus_id )) >= ?;";
+                                    "WHERE s.havaalani_id = ? AND p.havaalani_id =? AND ucus_tarih=? AND ucusSaat > ? AND (ucak.ucak_koltuk-(SELECT COUNT(ucus_id) FROM rezervasyon WHERE ucus_id=ucus.ucus_id )) >= ?;";
     private static final String REZERVASYON_SELECT_COUNT="SELECT COUNT(*) as sonuc FROM rezervasyon WHERE rezervasyon_tarih BETWEEN ? AND ?;";
     private static final String UCUS_SELECT_COUNT="SELECT count(*) as sonuc FROM ucus WHERE ucus_tarih >= ? ;";
     private static final String MESAJ_SELECT_COUNT="SELECT count(*) as sonuc FROM mesaj WHERE mesaj_okunma = 0;";
     private static final String REZERVASYON_DELETE = "delete from rezervasyon where rezervasyon_id = ?;";
     private static final String REZERVASYON_SELECT_PNRNO="SELECT * FROM rezervasyon where pnr_no=? and yolcu_soyad=?;";
-    private static final String REZERVASYON_SELECT_UCUS_ID="select DISTINCT k.ucak_ad, u.ucus_saat, u.ucus_tarih, u.ucus_sure, yolcu_ad, yolcu_soyad, yolcu_email, yolcu_tc, yolcu_tip, a.havaalani_sehir_ad AS kalkis_sehir, s.havaalani_ad as kalkis_ad, s.havaalani_kod as kalkis_kod, b.havaalani_sehir_ad as varis_sehir, p.havaalani_ad as varis_ad, p.havaalani_kod as varis_kod, f.firma_ad, f.firma_logo from rezervasyon JOIN havaalani JOIN havaalani_sehir JOIN ucus JOIN firma JOIN ucak\n" +
+    private static final String REZERVASYON_SELECT_UCUS_ID="select DISTINCT k.ucak_ad, u.ucusSaat, u.ucus_tarih, u.ucus_sure, yolcu_ad, yolcu_soyad, yolcu_email, yolcu_tc, yolcu_tip, a.havaalani_sehir_ad AS kalkis_sehir, s.havaalani_ad as kalkis_ad, s.havaalani_kod as kalkis_kod, b.havaalani_sehir_ad as varis_sehir, p.havaalani_ad as varis_ad, p.havaalani_kod as varis_kod, f.firma_ad, f.firma_logo from rezervasyon JOIN havaalani JOIN havaalani_sehir JOIN ucus JOIN firma JOIN ucak\n" +
                                     "INNER JOIN  ucus u ON (rezervasyon.ucus_id = ucus.ucus_id)\n" +
                                     "INNER JOIN  firma f ON (f.firma_id = u.firma_id)\n" +
                                     "INNER JOIN  ucak k ON (k.ucak_id = u.ucak_id)\n" +
@@ -77,7 +77,7 @@ public class RezervasyonDAO {
                                     "INNER JOIN  havaalani_sehir a ON (s.havaalani_sehir_id = a.havaalani_sehir_id )\n" +
                                     "INNER JOIN  havaalani_sehir b ON (p.havaalani_sehir_id = b.havaalani_sehir_id)\n" +
                                     "WHERE u.ucus_id=? and rezervasyon.rezervasyon_id=?;";
-    private static final String SELECT_UCUS_BILGILERI = "select distinct ucus_id,(ucak.ucak_koltuk-(SELECT COUNT(ucus_id) FROM rezervasyon WHERE ucus_id=ucus.ucus_id )) as bos_koltuk, a.havaalani_sehir_ad as kalkis_sehir, b.havaalani_sehir_ad as varis_sehir ,s.havaalani_ad as kalkis_ad,s.havaalani_kod as kalkis_kod, p.havaalani_ad as varis_ad, p.havaalani_kod as varis_kod, ucus_tarih, ucus_saat, ucus_sure, firma.firma_ad,firma.firma_logo , ucak.ucak_ad, ucak.ucak_koltuk, ucus_ucret from ucus JOIN havaalani JOIN havaalani_sehir\n" +
+    private static final String SELECT_UCUS_BILGILERI = "select distinct ucus_id,(ucak.ucak_koltuk-(SELECT COUNT(ucus_id) FROM rezervasyon WHERE ucus_id=ucus.ucus_id )) as bos_koltuk, a.havaalani_sehir_ad as kalkis_sehir, b.havaalani_sehir_ad as varis_sehir ,s.havaalani_ad as kalkis_ad,s.havaalani_kod as kalkis_kod, p.havaalani_ad as varis_ad, p.havaalani_kod as varis_kod, ucus_tarih, ucusSaat, ucus_sure, firma.firma_ad,firma.firma_logo , ucak.ucak_ad, ucak.ucak_koltuk, ucus_ucret from ucus JOIN havaalani JOIN havaalani_sehir\n" +
                                     "INNER JOIN  ucak ON (ucak.ucak_id = ucus.ucak_id)\n" +
                                     "INNER JOIN  firma ON (firma.firma_id = ucus.firma_id)\n" +
                                     "INNER JOIN  havaalani s ON (s.havaalani_id = ucus.ucus_kalkis_id)\n" +
@@ -92,7 +92,7 @@ public class RezervasyonDAO {
                                                 "WHERE ucus_id=?;";
     private static final String REZERVASYON_INSERT ="INSERT INTO rezervasyon (ucus_id, kullanici_id, pnr_no, yolcu_ad, yolcu_soyad, yolcu_email, yolcu_tel, yolcu_tc, yolcu_tip, yolcu_tarih, yolcu_ucret, koltuk_no) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";   
     private static final String KOLTUK_NO_SELECT="SELECT * FROM rezervasyon WHERE ucus_id=? and koltuk_no=?;";
-    private static final String REZERVASYON_ISLEMLERIM_SELECT="SELECT r.rezervasyon_id,r.durum ,r.rezervasyon_tarih, r.pnr_no, r.yolcu_ad, r.yolcu_soyad, r.yolcu_email, r.yolcu_tel, r.yolcu_tc, r.yolcu_tip, r.yolcu_tarih, r.yolcu_ucret, r.koltuk_no, u.ucus_tarih, u.ucus_saat, u.ucus_sure, k.havaalani_ad as kalkis_ad, k.havaalani_kod as kalkis_kod, v.havaalani_ad as varis_ad, v.havaalani_kod as varis_kod, s1.havaalani_sehir_ad as kalkis_sehir, s2.havaalani_sehir_ad as varis_sehir, f.firma_ad, f.firma_logo, p.ucak_ad from rezervasyon AS r\n" +
+    private static final String REZERVASYON_ISLEMLERIM_SELECT="SELECT r.rezervasyon_id,r.durum ,r.rezervasyon_tarih, r.pnr_no, r.yolcu_ad, r.yolcu_soyad, r.yolcu_email, r.yolcu_tel, r.yolcu_tc, r.yolcu_tip, r.yolcu_tarih, r.yolcu_ucret, r.koltuk_no, u.ucus_tarih, u.ucusSaat, u.ucus_sure, k.havaalani_ad as kalkis_ad, k.havaalani_kod as kalkis_kod, v.havaalani_ad as varis_ad, v.havaalani_kod as varis_kod, s1.havaalani_sehir_ad as kalkis_sehir, s2.havaalani_sehir_ad as varis_sehir, f.firma_ad, f.firma_logo, p.ucak_ad from rezervasyon AS r\n" +
                                                 "JOIN ucus AS u ON u.ucus_id = r.ucus_id\n" +
                                                 "JOIN havaalani AS k ON k.havaalani_id=u.ucus_kalkis_id \n" +
                                                 "JOIN havaalani AS v ON v.havaalani_id=u.ucus_varis_id\n" +
@@ -105,14 +105,14 @@ public class RezervasyonDAO {
     private static final String IPTAL_DURUM1="update rezervasyon r\n" +
                                                 "join ucus u on r.ucus_id = u.ucus_id\n" +
                                                 "set r.durum = '1'\n" +
-                                                "WHERE (r.kullanici_id=? and u.ucus_tarih > ?) OR (u.ucus_tarih = ? and u.ucus_saat > ?);";
+                                                "WHERE (r.kullanici_id=? and u.ucus_tarih > ?) OR (u.ucus_tarih = ? and u.ucusSaat > ?);";
     private static final String IPTAL_DURUM0="update rezervasyon r\n" +
                                                 "join ucus u on r.ucus_id = u.ucus_id\n" +
                                                 "set r.durum = '0'\n" +
-                                                "WHERE (r.kullanici_id=? and u.ucus_tarih < ?) OR (u.ucus_tarih = ? and u.ucus_saat < ?);";
+                                                "WHERE (r.kullanici_id=? and u.ucus_tarih < ?) OR (u.ucus_tarih = ? and u.ucusSaat < ?);";
     private static final String REZERVASYON_UPDATE = "update rezervasyon set yolcu_ad = ?, yolcu_soyad=?, yolcu_tc=?, yolcu_tarih=?, yolcu_email=?, yolcu_tel=? where rezervasyon_id = ?;";
     
-    private static final String RZERVASYON_INCELE="SELECT r.rezervasyon_id,r.durum ,r.rezervasyon_tarih, r.pnr_no, r.yolcu_ad, r.yolcu_soyad, r.yolcu_email, r.yolcu_tel, r.yolcu_tc, r.yolcu_tip, r.yolcu_tarih, r.yolcu_ucret, r.koltuk_no, u.ucus_tarih, u.ucus_saat, u.ucus_sure, k.havaalani_ad as kalkis_ad, k.havaalani_kod as kalkis_kod, v.havaalani_ad as varis_ad, v.havaalani_kod as varis_kod, s1.havaalani_sehir_ad as kalkis_sehir, s2.havaalani_sehir_ad as varis_sehir, f.firma_ad, f.firma_logo, p.ucak_ad from rezervasyon AS r\n" +
+    private static final String RZERVASYON_INCELE="SELECT r.rezervasyon_id,r.durum ,r.rezervasyon_tarih, r.pnr_no, r.yolcu_ad, r.yolcu_soyad, r.yolcu_email, r.yolcu_tel, r.yolcu_tc, r.yolcu_tip, r.yolcu_tarih, r.yolcu_ucret, r.koltuk_no, u.ucus_tarih, u.ucusSaat, u.ucus_sure, k.havaalani_ad as kalkis_ad, k.havaalani_kod as kalkis_kod, v.havaalani_ad as varis_ad, v.havaalani_kod as varis_kod, s1.havaalani_sehir_ad as kalkis_sehir, s2.havaalani_sehir_ad as varis_sehir, f.firma_ad, f.firma_logo, p.ucak_ad from rezervasyon AS r\n" +
                                                 "JOIN ucus AS u ON u.ucus_id = r.ucus_id\n" +
                                                 "JOIN havaalani AS k ON k.havaalani_id=u.ucus_kalkis_id\n" +
                                                 "JOIN havaalani AS v ON v.havaalani_id=u.ucus_varis_id\n" +
@@ -164,13 +164,13 @@ public class RezervasyonDAO {
         } else {
             ssaat = String.valueOf(hh + 2);
         }
-        String ucus_saat = ssaat + ":" + sdakika;            
+        String ucusSaat = ssaat + ":" + sdakika;            
         try (Connection connection = getConnection(); 
             PreparedStatement statement = connection.prepareStatement(IPTAL_DURUM1);) {
             statement.setInt(1, id);
             statement.setString(2, tarih);
             statement.setString(3, tarih);
-            statement.setString(4, ucus_saat);
+            statement.setString(4, ucusSaat);
             guncellenenSatir = statement.executeUpdate() > 0;
         }
         return guncellenenSatir;
@@ -201,13 +201,13 @@ public class RezervasyonDAO {
         } else {
             ssaat = String.valueOf(hh + 2);
         }
-        String ucus_saat = ssaat + ":" + sdakika;            
+        String ucusSaat = ssaat + ":" + sdakika;            
         try (Connection connection = getConnection(); 
             PreparedStatement statement = connection.prepareStatement(IPTAL_DURUM0);) {
             statement.setInt(1, id);
             statement.setString(2, tarih);
             statement.setString(3, tarih);
-            statement.setString(4, ucus_saat);
+            statement.setString(4, ucusSaat);
             guncellenenSatir = statement.executeUpdate() > 0;
         }
         return guncellenenSatir;
@@ -273,16 +273,16 @@ public class RezervasyonDAO {
                 String yolcu_tarih = rs.getString("yolcu_tarih");
                 Double yolcu_ucret=rs.getDouble("yolcu_ucret"); 
                 String koltuk_no = rs.getString(KOLTUK_NO_COLUMN);
-                String ucus_saat=rs.getString(UCUS_SAAT_COLUMN);
-                ucus_saat=ucus_saat.substring(0, 5);
+                String ucusSaat=rs.getString(ucusSaat_COLUMN);
+                ucusSaat=ucusSaat.substring(0, 5);
                 String ucus_tarih=rs.getString(UCUS_TARIH_COLUMN);
                 String ucus_sure=rs.getString(UCUS_SURE_COLUMN);
                 String[] ARRAYucus_sure = ucus_sure.split(":"); 
                 String ucus_s = ARRAYucus_sure[0];
                 String ucus_d = ARRAYucus_sure[1];
-                String[] ARRAYucus_saat = ucus_saat.split(":");
-                String s = ARRAYucus_saat[0];
-                String d = ARRAYucus_saat[1];
+                String[] ARRAYucusSaat = ucusSaat.split(":");
+                String s = ARRAYucusSaat[0];
+                String d = ARRAYucusSaat[1];
                 int saat=(Integer.parseInt(s)+Integer.parseInt(ucus_s))%24 ;
                 int dakika=(Integer.parseInt(d)+Integer.parseInt(ucus_d))%60 ;
                 String sdakika;
@@ -309,7 +309,7 @@ public class RezervasyonDAO {
                 String firma_logo=rs.getString(FIRMA_LOGO_COLUMN);
                 String ucak_ad=rs.getString(UCAK_AD_COLUMN);
                 String rezervasyon_tarih=rs.getString(REZERVASYON_TARIH_COLUMN);          
-                rez.add(new Rezervasyon(durum, rezervasyon_id, rezervasyon_tarih, pnr_no,yolcu_ad, yolcu_soyad,yolcu_email, yolcu_tel, yolcu_tc, yolcu_tip, koltuk_no, ucus_tarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucus_saat, ucus_sure, firma_ad, firma_logo, ucus_s, ucus_d, varis_saat,ucak_ad, yolcu_tarih, yolcu_ucret));
+                rez.add(new Rezervasyon(durum, rezervasyon_id, rezervasyon_tarih, pnr_no,yolcu_ad, yolcu_soyad,yolcu_email, yolcu_tel, yolcu_tc, yolcu_tip, koltuk_no, ucus_tarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucusSaat, ucus_sure, firma_ad, firma_logo, ucus_s, ucus_d, varis_saat,ucak_ad, yolcu_tarih, yolcu_ucret));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -400,11 +400,11 @@ public class RezervasyonDAO {
         String varis_sehir = rs.getString(VARIS_SEHIR_COLUMN);
         String varis_ad = rs.getString(VARIS_AD_COLUMN);
         String varis_kod = rs.getString(VARIS_KOD_COLUMN);
-        String ucus_saat = rs.getString(UCUS_SAAT_COLUMN).substring(0, 5);
+        String ucusSaat = rs.getString(ucusSaat_COLUMN).substring(0, 5);
         String ucus_tarih = rs.getString(UCUS_TARIH_COLUMN);
         String ucus_sure = rs.getString(UCUS_SURE_COLUMN);
     
-        String varis_saat = calculateArrivalTime(UCUS_SAAT_COLUMN, UCUS_SURE_COLUMN);
+        String varis_saat = calculateArrivalTime(ucusSaat_COLUMN, UCUS_SURE_COLUMN);
     
         String firma_ad = rs.getString(FIRMA_AD_COLUMN);
         String firma_logo = rs.getString(FIRMA_LOGO_COLUMN);
@@ -414,15 +414,15 @@ public class RezervasyonDAO {
         String ucus_s = ucus_sure_parts[0];
         String ucus_d = ucus_sure_parts[1];
     
-        return new Rezervasyon(ucus_id, ucus_tarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucus_saat, ucus_sure, firma_ad, firma_logo, ucus_ucret);
+        return new Rezervasyon(ucus_id, ucus_tarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucusSaat, ucus_sure, firma_ad, firma_logo, ucus_ucret);
     }
     
-    private String calculateArrivalTime(String ucus_saat, String ucus_sure) {
-        String[] ucus_saat_parts = ucus_saat.split(":");
+    private String calculateArrivalTime(String ucusSaat, String ucus_sure) {
+        String[] ucusSaat_parts = ucusSaat.split(":");
         String[] ucus_sure_parts = ucus_sure.split(":");
     
-        int saat = (Integer.parseInt(ucus_saat_parts[0]) + Integer.parseInt(ucus_sure_parts[0])) % 24;
-        int dakika = (Integer.parseInt(ucus_saat_parts[1]) + Integer.parseInt(ucus_sure_parts[1])) % 60;
+        int saat = (Integer.parseInt(ucusSaat_parts[0]) + Integer.parseInt(ucus_sure_parts[0])) % 24;
+        int dakika = (Integer.parseInt(ucusSaat_parts[1]) + Integer.parseInt(ucus_sure_parts[1])) % 60;
     
         String formattedHour = String.format("%02d", saat);
         String formattedMinute = String.format("%02d", dakika);
@@ -445,17 +445,17 @@ public class RezervasyonDAO {
                 String varis_sehir=rs.getString(VARIS_SEHIR_COLUMN);
                 String varis_ad=rs.getString(VARIS_AD_COLUMN);
                 String varis_kod=rs.getString(VARIS_KOD_COLUMN);
-                String ucus_saat=rs.getString(UCUS_SAAT_COLUMN);
-                ucus_saat=ucus_saat.substring(0, 5);
+                String ucusSaat=rs.getString(ucusSaat_COLUMN);
+                ucusSaat=ucusSaat.substring(0, 5);
                 String ucus_tarih=rs.getString(UCUS_TARIH_COLUMN);
                 String ucus_sure=rs.getString(UCUS_SURE_COLUMN);
                 
                 String[] ARRAYucus_sure = ucus_sure.split(":"); 
                 String ucus_s = ARRAYucus_sure[0];
                 String ucus_d = ARRAYucus_sure[1];
-                String[] ARRAYucus_saat = ucus_saat.split(":");
-                String s = ARRAYucus_saat[0];
-                String d = ARRAYucus_saat[1];
+                String[] ARRAYucusSaat = ucusSaat.split(":");
+                String s = ARRAYucusSaat[0];
+                String d = ARRAYucusSaat[1];
                 int saat=(Integer.parseInt(s)+Integer.parseInt(ucus_s))%24 ;
                 int dakika=(Integer.parseInt(d)+Integer.parseInt(ucus_d))%60 ;
                 String sdakika;
@@ -476,7 +476,7 @@ public class RezervasyonDAO {
                 Double ucus_ucret=rs.getDouble(UCUS_UCRET_COLUMN);
                 String ucak_ad=rs.getString(UCAK_AD_COLUMN);
                 int ucak_koltuk = rs.getInt("ucak_koltuk");
-                rez = new Rezervasyon(ucus_tarih,ucus_id, kalkis_sehir,kalkis_ad,kalkis_kod,varis_sehir,varis_ad,varis_kod,ucus_saat,ucus_sure,firma_ad,firma_logo,ucus_ucret, ucus_s, ucus_d, varis_saat,ucak_ad,ucak_koltuk);
+                rez = new Rezervasyon(ucus_tarih,ucus_id, kalkis_sehir,kalkis_ad,kalkis_kod,varis_sehir,varis_ad,varis_kod,ucusSaat,ucus_sure,firma_ad,firma_logo,ucus_ucret, ucus_s, ucus_d, varis_saat,ucak_ad,ucak_koltuk);
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -518,8 +518,8 @@ public class RezervasyonDAO {
             preparedStatement.setInt(2, rezervasyon_id);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                String ucus_saat = rs.getString(UCUS_SAAT_COLUMN);
-                ucus_saat=ucus_saat.substring(0, 5);
+                String ucusSaat = rs.getString(ucusSaat_COLUMN);
+                ucusSaat=ucusSaat.substring(0, 5);
                 String ucus_sure = rs.getString(UCUS_SURE_COLUMN); 
                 String[] ARRAYucus_sure = ucus_sure.split(":"); 
                 String ucus_s = ARRAYucus_sure[0];
@@ -535,7 +535,7 @@ public class RezervasyonDAO {
                 String varis_ad = rs.getString(VARIS_AD_COLUMN);
                 String varis_kod = rs.getString(VARIS_KOD_COLUMN);
                 
-                rezervasyon = new Rezervasyon(ucus_tarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucus_saat, firma_ad, firma_logo, ucus_s, ucus_d, ucak_ad);
+                rezervasyon = new Rezervasyon(ucus_tarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucusSaat, firma_ad, firma_logo, ucus_s, ucus_d, ucak_ad);
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -626,16 +626,16 @@ public class RezervasyonDAO {
                 String yolcu_tarih = rs.getString("yolcu_tarih");
                 Double yolcu_ucret=rs.getDouble("yolcu_ucret"); 
                 String koltuk_no = rs.getString(KOLTUK_NO_COLUMN);
-                String ucus_saat=rs.getString(UCUS_SAAT_COLUMN);
-                ucus_saat=ucus_saat.substring(0, 5);
+                String ucusSaat=rs.getString(ucusSaat_COLUMN);
+                ucusSaat=ucusSaat.substring(0, 5);
                 String ucus_tarih=rs.getString(UCUS_TARIH_COLUMN);
                 String ucus_sure=rs.getString(UCUS_SURE_COLUMN);
                 String[] ARRAYucus_sure = ucus_sure.split(":"); 
                 String ucus_s = ARRAYucus_sure[0];
                 String ucus_d = ARRAYucus_sure[1];
-                String[] ARRAYucus_saat = ucus_saat.split(":");
-                String s = ARRAYucus_saat[0];
-                String d = ARRAYucus_saat[1];
+                String[] ARRAYucusSaat = ucusSaat.split(":");
+                String s = ARRAYucusSaat[0];
+                String d = ARRAYucusSaat[1];
                 int saat=(Integer.parseInt(s)+Integer.parseInt(ucus_s))%24 ;
                 int dakika=(Integer.parseInt(d)+Integer.parseInt(ucus_d))%60 ;
                 String sdakika;
@@ -662,7 +662,7 @@ public class RezervasyonDAO {
                 String firma_logo=rs.getString(FIRMA_LOGO_COLUMN);
                 String ucak_ad=rs.getString(UCAK_AD_COLUMN);
                 String rezervasyon_tarih=rs.getString(REZERVASYON_TARIH_COLUMN);          
-                rez.add(new Rezervasyon(durum, rezervasyon_id, rezervasyon_tarih, pnr_no,yolcu_ad, yolcu_soyad,yolcu_email, yolcu_tel, yolcu_tc, yolcu_tip, koltuk_no, ucus_tarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucus_saat, ucus_sure, firma_ad, firma_logo, ucus_s, ucus_d, varis_saat,ucak_ad, yolcu_tarih, yolcu_ucret));
+                rez.add(new Rezervasyon(durum, rezervasyon_id, rezervasyon_tarih, pnr_no,yolcu_ad, yolcu_soyad,yolcu_email, yolcu_tel, yolcu_tc, yolcu_tip, koltuk_no, ucus_tarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucusSaat, ucus_sure, firma_ad, firma_logo, ucus_s, ucus_d, varis_saat,ucak_ad, yolcu_tarih, yolcu_ucret));
             }
         } catch (SQLException e) {
             printSQLException(e);
