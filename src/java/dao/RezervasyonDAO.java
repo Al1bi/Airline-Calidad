@@ -68,15 +68,6 @@ public class RezervasyonDAO {
     private static final String MESAJ_SELECT_COUNT="SELECT count(*) as sonuc FROM mesaj WHERE mesaj_okunma = 0;";
     private static final String REZERVASYON_DELETE = "delete from rezervasyon where rezervasyon_id = ?;";
     private static final String REZERVASYON_SELECT_PNRNO="SELECT * FROM rezervasyon where pnrNo=? and yolcu_soyad=?;";
-    private static final String REZERVASYON_SELECT_ucusId="select DISTINCT k.ucak_ad, u.ucus_saat, u.ucus_tarih, u.ucus_sure, yolcu_ad, yolcu_soyad, yolcu_email, yolcu_tc, yolcu_tip, a.havaalani_sehir_ad AS kalkis_sehir, s.havaalani_ad as kalkis_ad, s.havaalani_kod as kalkis_kod, b.havaalani_sehir_ad as varis_sehir, p.havaalani_ad as varis_ad, p.havaalani_kod as varis_kod, f.firma_ad, f.firma_logo from rezervasyon JOIN havaalani JOIN havaalani_sehir JOIN ucus JOIN firma JOIN ucak\n" +
-                                    "INNER JOIN  ucus u ON (rezervasyon.ucusId = ucus.ucusId)\n" +
-                                    "INNER JOIN  firma f ON (f.firma_id = u.firma_id)\n" +
-                                    "INNER JOIN  ucak k ON (k.ucak_id = u.ucak_id)\n" +
-                                    "INNER JOIN  havaalani s ON (u.ucus_kalkis_id = s.havaalani_id)\n" +
-                                    "INNER JOIN  havaalani p ON (u.ucus_varis_id = p.havaalani_id)\n" +
-                                    "INNER JOIN  havaalani_sehir a ON (s.havaalani_sehir_id = a.havaalani_sehir_id )\n" +
-                                    "INNER JOIN  havaalani_sehir b ON (p.havaalani_sehir_id = b.havaalani_sehir_id)\n" +
-                                    "WHERE u.ucusId=? and rezervasyon.rezervasyon_id=?;";
     private static final String SELECT_UCUS_BILGILERI = "select distinct ucusId,(ucak.ucak_koltuk-(SELECT COUNT(ucusId) FROM rezervasyon WHERE ucusId=ucus.ucusId )) as bos_koltuk, a.havaalani_sehir_ad as kalkis_sehir, b.havaalani_sehir_ad as varis_sehir ,s.havaalani_ad as kalkis_ad,s.havaalani_kod as kalkis_kod, p.havaalani_ad as varis_ad, p.havaalani_kod as varis_kod, ucus_tarih, ucus_saat, ucus_sure, firma.firma_ad,firma.firma_logo , ucak.ucak_ad, ucak.ucak_koltuk, ucus_ucret from ucus JOIN havaalani JOIN havaalani_sehir\n" +
                                     "INNER JOIN  ucak ON (ucak.ucak_id = ucus.ucak_id)\n" +
                                     "INNER JOIN  firma ON (firma.firma_id = ucus.firma_id)\n" +
