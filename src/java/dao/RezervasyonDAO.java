@@ -337,12 +337,12 @@ public class RezervasyonDAO {
         List<Rezervasyon> rez = new ArrayList<>();
     
         String currentFormattedTime = getCurrentFormattedTime();
-        String u_saat = calculateNextHour(currentFormattedTime);
+        String uSaat = calculateNextHour(currentFormattedTime);
         String currentDate = getCurrentDate();
     
         String query = rezervasyon.getUcus_tarih().equals(currentDate)
                                    ? TEKYON_SORGULAMA_SELECT2 : TEKYON_SORGULAMA_SELECT1;
-        executeQueryAndPopulateResults(rez, rezervasyon, u_saat, query);
+        executeQueryAndPopulateResults(rez, rezervasyon, uSaat, query);
     
         return rez;
     }
@@ -368,7 +368,7 @@ public class RezervasyonDAO {
         return LocalDate.now().format(formatter);
     }
     
-    private void executeQueryAndPopulateResults(List<Rezervasyon> rez, Rezervasyon rezervasyon, String u_saat, String query) {
+    private void executeQueryAndPopulateResults(List<Rezervasyon> rez, Rezervasyon rezervasyon, String uSaat, String query) {
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
     
@@ -376,7 +376,7 @@ public class RezervasyonDAO {
             statement.setInt(2, rezervasyon.getHavaalani_varis_id());
             statement.setString(3, rezervasyon.getUcus_tarih());
             if (query.equals(TEKYON_SORGULAMA_SELECT2)) {
-                statement.setString(4, u_saat);
+                statement.setString(4, uSaat);
                 statement.setInt(5, rezervasyon.getCocuk_sayi() + rezervasyon.getYetiskin_sayi());
             } else {
                 statement.setInt(4, rezervasyon.getCocuk_sayi() + rezervasyon.getYetiskin_sayi());
