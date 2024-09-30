@@ -158,13 +158,13 @@ public class RezervasyonDAO {
         } else {
             sdakika = String.valueOf(mm);
         }
-        String Ssaat;
+        String ssaat;
         if (hh < 10) {
-            Ssaat = "0" + String.valueOf(hh + 2);
+            ssaat = "0" + String.valueOf(hh + 2);
         } else {
-            Ssaat = String.valueOf(hh + 2);
+            ssaat = String.valueOf(hh + 2);
         }
-        String ucus_saat = Ssaat + ":" + sdakika;            
+        String ucus_saat = ssaat + ":" + sdakika;            
         try (Connection connection = getConnection(); 
             PreparedStatement statement = connection.prepareStatement(IPTAL_DURUM1);) {
             statement.setInt(1, id);
@@ -195,13 +195,13 @@ public class RezervasyonDAO {
         } else {
             sdakika = String.valueOf(mm);
         }
-        String Ssaat;
+        String ssaat;
         if (hh < 10) {
-            Ssaat = "0" + String.valueOf(hh + 2);
+            ssaat = "0" + String.valueOf(hh + 2);
         } else {
-            Ssaat = String.valueOf(hh + 2);
+            ssaat = String.valueOf(hh + 2);
         }
-        String ucus_saat = Ssaat + ":" + sdakika;            
+        String ucus_saat = ssaat + ":" + sdakika;            
         try (Connection connection = getConnection(); 
             PreparedStatement statement = connection.prepareStatement(IPTAL_DURUM0);) {
             statement.setInt(1, id);
@@ -291,13 +291,13 @@ public class RezervasyonDAO {
                 }else{                                    
                     sdakika=String.valueOf(dakika);
                 }
-                String Ssaat;
+                String ssaat;
                 if(saat < 10){
-                    Ssaat="0"+String.valueOf(saat);
+                    ssaat="0"+String.valueOf(saat);
                 }else{                                    
-                    Ssaat=String.valueOf(saat);
+                    ssaat=String.valueOf(saat);
                 }
-                String varis_saat = Ssaat+":"+sdakika;              
+                String varis_saat = ssaat+":"+sdakika;              
                 int rezervasyon_id = rs.getInt(REZERVASYON_ID_COLUMN);
                 String kalkis_sehir=rs.getString(KALKIS_SEHIR_COLUMN);
                 String kalkis_ad=rs.getString(KALKIS_AD_COLUMN);
@@ -449,13 +449,13 @@ public class RezervasyonDAO {
                 }else{                                    
                     sdakika=String.valueOf(dakika);
                 }
-                String Ssaat;
+                String ssaat;
                 if(saat < 10){
-                    Ssaat="0"+String.valueOf(saat);
+                    ssaat="0"+String.valueOf(saat);
                 }else{                                    
-                    Ssaat=String.valueOf(saat);
+                    ssaat=String.valueOf(saat);
                 }
-                String varis_saat = Ssaat+":"+sdakika;
+                String varis_saat = ssaat+":"+sdakika;
                 String firma_ad=rs.getString(FIRMA_AD_COLUMN);
                 String firma_logo=rs.getString(FIRMA_LOGO_COLUMN);
                 Double ucus_ucret=rs.getDouble(UCUS_UCRET_COLUMN);
@@ -629,13 +629,13 @@ public class RezervasyonDAO {
                 }else{                                    
                     sdakika=String.valueOf(dakika);
                 }
-                String Ssaat;
+                String ssaat;
                 if(saat < 10){
-                    Ssaat="0"+String.valueOf(saat);
+                    ssaat="0"+String.valueOf(saat);
                 }else{                                    
-                    Ssaat=String.valueOf(saat);
+                    ssaat=String.valueOf(saat);
                 }
-                String varis_saat = Ssaat+":"+sdakika;              
+                String varis_saat = ssaat+":"+sdakika;              
                 int rezervasyon_id = rs.getInt(REZERVASYON_ID_COLUMN);
                 String kalkis_sehir=rs.getString(KALKIS_SEHIR_COLUMN);
                 String kalkis_ad=rs.getString(KALKIS_AD_COLUMN);
