@@ -63,11 +63,11 @@ public class CevapDAO {
                 String cevapTarih = rs.getString("cevapTarih");
                 String mesajAdsoyad = rs.getString(MESAJ_ADSOYAD);
                 String mesajEmail = rs.getString(MESAJ_EMAIL);
-                String mesaj_konu = rs.getString(MESAJ_KONU);
+                String mesajKonu = rs.getString(MESAJ_KONU);
                 String mesaj_icerik = rs.getString(MESAJ_ICERIK);
                 String mesaj_tarih = rs.getString(MESAJ_TARIH);
                 
-                cevaplar.add(new Cevap(cevapId, mesajId, cevapIcerik, cevapBalsik, cevapTarih, mesajAdsoyad, mesajEmail, mesaj_konu, mesaj_icerik, mesaj_tarih));
+                cevaplar.add(new Cevap(cevapId, mesajId, cevapIcerik, cevapBalsik, cevapTarih, mesajAdsoyad, mesajEmail, mesajKonu, mesaj_icerik, mesaj_tarih));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -84,13 +84,13 @@ public class CevapDAO {
             while (rs.next()) {
                 String mesajAdsoyad = rs.getString(MESAJ_ADSOYAD);
                 String mesajEmail = rs.getString(MESAJ_EMAIL);
-                String mesaj_konu = rs.getString(MESAJ_KONU);
+                String mesajKonu = rs.getString(MESAJ_KONU);
                 String mesaj_icerik = rs.getString(MESAJ_ICERIK);
                 String mesaj_tarih = rs.getString(MESAJ_TARIH);
                 int mesaj_okunma = rs.getInt("mesaj_okunma");
                 int mesaj_cevap = rs.getInt("mesaj_cevap");
 
-                mesaj = new Mesaj(id, mesajAdsoyad, mesajEmail, mesaj_konu, mesaj_icerik, mesaj_tarih, mesaj_okunma, mesaj_cevap);
+                mesaj = new Mesaj(id, mesajAdsoyad, mesajEmail, mesajKonu, mesaj_icerik, mesaj_tarih, mesaj_okunma, mesaj_cevap);
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -112,11 +112,11 @@ public class CevapDAO {
                 String cevapTarih = rs.getString("cevapTarih");
                 String mesajAdsoyad = rs.getString(MESAJ_ADSOYAD);
                 String mesajEmail = rs.getString(MESAJ_EMAIL);
-                String mesaj_konu = rs.getString(MESAJ_KONU);
+                String mesajKonu = rs.getString(MESAJ_KONU);
                 String mesaj_icerik = rs.getString(MESAJ_ICERIK);
                 String mesaj_tarih = rs.getString(MESAJ_TARIH);
                 
-                cevap = new Cevap(cevapId, mesajId, cevapIcerik, cevapBalsik, cevapTarih, mesajAdsoyad, mesajEmail, mesaj_konu, mesaj_icerik, mesaj_tarih);
+                cevap = new Cevap(cevapId, mesajId, cevapIcerik, cevapBalsik, cevapTarih, mesajAdsoyad, mesajEmail, mesajKonu, mesaj_icerik, mesaj_tarih);
             }
         } catch (SQLException e) {
             printSQLException(e);
