@@ -28,7 +28,7 @@ public class RezervasyonDAO {
     public static final String YOLCU_TEL_COLUMN = "yolcu_tel";
     public static final String YOLCU_TC_COLUMN = "yolcu_tc";
     public static final String YOLCU_TIP_COLUMN = "yolcu_tip";
-    public static final String KOLTUK_NO_COLUMN = "koltuk_no";
+    public static final String koltukNo_COLUMN = "koltukNo";
     public static final String ucusSaat_COLUMN = "ucusSaat";
     public static final String UCUS_TARIH_COLUMN = "ucus_tarih";
     public static final String UCUS_SURE_COLUMN = "ucus_seguro";
@@ -85,14 +85,14 @@ public class RezervasyonDAO {
                                     "INNER JOIN  havaalani_sehir a ON (a.havaalani_sehir_id = s.havaalani_sehir_id)\n" +
                                     "INNER JOIN  havaalani_sehir b ON (b.havaalani_sehir_id = p.havaalani_sehir_id)\n" +
                                     "WHERE ucus_id=?;";
-    private static final String KOLTUK_BILGI_SELECT="SELECT koltuk_no FROM rezervasyon \n" +
+    private static final String KOLTUK_BILGI_SELECT="SELECT koltukNo FROM rezervasyon \n" +
                                                 "WHERE ucus_id=?\n" +
-                                                "ORDER BY koltuk_no ASC;";  
-    private static final String KOLTUK_DOLU_SELECT="SELECT COUNT(koltuk_no) as koltuk_dolu FROM rezervasyon \n" +
+                                                "ORDER BY koltukNo ASC;";  
+    private static final String KOLTUK_DOLU_SELECT="SELECT COUNT(koltukNo) as koltuk_dolu FROM rezervasyon \n" +
                                                 "WHERE ucus_id=?;";
-    private static final String REZERVASYON_INSERT ="INSERT INTO rezervasyon (ucus_id, kullanici_id, pnr_no, yolcu_ad, yolcu_soyad, yolcu_email, yolcu_tel, yolcu_tc, yolcu_tip, yolcu_tarih, yolcu_ucret, koltuk_no) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";   
-    private static final String KOLTUK_NO_SELECT="SELECT * FROM rezervasyon WHERE ucus_id=? and koltuk_no=?;";
-    private static final String REZERVASYON_ISLEMLERIM_SELECT="SELECT r.rezervasyon_id,r.durum ,r.rezervasyon_tarih, r.pnr_no, r.yolcu_ad, r.yolcu_soyad, r.yolcu_email, r.yolcu_tel, r.yolcu_tc, r.yolcu_tip, r.yolcu_tarih, r.yolcu_ucret, r.koltuk_no, u.ucus_tarih, u.ucusSaat, u.ucus_sure, k.havaalani_ad as kalkis_ad, k.havaalani_kod as kalkis_kod, v.havaalani_ad as varis_ad, v.havaalani_kod as varis_kod, s1.havaalani_sehir_ad as kalkis_sehir, s2.havaalani_sehir_ad as varis_sehir, f.firma_ad, f.firma_logo, p.ucak_ad from rezervasyon AS r\n" +
+    private static final String REZERVASYON_INSERT ="INSERT INTO rezervasyon (ucus_id, kullanici_id, pnr_no, yolcu_ad, yolcu_soyad, yolcu_email, yolcu_tel, yolcu_tc, yolcu_tip, yolcu_tarih, yolcu_ucret, koltukNo) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";   
+    private static final String koltukNo_SELECT="SELECT * FROM rezervasyon WHERE ucus_id=? and koltukNo=?;";
+    private static final String REZERVASYON_ISLEMLERIM_SELECT="SELECT r.rezervasyon_id,r.durum ,r.rezervasyon_tarih, r.pnr_no, r.yolcu_ad, r.yolcu_soyad, r.yolcu_email, r.yolcu_tel, r.yolcu_tc, r.yolcu_tip, r.yolcu_tarih, r.yolcu_ucret, r.koltukNo, u.ucus_tarih, u.ucusSaat, u.ucus_sure, k.havaalani_ad as kalkis_ad, k.havaalani_kod as kalkis_kod, v.havaalani_ad as varis_ad, v.havaalani_kod as varis_kod, s1.havaalani_sehir_ad as kalkis_sehir, s2.havaalani_sehir_ad as varis_sehir, f.firma_ad, f.firma_logo, p.ucak_ad from rezervasyon AS r\n" +
                                                 "JOIN ucus AS u ON u.ucus_id = r.ucus_id\n" +
                                                 "JOIN havaalani AS k ON k.havaalani_id=u.ucus_kalkis_id \n" +
                                                 "JOIN havaalani AS v ON v.havaalani_id=u.ucus_varis_id\n" +
@@ -112,7 +112,7 @@ public class RezervasyonDAO {
                                                 "WHERE (r.kullanici_id=? and u.ucus_tarih < ?) OR (u.ucus_tarih = ? and u.ucusSaat < ?);";
     private static final String REZERVASYON_UPDATE = "update rezervasyon set yolcu_ad = ?, yolcu_soyad=?, yolcu_tc=?, yolcu_tarih=?, yolcu_email=?, yolcu_tel=? where rezervasyon_id = ?;";
     
-    private static final String RZERVASYON_INCELE="SELECT r.rezervasyon_id,r.durum ,r.rezervasyon_tarih, r.pnr_no, r.yolcu_ad, r.yolcu_soyad, r.yolcu_email, r.yolcu_tel, r.yolcu_tc, r.yolcu_tip, r.yolcu_tarih, r.yolcu_ucret, r.koltuk_no, u.ucus_tarih, u.ucusSaat, u.ucus_sure, k.havaalani_ad as kalkis_ad, k.havaalani_kod as kalkis_kod, v.havaalani_ad as varis_ad, v.havaalani_kod as varis_kod, s1.havaalani_sehir_ad as kalkis_sehir, s2.havaalani_sehir_ad as varis_sehir, f.firma_ad, f.firma_logo, p.ucak_ad from rezervasyon AS r\n" +
+    private static final String RZERVASYON_INCELE="SELECT r.rezervasyon_id,r.durum ,r.rezervasyon_tarih, r.pnr_no, r.yolcu_ad, r.yolcu_soyad, r.yolcu_email, r.yolcu_tel, r.yolcu_tc, r.yolcu_tip, r.yolcu_tarih, r.yolcu_ucret, r.koltukNo, u.ucus_tarih, u.ucusSaat, u.ucus_sure, k.havaalani_ad as kalkis_ad, k.havaalani_kod as kalkis_kod, v.havaalani_ad as varis_ad, v.havaalani_kod as varis_kod, s1.havaalani_sehir_ad as kalkis_sehir, s2.havaalani_sehir_ad as varis_sehir, f.firma_ad, f.firma_logo, p.ucak_ad from rezervasyon AS r\n" +
                                                 "JOIN ucus AS u ON u.ucus_id = r.ucus_id\n" +
                                                 "JOIN havaalani AS k ON k.havaalani_id=u.ucus_kalkis_id\n" +
                                                 "JOIN havaalani AS v ON v.havaalani_id=u.ucus_varis_id\n" +
@@ -213,12 +213,12 @@ public class RezervasyonDAO {
         return guncellenenSatir;
     }
     
-    public boolean koltukkontrol(int id, String koltuk_no) {
+    public boolean koltukkontrol(int id, String koltukNo) {
 
         try (Connection connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(KOLTUK_NO_SELECT);) {
+            PreparedStatement preparedStatement = connection.prepareStatement(koltukNo_SELECT);) {
             preparedStatement.setInt(1, id);
-            preparedStatement.setString(2, koltuk_no);
+            preparedStatement.setString(2, koltukNo);
             ResultSet rs = preparedStatement.executeQuery();
             
             if (rs.next()) {
@@ -247,7 +247,7 @@ public class RezervasyonDAO {
             preparedStatement.setInt(9, rez.getYolcu_tip());
             preparedStatement.setString(10, rez.getYolcu_tarih());
             preparedStatement.setDouble(11, rez.getYolcu_ucret());
-            preparedStatement.setString(12, rez.getKoltuk_no());
+            preparedStatement.setString(12, rez.getkoltukNo());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             printSQLException(e);
@@ -272,7 +272,7 @@ public class RezervasyonDAO {
                 int yolcu_tip = rs.getInt(YOLCU_TIP_COLUMN);
                 String yolcu_tarih = rs.getString("yolcu_tarih");
                 Double yolcu_ucret=rs.getDouble("yolcu_ucret"); 
-                String koltuk_no = rs.getString(KOLTUK_NO_COLUMN);
+                String koltukNo = rs.getString(koltukNo_COLUMN);
                 String ucusSaat=rs.getString(ucusSaat_COLUMN);
                 ucusSaat=ucusSaat.substring(0, 5);
                 String ucus_tarih=rs.getString(UCUS_TARIH_COLUMN);
@@ -309,7 +309,7 @@ public class RezervasyonDAO {
                 String firma_logo=rs.getString(FIRMA_LOGO_COLUMN);
                 String ucak_ad=rs.getString(UCAK_AD_COLUMN);
                 String rezervasyon_tarih=rs.getString(REZERVASYON_TARIH_COLUMN);          
-                rez.add(new Rezervasyon(durum, rezervasyon_id, rezervasyon_tarih, pnr_no,yolcu_ad, yolcu_soyad,yolcu_email, yolcu_tel, yolcu_tc, yolcu_tip, koltuk_no, ucus_tarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucusSaat, ucus_sure, firma_ad, firma_logo, ucus_s, ucus_d, varis_saat,ucak_ad, yolcu_tarih, yolcu_ucret));
+                rez.add(new Rezervasyon(durum, rezervasyon_id, rezervasyon_tarih, pnr_no,yolcu_ad, yolcu_soyad,yolcu_email, yolcu_tel, yolcu_tc, yolcu_tip, koltukNo, ucus_tarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucusSaat, ucus_sure, firma_ad, firma_logo, ucus_s, ucus_d, varis_saat,ucak_ad, yolcu_tarih, yolcu_ucret));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -501,8 +501,8 @@ public class RezervasyonDAO {
                 String yolcu_tel = rs.getString(YOLCU_TEL_COLUMN);
                 String yolcu_tc = rs.getString(YOLCU_TC_COLUMN);
                 int yolcu_tip = rs.getInt(YOLCU_TIP_COLUMN); 
-                String koltuk_no = rs.getString(KOLTUK_NO_COLUMN);
-                rezervasyon = new Rezervasyon(rezervasyon_id, rezervasyon_tarih,pnr_no,yolcu_ad, yolcu_soyad,yolcu_email,yolcu_tel,yolcu_tc,yolcu_tip,koltuk_no,kullanici_id, ucus_id  );
+                String koltukNo = rs.getString(koltukNo_COLUMN);
+                rezervasyon = new Rezervasyon(rezervasyon_id, rezervasyon_tarih,pnr_no,yolcu_ad, yolcu_soyad,yolcu_email,yolcu_tel,yolcu_tc,yolcu_tip,koltukNo,kullanici_id, ucus_id  );
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -625,7 +625,7 @@ public class RezervasyonDAO {
                 int yolcu_tip = rs.getInt(YOLCU_TIP_COLUMN);
                 String yolcu_tarih = rs.getString("yolcu_tarih");
                 Double yolcu_ucret=rs.getDouble("yolcu_ucret"); 
-                String koltuk_no = rs.getString(KOLTUK_NO_COLUMN);
+                String koltukNo = rs.getString(koltukNo_COLUMN);
                 String ucusSaat=rs.getString(ucusSaat_COLUMN);
                 ucusSaat=ucusSaat.substring(0, 5);
                 String ucus_tarih=rs.getString(UCUS_TARIH_COLUMN);
@@ -662,7 +662,7 @@ public class RezervasyonDAO {
                 String firma_logo=rs.getString(FIRMA_LOGO_COLUMN);
                 String ucak_ad=rs.getString(UCAK_AD_COLUMN);
                 String rezervasyon_tarih=rs.getString(REZERVASYON_TARIH_COLUMN);          
-                rez.add(new Rezervasyon(durum, rezervasyon_id, rezervasyon_tarih, pnr_no,yolcu_ad, yolcu_soyad,yolcu_email, yolcu_tel, yolcu_tc, yolcu_tip, koltuk_no, ucus_tarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucusSaat, ucus_sure, firma_ad, firma_logo, ucus_s, ucus_d, varis_saat,ucak_ad, yolcu_tarih, yolcu_ucret));
+                rez.add(new Rezervasyon(durum, rezervasyon_id, rezervasyon_tarih, pnr_no,yolcu_ad, yolcu_soyad,yolcu_email, yolcu_tel, yolcu_tc, yolcu_tip, koltukNo, ucus_tarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucusSaat, ucus_sure, firma_ad, firma_logo, ucus_s, ucus_d, varis_saat,ucak_ad, yolcu_tarih, yolcu_ucret));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -676,8 +676,8 @@ public class RezervasyonDAO {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                int koltuk_no = rs.getInt(KOLTUK_NO_COLUMN);
-                rezervasyonlar.add(new Rezervasyon(koltuk_no));
+                int koltukNo = rs.getInt(koltukNo_COLUMN);
+                rezervasyonlar.add(new Rezervasyon(koltukNo));
             }
         } catch (SQLException e) {
             printSQLException(e);
