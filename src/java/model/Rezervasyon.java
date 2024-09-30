@@ -1,3 +1,4 @@
+package model;
 class Yolcu {
     private String nombre;
     private String apellido;
