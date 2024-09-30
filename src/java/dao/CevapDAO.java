@@ -60,14 +60,14 @@ public class CevapDAO {
                 int mesajId = rs.getInt("mesajId");
                 String cevapIcerik = rs.getString("cevapIcerik");
                 String cevapBalsik = rs.getString("cevapBalsik");
-                String cevap_tarih = rs.getString("cevap_tarih");
+                String cevapTarih = rs.getString("cevapTarih");
                 String mesaj_adsoyad = rs.getString(MESAJ_ADSOYAD);
                 String mesaj_email = rs.getString(MESAJ_EMAIL);
                 String mesaj_konu = rs.getString(MESAJ_KONU);
                 String mesaj_icerik = rs.getString(MESAJ_ICERIK);
                 String mesaj_tarih = rs.getString(MESAJ_TARIH);
                 
-                cevaplar.add(new Cevap(cevapId, mesajId, cevapIcerik, cevapBalsik, cevap_tarih, mesaj_adsoyad, mesaj_email, mesaj_konu, mesaj_icerik, mesaj_tarih));
+                cevaplar.add(new Cevap(cevapId, mesajId, cevapIcerik, cevapBalsik, cevapTarih, mesaj_adsoyad, mesaj_email, mesaj_konu, mesaj_icerik, mesaj_tarih));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -109,14 +109,14 @@ public class CevapDAO {
                 int mesajId = rs.getInt("mesajId");
                 String cevapIcerik = rs.getString("cevapIcerik");
                 String cevapBalsik = rs.getString("cevapBalsik");
-                String cevap_tarih = rs.getString("cevap_tarih");
+                String cevapTarih = rs.getString("cevapTarih");
                 String mesaj_adsoyad = rs.getString(MESAJ_ADSOYAD);
                 String mesaj_email = rs.getString(MESAJ_EMAIL);
                 String mesaj_konu = rs.getString(MESAJ_KONU);
                 String mesaj_icerik = rs.getString(MESAJ_ICERIK);
                 String mesaj_tarih = rs.getString(MESAJ_TARIH);
                 
-                cevap = new Cevap(cevapId, mesajId, cevapIcerik, cevapBalsik, cevap_tarih, mesaj_adsoyad, mesaj_email, mesaj_konu, mesaj_icerik, mesaj_tarih);
+                cevap = new Cevap(cevapId, mesajId, cevapIcerik, cevapBalsik, cevapTarih, mesaj_adsoyad, mesaj_email, mesaj_konu, mesaj_icerik, mesaj_tarih);
             }
         } catch (SQLException e) {
             printSQLException(e);
