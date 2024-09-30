@@ -65,9 +65,9 @@ public class CevapDAO {
                 String mesajEmail = rs.getString(MESAJ_EMAIL);
                 String mesajKonu = rs.getString(MESAJ_KONU);
                 String mesajIcerik = rs.getString(MESAJ_ICERIK);
-                String mesaj_tarih = rs.getString(MESAJ_TARIH);
+                String mesajTarih = rs.getString(MESAJ_TARIH);
                 
-                cevaplar.add(new Cevap(cevapId, mesajId, cevapIcerik, cevapBalsik, cevapTarih, mesajAdsoyad, mesajEmail, mesajKonu, mesajIcerik, mesaj_tarih));
+                cevaplar.add(new Cevap(cevapId, mesajId, cevapIcerik, cevapBalsik, cevapTarih, mesajAdsoyad, mesajEmail, mesajKonu, mesajIcerik, mesajTarih));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -86,11 +86,11 @@ public class CevapDAO {
                 String mesajEmail = rs.getString(MESAJ_EMAIL);
                 String mesajKonu = rs.getString(MESAJ_KONU);
                 String mesajIcerik = rs.getString(MESAJ_ICERIK);
-                String mesaj_tarih = rs.getString(MESAJ_TARIH);
+                String mesajTarih = rs.getString(MESAJ_TARIH);
                 int mesaj_okunma = rs.getInt("mesaj_okunma");
                 int mesaj_cevap = rs.getInt("mesaj_cevap");
 
-                mesaj = new Mesaj(id, mesajAdsoyad, mesajEmail, mesajKonu, mesajIcerik, mesaj_tarih, mesaj_okunma, mesaj_cevap);
+                mesaj = new Mesaj(id, mesajAdsoyad, mesajEmail, mesajKonu, mesajIcerik, mesajTarih, mesaj_okunma, mesaj_cevap);
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -114,9 +114,9 @@ public class CevapDAO {
                 String mesajEmail = rs.getString(MESAJ_EMAIL);
                 String mesajKonu = rs.getString(MESAJ_KONU);
                 String mesajIcerik = rs.getString(MESAJ_ICERIK);
-                String mesaj_tarih = rs.getString(MESAJ_TARIH);
+                String mesajTarih = rs.getString(MESAJ_TARIH);
                 
-                cevap = new Cevap(cevapId, mesajId, cevapIcerik, cevapBalsik, cevapTarih, mesajAdsoyad, mesajEmail, mesajKonu, mesajIcerik, mesaj_tarih);
+                cevap = new Cevap(cevapId, mesajId, cevapIcerik, cevapBalsik, cevapTarih, mesajAdsoyad, mesajEmail, mesajKonu, mesajIcerik, mesajTarih);
             }
         } catch (SQLException e) {
             printSQLException(e);
