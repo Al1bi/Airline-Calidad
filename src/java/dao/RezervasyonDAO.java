@@ -277,9 +277,9 @@ public class RezervasyonDAO {
                 ucusSaat=ucusSaat.substring(0, 5);
                 String ucusTarih=rs.getString(UCUS_TARIH_COLUMN);
                 String ucusSure=rs.getString(UCUS_SURE_COLUMN);
-                String[] ARRAYucus_sure = ucus_sure.split(":"); 
-                String ucus_s = ARRAYucus_sure[0];
-                String ucus_d = ARRAYucus_sure[1];
+                String[] arrayUcusSure = ucusSure.split(":"); 
+                String ucus_s = arrayUcusSure[0];
+                String ucus_d = arrayUcusSure[1];
                 String[] ARRAYucus_saat = ucus_saat.split(":");
                 String s = ARRAYucus_saat[0];
                 String d = ARRAYucus_saat[1];
@@ -435,9 +435,9 @@ public class RezervasyonDAO {
                 String ucusTarih=rs.getString(UCUS_TARIH_COLUMN);
                 String ucusSure=rs.getString(UCUS_SURE_COLUMN);
                 
-                String[] ARRAYucus_sure = ucus_sure.split(":"); 
-                String ucus_s = ARRAYucus_sure[0];
-                String ucus_d = ARRAYucus_sure[1];
+                String[] arrayUcusSure = ucus_sure.split(":"); 
+                String ucus_s = arrayUcusSure[0];
+                String ucus_d = arrayUcusSure[1];
                 String[] ARRAYucus_saat = ucusSaat.split(":");
                 String s = ARRAYucus_saat[0];
                 String d = ARRAYucus_saat[1];
@@ -506,9 +506,9 @@ public class RezervasyonDAO {
                 String ucusSaat = rs.getString(UCUS_SAAT_COLUMN);
                 ucusSaat=ucusSaat.substring(0, 5);
                 String ucusSure = rs.getString(UCUS_SURE_COLUMN); 
-                String[] ARRAYucus_sure = ucus_sure.split(":"); 
-                String ucus_s = ARRAYucus_sure[0];
-                String ucus_d = ARRAYucus_sure[1];
+                String[] arrayUcusSure = ucus_sure.split(":"); 
+                String ucus_s = arrayUcusSure[0];
+                String ucus_d = arrayUcusSure[1];
                 String ucusTarih = rs.getString(UCUS_TARIH_COLUMN);
                 String ucak_ad = rs.getString(UCAK_AD_COLUMN);
                 String firma_ad = rs.getString(FIRMA_AD_COLUMN);
@@ -615,9 +615,9 @@ public class RezervasyonDAO {
                 ucusSaat=ucusSaat.substring(0, 5);
                 String ucusTarih=rs.getString(UCUS_TARIH_COLUMN);
                 String ucusSure=rs.getString(UCUS_SURE_COLUMN);
-                String[] ARRAYucus_sure = ucus_sure.split(":"); 
-                String ucus_s = ARRAYucus_sure[0];
-                String ucus_d = ARRAYucus_sure[1];
+                String[] arrayUcusSure = ucus_sure.split(":"); 
+                String ucus_s = arrayUcusSure[0];
+                String ucus_d = arrayUcusSure[1];
                 String[] ARRAYucus_saat = ucus_saat.split(":");
                 String s = ARRAYucus_saat[0];
                 String d = ARRAYucus_saat[1];
