@@ -147,9 +147,9 @@ public class RezervasyonDAO {
         String tarih = now.format(formatter);
         String saat = now.format(timeformatter);
         
-        String[] ARRAYsaat = saat.split(":");
-        String h = ARRAYsaat[0];
-        String m = ARRAYsaat[1];
+        String[] arraySaat = saat.split(":");
+        String h = arraySaat[0];
+        String m = arraySaat[1];
         int hh = Integer.parseInt(h);
         int mm = Integer.parseInt(m);
         String Sdakika;
@@ -184,9 +184,9 @@ public class RezervasyonDAO {
         String tarih = now.format(formatter);
         String saat = now.format(timeformatter);
         
-        String[] ARRAYsaat = saat.split(":");
-        String h = ARRAYsaat[0];
-        String m = ARRAYsaat[1];
+        String[] arraySaat = saat.split(":");
+        String h = arraySaat[0];
+        String m = arraySaat[1];
         int hh = Integer.parseInt(h);
         int mm = Integer.parseInt(m);
         String Sdakika;
