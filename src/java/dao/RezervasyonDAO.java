@@ -460,8 +460,8 @@ public class RezervasyonDAO {
                 String firmaLogo=rs.getString(FIRMA_LOGO_COLUMN);
                 Double ucusUcret=rs.getDouble(UCUS_UCRET_COLUMN);
                 String ucakAd=rs.getString(UCAK_AD_COLUMN);
-                int ucak_koltuk = rs.getInt("ucak_koltuk");
-                rez = new Rezervasyon(ucusTarih,ucusId, kalkisSehir,kalkisAd,kalkisKod,varisSehir,varisAd,varisKod,ucusSaat,ucusSure,firmaAd,firmaLogo,ucusUcret, ucusS, ucusD, varisSaat,ucakAd,ucak_koltuk);
+                int ucakKoltuk = rs.getInt("ucak_koltuk");
+                rez = new Rezervasyon(ucusTarih,ucusId, kalkisSehir,kalkisAd,kalkisKod,varisSehir,varisAd,varisKod,ucusSaat,ucusSure,firmaAd,firmaLogo,ucusUcret, ucusS, ucusD, varisSaat,ucakAd,ucakKoltuk);
             }
         } catch (SQLException e) {
             printSQLException(e);
