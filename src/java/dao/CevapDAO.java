@@ -28,11 +28,11 @@ public class CevapDAO {
 
     private static final String CEVAP_SELECT_ALL = "SELECT * FROM cevap " +
             "INNER JOIN mesaj ON (mesaj.mesaj_id = cevap.mesaj_id);";
-    private static final String CEVAP_DELETE = "DELETE FROM cevap WHERE cevap_id = ?;";
+    private static final String CEVAP_DELETE = "DELETE FROM cevap WHERE cevapId = ?;";
     private static final String MESAJ_SELECT_ID = "SELECT * FROM mesaj WHERE mesaj_id=?;";
     private static final String CEVAP_INSERT = "INSERT INTO cevap (mesaj_id, cevap_icerik, cevap_baslik) VALUES (?,?,?);"; 
     private static final String CEVAP_SELECT_ID = "SELECT * FROM cevap " +
-            "INNER JOIN mesaj ON (mesaj.mesaj_id = cevap.mesaj_id) WHERE cevap_id=?;";
+            "INNER JOIN mesaj ON (mesaj.mesaj_id = cevap.mesaj_id) WHERE cevapId=?;";
 
     private static final Logger logger = Logger.getLogger(CevapDAO.class.getName());
 
@@ -56,7 +56,7 @@ public class CevapDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(CEVAP_SELECT_ALL);) {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                int cevap_id = rs.getInt("cevap_id");
+                int cevapId = rs.getInt("cevapId");
                 int mesaj_id = rs.getInt("mesaj_id");
                 String cevap_icerik = rs.getString("cevap_icerik");
                 String cevap_baslik = rs.getString("cevap_baslik");
@@ -67,7 +67,7 @@ public class CevapDAO {
                 String mesaj_icerik = rs.getString(MESAJ_ICERIK);
                 String mesaj_tarih = rs.getString(MESAJ_TARIH);
                 
-                cevaplar.add(new Cevap(cevap_id, mesaj_id, cevap_icerik, cevap_baslik, cevap_tarih, mesaj_adsoyad, mesaj_email, mesaj_konu, mesaj_icerik, mesaj_tarih));
+                cevaplar.add(new Cevap(cevapId, mesaj_id, cevap_icerik, cevap_baslik, cevap_tarih, mesaj_adsoyad, mesaj_email, mesaj_konu, mesaj_icerik, mesaj_tarih));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -105,7 +105,7 @@ public class CevapDAO {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                int cevap_id = rs.getInt("cevap_id");
+                int cevapId = rs.getInt("cevapId");
                 int mesaj_id = rs.getInt("mesaj_id");
                 String cevap_icerik = rs.getString("cevap_icerik");
                 String cevap_baslik = rs.getString("cevap_baslik");
@@ -116,7 +116,7 @@ public class CevapDAO {
                 String mesaj_icerik = rs.getString(MESAJ_ICERIK);
                 String mesaj_tarih = rs.getString(MESAJ_TARIH);
                 
-                cevap = new Cevap(cevap_id, mesaj_id, cevap_icerik, cevap_baslik, cevap_tarih, mesaj_adsoyad, mesaj_email, mesaj_konu, mesaj_icerik, mesaj_tarih);
+                cevap = new Cevap(cevapId, mesaj_id, cevap_icerik, cevap_baslik, cevap_tarih, mesaj_adsoyad, mesaj_email, mesaj_konu, mesaj_icerik, mesaj_tarih);
             }
         } catch (SQLException e) {
             printSQLException(e);
