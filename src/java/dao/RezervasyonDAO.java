@@ -280,9 +280,9 @@ public class RezervasyonDAO {
                 String[] arrayUcusSure = ucusSure.split(":"); 
                 String ucusS = arrayUcusSure[0];
                 String ucusD = arrayUcusSure[1];
-                String[] ARRAYucus_saat = ucusSaat.split(":");
-                String s = ARRAYucus_saat[0];
-                String d = ARRAYucus_saat[1];
+                String[] arrayUcusSaat = ucusSaat.split(":");
+                String s = arrayUcusSaat[0];
+                String d = arrayUcusSaat[1];
                 int saat=(Integer.parseInt(s)+Integer.parseInt(ucusS))%24 ;
                 int dakika=(Integer.parseInt(d)+Integer.parseInt(ucusD))%60 ;
                 String sdakika;
@@ -438,9 +438,9 @@ public class RezervasyonDAO {
                 String[] arrayUcusSure = ucus_sure.split(":"); 
                 String ucusS = arrayUcusSure[0];
                 String ucusD = arrayUcusSure[1];
-                String[] ARRAYucus_saat = ucusSaat.split(":");
-                String s = ARRAYucus_saat[0];
-                String d = ARRAYucus_saat[1];
+                String[] arrayUcusSaat = ucusSaat.split(":");
+                String s = arrayUcusSaat[0];
+                String d = arrayUcusSaat[1];
                 int saat=(Integer.parseInt(s)+Integer.parseInt(ucusS))%24 ;
                 int dakika=(Integer.parseInt(d)+Integer.parseInt(ucusD))%60 ;
                 String sdakika;
@@ -618,9 +618,9 @@ public class RezervasyonDAO {
                 String[] arrayUcusSure = ucus_sure.split(":"); 
                 String ucusS = arrayUcusSure[0];
                 String ucusD = arrayUcusSure[1];
-                String[] ARRAYucus_saat = ucus_saat.split(":");
-                String s = ARRAYucus_saat[0];
-                String d = ARRAYucus_saat[1];
+                String[] arrayUcusSaat = ucus_saat.split(":");
+                String s = arrayUcusSaat[0];
+                String d = arrayUcusSaat[1];
                 int saat=(Integer.parseInt(s)+Integer.parseInt(ucusS))%24 ;
                 int dakika=(Integer.parseInt(d)+Integer.parseInt(ucusD))%60 ;
                 String sdakika;
