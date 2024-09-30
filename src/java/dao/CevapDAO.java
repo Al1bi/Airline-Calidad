@@ -87,10 +87,10 @@ public class CevapDAO {
                 String mesajKonu = rs.getString(MESAJ_KONU);
                 String mesajIcerik = rs.getString(MESAJ_ICERIK);
                 String mesajTarih = rs.getString(MESAJ_TARIH);
-                int mesaj_okunma = rs.getInt("mesaj_okunma");
+                int mesajOkunma = rs.getInt("mesaj_okunma");
                 int mesaj_cevap = rs.getInt("mesaj_cevap");
 
-                mesaj = new Mesaj(id, mesajAdsoyad, mesajEmail, mesajKonu, mesajIcerik, mesajTarih, mesaj_okunma, mesaj_cevap);
+                mesaj = new Mesaj(id, mesajAdsoyad, mesajEmail, mesajKonu, mesajIcerik, mesajTarih, mesajOkunma, mesaj_cevap);
             }
         } catch (SQLException e) {
             printSQLException(e);
