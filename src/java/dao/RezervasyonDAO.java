@@ -270,7 +270,7 @@ public class RezervasyonDAO {
                 String yolcuTel = rs.getString(YOLCU_TEL_COLUMN);
                 String yolcuTc = rs.getString(YOLCU_TC_COLUMN);
                 int yolcuTip = rs.getInt(YOLCU_TIP_COLUMN);
-                String yolcu_tarih = rs.getString("yolcu_tarih");
+                String yolcuTarih = rs.getString("yolcu_tarih");
                 Double yolcu_ucret=rs.getDouble("yolcu_ucret"); 
                 String koltuk_no = rs.getString(KOLTUK_NO_COLUMN);
                 String ucus_saat=rs.getString(UCUS_SAAT_COLUMN);
@@ -309,7 +309,7 @@ public class RezervasyonDAO {
                 String firma_logo=rs.getString(FIRMA_LOGO_COLUMN);
                 String ucak_ad=rs.getString(UCAK_AD_COLUMN);
                 String rezervasyon_tarih=rs.getString(REZERVASYON_TARIH_COLUMN);          
-                rez.add(new Rezervasyon(durum, rezervasyon_id, rezervasyon_tarih, pnrNo,yolcuAd, yolcuSoyad,yolcuEmail, yolcuTel, yolcuTc, yolcuTip, koltuk_no, ucus_tarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucus_saat, ucus_sure, firma_ad, firma_logo, ucus_s, ucus_d, varis_saat,ucak_ad, yolcu_tarih, yolcu_ucret));
+                rez.add(new Rezervasyon(durum, rezervasyon_id, rezervasyon_tarih, pnrNo,yolcuAd, yolcuSoyad,yolcuEmail, yolcuTel, yolcuTc, yolcuTip, koltuk_no, ucus_tarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucus_saat, ucus_sure, firma_ad, firma_logo, ucus_s, ucus_d, varis_saat,ucak_ad, yolcuTarih, yolcu_ucret));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -486,8 +486,8 @@ public class RezervasyonDAO {
                 String yolcuTel = rs.getString(YOLCU_TEL_COLUMN);
                 String yolcuTc = rs.getString(YOLCU_TC_COLUMN);
                 int yolcuTip = rs.getInt(YOLCU_TIP_COLUMN); 
-                String koltuk_no = rs.getString(KOLTUK_NO_COLUMN);
-                rezervasyon = new Rezervasyon(rezervasyon_id, rezervasyon_tarih,pnrNo,yolcuAd, yolcuSoyad,yolcuEmail,yolcuTel,yolcuTc,yolcuTip,koltuk_no,kullanici_id, ucus_id  );
+                String koltukNo = rs.getString(KOLTUK_NO_COLUMN);
+                rezervasyon = new Rezervasyon(rezervasyon_id, rezervasyon_tarih,pnrNo,yolcuAd, yolcuSoyad,yolcuEmail,yolcuTel,yolcuTc,yolcuTip,koltukNo,kullanici_id, ucus_id  );
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -608,7 +608,7 @@ public class RezervasyonDAO {
                 String yolcuTel = rs.getString(YOLCU_TEL_COLUMN);
                 String yolcuTc = rs.getString(YOLCU_TC_COLUMN);
                 int yolcuTip = rs.getInt(YOLCU_TIP_COLUMN);
-                String yolcu_tarih = rs.getString("yolcu_tarih");
+                String yolcuTarih = rs.getString("yolcu_tarih");
                 Double yolcu_ucret=rs.getDouble("yolcu_ucret"); 
                 String koltuk_no = rs.getString(KOLTUK_NO_COLUMN);
                 String ucusSaat=rs.getString(UCUS_SAAT_COLUMN);
@@ -647,7 +647,7 @@ public class RezervasyonDAO {
                 String firma_logo=rs.getString(FIRMA_LOGO_COLUMN);
                 String ucak_ad=rs.getString(UCAK_AD_COLUMN);
                 String rezervasyon_tarih=rs.getString(REZERVASYON_TARIH_COLUMN);          
-                rez.add(new Rezervasyon(durum, rezervasyon_id, rezervasyon_tarih, pnrNo,yolcuAd, yolcuSoyad,yolcuEmail, yolcuTel, yolcuTc, yolcuTip, koltuk_no, ucus_tarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucusSaat, ucus_sure, firma_ad, firma_logo, ucus_s, ucus_d, varis_saat,ucak_ad, yolcu_tarih, yolcu_ucret));
+                rez.add(new Rezervasyon(durum, rezervasyon_id, rezervasyon_tarih, pnrNo,yolcuAd, yolcuSoyad,yolcuEmail, yolcuTel, yolcuTc, yolcuTip, koltuk_no, ucus_tarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucusSaat, ucus_sure, firma_ad, firma_logo, ucus_s, ucus_d, varis_saat,ucak_ad, yolcuTarih, yolcu_ucret));
             }
         } catch (SQLException e) {
             printSQLException(e);
