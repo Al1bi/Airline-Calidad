@@ -279,12 +279,12 @@ public class RezervasyonDAO {
                 String ucusSure=rs.getString(UCUS_SURE_COLUMN);
                 String[] arrayUcusSure = ucusSure.split(":"); 
                 String ucusS = arrayUcusSure[0];
-                String ucus_d = arrayUcusSure[1];
+                String ucusD = arrayUcusSure[1];
                 String[] ARRAYucus_saat = ucusSaat.split(":");
                 String s = ARRAYucus_saat[0];
                 String d = ARRAYucus_saat[1];
                 int saat=(Integer.parseInt(s)+Integer.parseInt(ucusS))%24 ;
-                int dakika=(Integer.parseInt(d)+Integer.parseInt(ucus_d))%60 ;
+                int dakika=(Integer.parseInt(d)+Integer.parseInt(ucusD))%60 ;
                 String sdakika;
                 if(dakika < 10){
                     sdakika="0"+String.valueOf(dakika);
@@ -309,7 +309,7 @@ public class RezervasyonDAO {
                 String firma_logo=rs.getString(FIRMA_LOGO_COLUMN);
                 String ucak_ad=rs.getString(UCAK_AD_COLUMN);
                 String rezervasyon_tarih=rs.getString(REZERVASYON_TARIH_COLUMN);          
-                rez.add(new Rezervasyon(durum, rezervasyon_id, rezervasyon_tarih, pnrNo,yolcuAd, yolcuSoyad,yolcuEmail, yolcuTel, yolcuTc, yolcuTip, koltukNo, ucusTarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucusSaat, ucusSure, firma_ad, firma_logo, ucusS, ucus_d, varis_saat,ucak_ad, yolcuTarih, yolcuUcret));
+                rez.add(new Rezervasyon(durum, rezervasyon_id, rezervasyon_tarih, pnrNo,yolcuAd, yolcuSoyad,yolcuEmail, yolcuTel, yolcuTc, yolcuTip, koltukNo, ucusTarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucusSaat, ucusSure, firma_ad, firma_logo, ucusS, ucusD, varis_saat,ucak_ad, yolcuTarih, yolcuUcret));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -437,12 +437,12 @@ public class RezervasyonDAO {
                 
                 String[] arrayUcusSure = ucus_sure.split(":"); 
                 String ucusS = arrayUcusSure[0];
-                String ucus_d = arrayUcusSure[1];
+                String ucusD = arrayUcusSure[1];
                 String[] ARRAYucus_saat = ucusSaat.split(":");
                 String s = ARRAYucus_saat[0];
                 String d = ARRAYucus_saat[1];
-                int saat=(Integer.parseInt(s)+Integer.parseInt(ucus_s))%24 ;
-                int dakika=(Integer.parseInt(d)+Integer.parseInt(ucus_d))%60 ;
+                int saat=(Integer.parseInt(s)+Integer.parseInt(ucusS))%24 ;
+                int dakika=(Integer.parseInt(d)+Integer.parseInt(ucusD))%60 ;
                 String sdakika;
                 if(dakika < 10){
                     sdakika="0"+String.valueOf(dakika);
@@ -461,7 +461,7 @@ public class RezervasyonDAO {
                 Double ucusUcret=rs.getDouble(UCUS_UCRET_COLUMN);
                 String ucak_ad=rs.getString(UCAK_AD_COLUMN);
                 int ucak_koltuk = rs.getInt("ucak_koltuk");
-                rez = new Rezervasyon(ucusTarih,ucus_id, kalkis_sehir,kalkis_ad,kalkis_kod,varis_sehir,varis_ad,varis_kod,ucusSaat,ucusSure,firma_ad,firma_logo,ucusUcret, ucusS, ucus_d, varis_saat,ucak_ad,ucak_koltuk);
+                rez = new Rezervasyon(ucusTarih,ucus_id, kalkis_sehir,kalkis_ad,kalkis_kod,varis_sehir,varis_ad,varis_kod,ucusSaat,ucusSure,firma_ad,firma_logo,ucusUcret, ucusS, ucusD, varis_saat,ucak_ad,ucak_koltuk);
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -508,7 +508,7 @@ public class RezervasyonDAO {
                 String ucusSure = rs.getString(UCUS_SURE_COLUMN); 
                 String[] arrayUcusSure = ucus_sure.split(":"); 
                 String ucusS = arrayUcusSure[0];
-                String ucus_d = arrayUcusSure[1];
+                String ucusD = arrayUcusSure[1];
                 String ucusTarih = rs.getString(UCUS_TARIH_COLUMN);
                 String ucak_ad = rs.getString(UCAK_AD_COLUMN);
                 String firma_ad = rs.getString(FIRMA_AD_COLUMN);
@@ -520,7 +520,7 @@ public class RezervasyonDAO {
                 String varis_ad = rs.getString(VARIS_AD_COLUMN);
                 String varis_kod = rs.getString(VARIS_KOD_COLUMN);
                 
-                rezervasyon = new Rezervasyon(ucusTarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucusSaat, firma_ad, firma_logo, ucusS, ucus_d, ucak_ad);
+                rezervasyon = new Rezervasyon(ucusTarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucusSaat, firma_ad, firma_logo, ucusS, ucusD, ucak_ad);
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -617,12 +617,12 @@ public class RezervasyonDAO {
                 String ucusSure=rs.getString(UCUS_SURE_COLUMN);
                 String[] arrayUcusSure = ucus_sure.split(":"); 
                 String ucusS = arrayUcusSure[0];
-                String ucus_d = arrayUcusSure[1];
+                String ucusD = arrayUcusSure[1];
                 String[] ARRAYucus_saat = ucus_saat.split(":");
                 String s = ARRAYucus_saat[0];
                 String d = ARRAYucus_saat[1];
-                int saat=(Integer.parseInt(s)+Integer.parseInt(ucus_s))%24 ;
-                int dakika=(Integer.parseInt(d)+Integer.parseInt(ucus_d))%60 ;
+                int saat=(Integer.parseInt(s)+Integer.parseInt(ucusS))%24 ;
+                int dakika=(Integer.parseInt(d)+Integer.parseInt(ucusD))%60 ;
                 String sdakika;
                 if(dakika < 10){
                     sdakika="0"+String.valueOf(dakika);
@@ -647,7 +647,7 @@ public class RezervasyonDAO {
                 String firma_logo=rs.getString(FIRMA_LOGO_COLUMN);
                 String ucak_ad=rs.getString(UCAK_AD_COLUMN);
                 String rezervasyon_tarih=rs.getString(REZERVASYON_TARIH_COLUMN);          
-                rez.add(new Rezervasyon(durum, rezervasyon_id, rezervasyon_tarih, pnrNo,yolcuAd, yolcuSoyad,yolcuEmail, yolcuTel, yolcuTc, yolcuTip, koltukNo, ucusTarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucusSaat, ucusSure, firma_ad, firma_logo, ucusS, ucus_d, varis_saat,ucak_ad, yolcuTarih, yolcuUcret));
+                rez.add(new Rezervasyon(durum, rezervasyon_id, rezervasyon_tarih, pnrNo,yolcuAd, yolcuSoyad,yolcuEmail, yolcuTel, yolcuTc, yolcuTip, koltukNo, ucusTarih, kalkis_sehir, kalkis_ad, kalkis_kod, varis_sehir, varis_ad, varis_kod, ucusSaat, ucusSure, firma_ad, firma_logo, ucusS, ucusD, varis_saat,ucak_ad, yolcuTarih, yolcuUcret));
             }
         } catch (SQLException e) {
             printSQLException(e);
