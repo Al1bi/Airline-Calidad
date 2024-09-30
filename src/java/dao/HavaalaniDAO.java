@@ -59,13 +59,13 @@ public class HavaalaniDAO {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 int havaalaniSehirId = rs.getInt(HAVAALANI_SEHIR_ID);
-                String havaalani_sehir_ad = rs.getString("havaalani_sehir_ad");
+                String havaalaniSehirAd = rs.getString("havaalani_sehir_ad");
                 int havaalani_ulke_id = rs.getInt(HAVAALANI_ULKE_ID);
                 String havaalani_ulke_ad = rs.getString("havaalani_ulke_ad");
                 String havaalani_ad = rs.getString("havaalani_ad");
                 String havaalani_kod = rs.getString("havaalani_kod");
                 int havaalani_id = rs.getInt("havaalani_id");
-                havaalani.add(new Havaalani(havaalani_id, havaalani_ulke_id, havaalaniSehirId, havaalani_ad, havaalani_kod, havaalani_ulke_ad, havaalani_sehir_ad));
+                havaalani.add(new Havaalani(havaalani_id, havaalani_ulke_id, havaalaniSehirId, havaalani_ad, havaalani_kod, havaalani_ulke_ad, havaalaniSehirAd));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -80,8 +80,8 @@ public class HavaalaniDAO {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 int havaalaniSehirId = rs.getInt(HAVAALANI_SEHIR_ID);
-                String havaalani_sehir_ad = rs.getString("havaalani_sehir_ad");
-                havaalanisehir.add(new Havaalani_sehir(havaalaniSehirId, havaalani_sehir_ad));
+                String havaalaniSehirAd = rs.getString("havaalani_sehir_ad");
+                havaalanisehir.add(new Havaalani_sehir(havaalaniSehirId, havaalaniSehirAd));
             }
         } catch (SQLException e) {
             printSQLException(e);
