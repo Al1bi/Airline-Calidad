@@ -20,7 +20,7 @@ public class CevapDAO {
     private final String jdbcPassword = System.getenv("DB_PASSWORD");   
     
     // Definir constantes para los literales de cadena duplicados
-    private static final String mesajAdsoyad = "mesajAdsoyad";
+    private static final String MESAJ_ADSOYAD = "mesaj_adsoyad";
     private static final String MESAJ_EMAIL = "mesaj_email";
     private static final String MESAJ_KONU = "mesaj_konu";
     private static final String MESAJ_ICERIK = "mesaj_icerik";
@@ -61,7 +61,7 @@ public class CevapDAO {
                 String cevapIcerik = rs.getString("cevapIcerik");
                 String cevapBalsik = rs.getString("cevapBalsik");
                 String cevapTarih = rs.getString("cevapTarih");
-                String mesajAdsoyad = rs.getString(mesajAdsoyad);
+                String mesajAdsoyad = rs.getString(MESAJ_ADSOYAD);
                 String mesaj_email = rs.getString(MESAJ_EMAIL);
                 String mesaj_konu = rs.getString(MESAJ_KONU);
                 String mesaj_icerik = rs.getString(MESAJ_ICERIK);
@@ -82,7 +82,7 @@ public class CevapDAO {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                String mesajAdsoyad = rs.getString(mesajAdsoyad);
+                String mesajAdsoyad = rs.getString(MESAJ_ADSOYAD);
                 String mesaj_email = rs.getString(MESAJ_EMAIL);
                 String mesaj_konu = rs.getString(MESAJ_KONU);
                 String mesaj_icerik = rs.getString(MESAJ_ICERIK);
@@ -110,7 +110,7 @@ public class CevapDAO {
                 String cevapIcerik = rs.getString("cevapIcerik");
                 String cevapBalsik = rs.getString("cevapBalsik");
                 String cevapTarih = rs.getString("cevapTarih");
-                String mesajAdsoyad = rs.getString(mesajAdsoyad);
+                String mesajAdsoyad = rs.getString(MESAJ_ADSOYAD);
                 String mesaj_email = rs.getString(MESAJ_EMAIL);
                 String mesaj_konu = rs.getString(MESAJ_KONU);
                 String mesaj_icerik = rs.getString(MESAJ_ICERIK);
