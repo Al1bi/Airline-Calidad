@@ -480,14 +480,14 @@ public class RezervasyonDAO {
                 int rezervasyonId = rs.getInt(REZERVASYON_ID_COLUMN);
                 String rezervasyonTarih = rs.getString(REZERVASYON_TARIH_COLUMN);
                 int ucusId = rs.getInt(UCUS_ID_COLUMN);
-                int kullanici_id = rs.getInt("kullanici_id"); 
+                int kullaniciId = rs.getInt("kullanici_id"); 
                 String yolcuAd = rs.getString(YOLCU_AD_COLUMN);
                 String yolcuEmail = rs.getString(YOLCU_EMAIL_COLUMN );
                 String yolcuTel = rs.getString(YOLCU_TEL_COLUMN);
                 String yolcuTc = rs.getString(YOLCU_TC_COLUMN);
                 int yolcuTip = rs.getInt(YOLCU_TIP_COLUMN); 
                 String koltukNo = rs.getString(KOLTUK_NO_COLUMN);
-                rezervasyon = new Rezervasyon(rezervasyonId, rezervasyonTarih,pnrNo,yolcuAd, yolcuSoyad,yolcuEmail,yolcuTel,yolcuTc,yolcuTip,koltukNo,kullanici_id, ucusId  );
+                rezervasyon = new Rezervasyon(rezervasyonId, rezervasyonTarih,pnrNo,yolcuAd, yolcuSoyad,yolcuEmail,yolcuTel,yolcuTc,yolcuTip,koltukNo,kullaniciId, ucusId  );
             }
         } catch (SQLException e) {
             printSQLException(e);
