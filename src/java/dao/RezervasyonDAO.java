@@ -152,11 +152,11 @@ public class RezervasyonDAO {
         String m = arraySaat[1];
         int hh = Integer.parseInt(h);
         int mm = Integer.parseInt(m);
-        String Sdakika;
+        String sdakika;
         if (mm < 10) {
-            Sdakika = "0" + String.valueOf(mm);
+            sdakika = "0" + String.valueOf(mm);
         } else {
-            Sdakika = String.valueOf(mm);
+            sdakika = String.valueOf(mm);
         }
         String Ssaat;
         if (hh < 10) {
@@ -164,7 +164,7 @@ public class RezervasyonDAO {
         } else {
             Ssaat = String.valueOf(hh + 2);
         }
-        String ucus_saat = Ssaat + ":" + Sdakika;            
+        String ucus_saat = Ssaat + ":" + sdakika;            
         try (Connection connection = getConnection(); 
             PreparedStatement statement = connection.prepareStatement(IPTAL_DURUM1);) {
             statement.setInt(1, id);
@@ -189,11 +189,11 @@ public class RezervasyonDAO {
         String m = arraySaat[1];
         int hh = Integer.parseInt(h);
         int mm = Integer.parseInt(m);
-        String Sdakika;
+        String sdakika;
         if (mm < 10) {
-            Sdakika = "0" + String.valueOf(mm);
+            sdakika = "0" + String.valueOf(mm);
         } else {
-            Sdakika = String.valueOf(mm);
+            sdakika = String.valueOf(mm);
         }
         String Ssaat;
         if (hh < 10) {
@@ -201,7 +201,7 @@ public class RezervasyonDAO {
         } else {
             Ssaat = String.valueOf(hh + 2);
         }
-        String ucus_saat = Ssaat + ":" + Sdakika;            
+        String ucus_saat = Ssaat + ":" + sdakika;            
         try (Connection connection = getConnection(); 
             PreparedStatement statement = connection.prepareStatement(IPTAL_DURUM0);) {
             statement.setInt(1, id);
@@ -285,11 +285,11 @@ public class RezervasyonDAO {
                 String d = ARRAYucus_saat[1];
                 int saat=(Integer.parseInt(s)+Integer.parseInt(ucus_s))%24 ;
                 int dakika=(Integer.parseInt(d)+Integer.parseInt(ucus_d))%60 ;
-                String Sdakika;
+                String sdakika;
                 if(dakika < 10){
-                    Sdakika="0"+String.valueOf(dakika);
+                    sdakika="0"+String.valueOf(dakika);
                 }else{                                    
-                    Sdakika=String.valueOf(dakika);
+                    sdakika=String.valueOf(dakika);
                 }
                 String Ssaat;
                 if(saat < 10){
@@ -297,7 +297,7 @@ public class RezervasyonDAO {
                 }else{                                    
                     Ssaat=String.valueOf(saat);
                 }
-                String varis_saat = Ssaat+":"+Sdakika;              
+                String varis_saat = Ssaat+":"+sdakika;              
                 int rezervasyon_id = rs.getInt(REZERVASYON_ID_COLUMN);
                 String kalkis_sehir=rs.getString(KALKIS_SEHIR_COLUMN);
                 String kalkis_ad=rs.getString(KALKIS_AD_COLUMN);
@@ -443,11 +443,11 @@ public class RezervasyonDAO {
                 String d = ARRAYucus_saat[1];
                 int saat=(Integer.parseInt(s)+Integer.parseInt(ucus_s))%24 ;
                 int dakika=(Integer.parseInt(d)+Integer.parseInt(ucus_d))%60 ;
-                String Sdakika;
+                String sdakika;
                 if(dakika < 10){
-                    Sdakika="0"+String.valueOf(dakika);
+                    sdakika="0"+String.valueOf(dakika);
                 }else{                                    
-                    Sdakika=String.valueOf(dakika);
+                    sdakika=String.valueOf(dakika);
                 }
                 String Ssaat;
                 if(saat < 10){
@@ -455,7 +455,7 @@ public class RezervasyonDAO {
                 }else{                                    
                     Ssaat=String.valueOf(saat);
                 }
-                String varis_saat = Ssaat+":"+Sdakika;
+                String varis_saat = Ssaat+":"+sdakika;
                 String firma_ad=rs.getString(FIRMA_AD_COLUMN);
                 String firma_logo=rs.getString(FIRMA_LOGO_COLUMN);
                 Double ucus_ucret=rs.getDouble(UCUS_UCRET_COLUMN);
@@ -623,11 +623,11 @@ public class RezervasyonDAO {
                 String d = ARRAYucus_saat[1];
                 int saat=(Integer.parseInt(s)+Integer.parseInt(ucus_s))%24 ;
                 int dakika=(Integer.parseInt(d)+Integer.parseInt(ucus_d))%60 ;
-                String Sdakika;
+                String sdakika;
                 if(dakika < 10){
-                    Sdakika="0"+String.valueOf(dakika);
+                    sdakika="0"+String.valueOf(dakika);
                 }else{                                    
-                    Sdakika=String.valueOf(dakika);
+                    sdakika=String.valueOf(dakika);
                 }
                 String Ssaat;
                 if(saat < 10){
@@ -635,7 +635,7 @@ public class RezervasyonDAO {
                 }else{                                    
                     Ssaat=String.valueOf(saat);
                 }
-                String varis_saat = Ssaat+":"+Sdakika;              
+                String varis_saat = Ssaat+":"+sdakika;              
                 int rezervasyon_id = rs.getInt(REZERVASYON_ID_COLUMN);
                 String kalkis_sehir=rs.getString(KALKIS_SEHIR_COLUMN);
                 String kalkis_ad=rs.getString(KALKIS_AD_COLUMN);
