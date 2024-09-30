@@ -213,12 +213,12 @@ public class RezervasyonDAO {
         return guncellenenSatir;
     }
     
-    public boolean koltukkontrol(int id, String koltuk_no) {
+    public boolean koltukkontrol(int id, String koltukNo) {
 
         try (Connection connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(KOLTUK_NO_SELECT);) {
             preparedStatement.setInt(1, id);
-            preparedStatement.setString(2, koltuk_no);
+            preparedStatement.setString(2, koltukNo);
             ResultSet rs = preparedStatement.executeQuery();
             
             if (rs.next()) {
