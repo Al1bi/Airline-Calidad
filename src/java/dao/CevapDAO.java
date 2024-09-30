@@ -30,7 +30,7 @@ public class CevapDAO {
             "INNER JOIN mesaj ON (mesaj.mesajId = cevap.mesajId);";
     private static final String CEVAP_DELETE = "DELETE FROM cevap WHERE cevapId = ?;";
     private static final String MESAJ_SELECT_ID = "SELECT * FROM mesaj WHERE mesajId=?;";
-    private static final String CEVAP_INSERT = "INSERT INTO cevap (mesajId, cevapIcerik, cevap_baslik) VALUES (?,?,?);"; 
+    private static final String CEVAP_INSERT = "INSERT INTO cevap (mesajId, cevapIcerik, cevapBalsik) VALUES (?,?,?);"; 
     private static final String CEVAP_SELECT_ID = "SELECT * FROM cevap " +
             "INNER JOIN mesaj ON (mesaj.mesajId = cevap.mesajId) WHERE cevapId=?;";
 
@@ -59,7 +59,7 @@ public class CevapDAO {
                 int cevapId = rs.getInt("cevapId");
                 int mesajId = rs.getInt("mesajId");
                 String cevapIcerik = rs.getString("cevapIcerik");
-                String cevap_baslik = rs.getString("cevap_baslik");
+                String cevapBalsik = rs.getString("cevapBalsik");
                 String cevap_tarih = rs.getString("cevap_tarih");
                 String mesaj_adsoyad = rs.getString(MESAJ_ADSOYAD);
                 String mesaj_email = rs.getString(MESAJ_EMAIL);
@@ -67,7 +67,7 @@ public class CevapDAO {
                 String mesaj_icerik = rs.getString(MESAJ_ICERIK);
                 String mesaj_tarih = rs.getString(MESAJ_TARIH);
                 
-                cevaplar.add(new Cevap(cevapId, mesajId, cevapIcerik, cevap_baslik, cevap_tarih, mesaj_adsoyad, mesaj_email, mesaj_konu, mesaj_icerik, mesaj_tarih));
+                cevaplar.add(new Cevap(cevapId, mesajId, cevapIcerik, cevapBalsik, cevap_tarih, mesaj_adsoyad, mesaj_email, mesaj_konu, mesaj_icerik, mesaj_tarih));
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -108,7 +108,7 @@ public class CevapDAO {
                 int cevapId = rs.getInt("cevapId");
                 int mesajId = rs.getInt("mesajId");
                 String cevapIcerik = rs.getString("cevapIcerik");
-                String cevap_baslik = rs.getString("cevap_baslik");
+                String cevapBalsik = rs.getString("cevapBalsik");
                 String cevap_tarih = rs.getString("cevap_tarih");
                 String mesaj_adsoyad = rs.getString(MESAJ_ADSOYAD);
                 String mesaj_email = rs.getString(MESAJ_EMAIL);
@@ -116,7 +116,7 @@ public class CevapDAO {
                 String mesaj_icerik = rs.getString(MESAJ_ICERIK);
                 String mesaj_tarih = rs.getString(MESAJ_TARIH);
                 
-                cevap = new Cevap(cevapId, mesajId, cevapIcerik, cevap_baslik, cevap_tarih, mesaj_adsoyad, mesaj_email, mesaj_konu, mesaj_icerik, mesaj_tarih);
+                cevap = new Cevap(cevapId, mesajId, cevapIcerik, cevapBalsik, cevap_tarih, mesaj_adsoyad, mesaj_email, mesaj_konu, mesaj_icerik, mesaj_tarih);
             }
         } catch (SQLException e) {
             printSQLException(e);
@@ -129,7 +129,7 @@ public class CevapDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(CEVAP_INSERT)) {
             preparedStatement.setInt(1, cevap.getmesajId());
             preparedStatement.setString(2, cevap.getcevapIcerik());
-            preparedStatement.setString(3, cevap.getCevap_baslik());
+            preparedStatement.setString(3, cevap.getcevapBalsik());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             printSQLException(e);
